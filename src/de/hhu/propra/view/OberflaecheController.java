@@ -1,5 +1,6 @@
 package de.hhu.propra.view;
 
+import de.hhu.propra.CodeTester;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -67,6 +68,9 @@ public class OberflaecheController {
 		codeTextArea.setStyle("-fx-control-inner-background: #555555");
 		codePrüfen.setDisable(true);
 		codeLeeren.setDisable(true);
+		
+		CodeTester.testCode(codeTextArea.getText());
+		
 		System.out.println("Code prüfen");
 	}
 }

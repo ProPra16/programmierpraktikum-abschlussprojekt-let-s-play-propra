@@ -16,7 +16,7 @@ public class Main extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("TDDT");
 		
-		BorderPane hauptfenster = FXMLLoader.load(getClass().getResource("view/Hauptfenster.fxml"));
+		hauptfenster = FXMLLoader.load(getClass().getResource("view/Hauptfenster.fxml"));
 		Scene scene = new Scene(hauptfenster);
 		
 		primaryStage.setScene(scene);
