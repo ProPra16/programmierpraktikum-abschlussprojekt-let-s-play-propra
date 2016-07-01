@@ -59,18 +59,16 @@ public class OberflaecheController {
 	
 	@FXML
 	protected void handleCodePrüfen(){
-		testTextArea.setEditable(true);
-		testTextArea.setStyle("");
-		testPrüfen.setDisable(false);
-		testLeeren.setDisable(false);
+		//testTextArea.setEditable(true);
+		//testTextArea.setStyle("");
+		//testPrüfen.setDisable(false);
+		//testLeeren.setDisable(false);
 		
-		codeTextArea.setEditable(false);
-		codeTextArea.setStyle("-fx-control-inner-background: #555555");
-		codePrüfen.setDisable(true);
-		codeLeeren.setDisable(true);
+		//codeTextArea.setEditable(false);
+		//codeTextArea.setStyle("-fx-control-inner-background: #555555");
+		//codePrüfen.setDisable(true);
+		//codeLeeren.setDisable(true);
 		
 		CodeTester.testCode(codeTextArea.getText());
-		
-		System.out.println("Code prüfen");
 	}
 }
