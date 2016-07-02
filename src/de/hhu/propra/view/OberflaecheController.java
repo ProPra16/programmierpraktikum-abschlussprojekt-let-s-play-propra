@@ -11,7 +11,7 @@ public class OberflaecheController {
 	private TextArea testTextArea;
 	
 	@FXML
-	private Button testPrüfen;
+	private Button testPruefen;
 	
 	@FXML
 	private Button testLeeren;
@@ -20,29 +20,32 @@ public class OberflaecheController {
 	private TextArea codeTextArea;
 	
 	@FXML
-	private Button codePrüfen;
+	private Button codePruefen;
 	
 	@FXML
 	private Button codeLeeren;
 	
 	@FXML
+	private TextArea konsoleTextArea;
+	
+	@FXML
 	private ListView<String> fehlgeschlageneTests;
 	
 	@FXML
-	protected void handleTestPrüfen(){
+	protected void handleTestPruefen(){
 		testTextArea.setEditable(false);
 		testTextArea.setStyle("-fx-control-inner-background: #555555");
-		testPrüfen.setDisable(true);
+		testPruefen.setDisable(true);
 		testLeeren.setDisable(true);
 		
 		codeTextArea.setEditable(true);
 		codeTextArea.setStyle("");
-		codePrüfen.setDisable(false);
+		codePruefen.setDisable(false);
 		codeLeeren.setDisable(false);
 		for (int i=0;i<5;i++) {
 			fehlgeschlageneTests.getItems().add(i+"");
 		}
-		System.out.println("Test prüfen");
+		System.out.println("Test prÃ¼fen");
 	}
 	
 	@FXML
@@ -58,15 +61,15 @@ public class OberflaecheController {
 	}
 	
 	@FXML
-	protected void handleCodePrüfen(){
+	protected void handleCodePruefen(){
 		//testTextArea.setEditable(true);
 		//testTextArea.setStyle("");
-		//testPrüfen.setDisable(false);
+		//testPruefen.setDisable(false);
 		//testLeeren.setDisable(false);
 		
 		//codeTextArea.setEditable(false);
 		//codeTextArea.setStyle("-fx-control-inner-background: #555555");
-		//codePrüfen.setDisable(true);
+		//codePruefen.setDisable(true);
 		//codeLeeren.setDisable(true);
 		
 		CodeTester.testCode(codeTextArea.getText());
