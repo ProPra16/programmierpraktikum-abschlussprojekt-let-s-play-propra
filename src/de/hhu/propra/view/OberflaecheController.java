@@ -1,13 +1,13 @@
-package main.java.de.hhu.propra.view;
+package de.hhu.propra.view;
 
+import de.hhu.propra.CodeTester;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import main.java.de.hhu.propra.CodeTester;
 
-//public class OberflaecheController implements OberflaecheControllerInterface{
-public class OberflaecheController {
+public class OberflaecheController implements OberflaecheControllerInterface{
+
 	public static boolean wechsel = false;
 	
 	@FXML

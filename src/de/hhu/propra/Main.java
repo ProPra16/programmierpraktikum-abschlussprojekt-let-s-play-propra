@@ -1,4 +1,4 @@
-package main.java.de.hhu.propra;
+package de.hhu.propra;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

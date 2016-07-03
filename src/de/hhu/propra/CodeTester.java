@@ -1,4 +1,4 @@
-package main.java.de.hhu.propra;
+package de.hhu.propra;
 
 import vk.core.api.*;
 
