@@ -16,12 +16,12 @@ public class Main extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("TDDT");
 		
-		hauptfenster = FXMLLoader.load(getClass().getClassLoader().getResource("view/Hauptfenster.fxml"));
+		hauptfenster = FXMLLoader.load(getClass().getResource("view/Hauptfenster.fxml"));
 		Scene scene = new Scene(hauptfenster);
 		
 		primaryStage.setScene(scene);
 		
-		BorderPane oberflaeche = FXMLLoader.load(getClass().getClassLoader().getResource("view/Oberflaeche.fxml"));
+		BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("view/Oberflaeche.fxml"));
 		hauptfenster.setCenter(oberflaeche);
 		
 		primaryStage.show();
