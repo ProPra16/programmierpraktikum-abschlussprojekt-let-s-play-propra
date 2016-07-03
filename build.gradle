@@ -9,3 +9,10 @@ dependencies {
 	testCompile "junit:junit:4.8.2"
 	compile group: 'de.hhu.stups', name: 'virtual-kata-lib', version: '1.0.1'
 }
+
+jar {
+	manifest.attributes(
+		'Class-Path': configurations.runtime.files.collect { it.name }.join(' '),
+		'Main-Class': 'main.java.de.hhu.propra.Main'
+	)
+}
