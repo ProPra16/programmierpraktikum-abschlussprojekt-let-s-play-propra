@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Menü">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Neue Übung" />
+                  <MenuItem mnemonicParsing="false" text="Programm beenden" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Katalog">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Katalog ändern" />
+                  <MenuItem mnemonicParsing="false" text="Aufgabe ändern" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Hilfe">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Aufgabenstellung" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

@@ -1,6 +1,7 @@
 apply plugin: "java"
 apply plugin: "eclipse"
-    
+apply plugin: "application"
+mainClassName ="de.hhu.propra.Main"
 repositories {
 	mavenCentral()
 }
@@ -13,6 +14,6 @@ dependencies {
 jar {
 	manifest.attributes(
 		'Class-Path': configurations.runtime.files.collect { it.name }.join(' '),
-		'Main-Class': 'main.java.de.hhu.propra.Main'
+		'Main-Class': 'de.hhu.propra.Main'
 	)
 }
