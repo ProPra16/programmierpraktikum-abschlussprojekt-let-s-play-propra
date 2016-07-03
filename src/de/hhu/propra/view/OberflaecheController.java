@@ -85,7 +85,7 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	@FXML
 	protected void handleCodePruefen(){
 		wechsel = false;
-		CodeTester.testCode(codeTextArea.getText());
+		System.out.println(CodeTester.testCode(codeTextArea.getText()));
 	}
 	
 	@FXML
@@ -114,19 +114,23 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 		testPruefen.setDisable(true);
 		testPruefenUndWechsel.setDisable(true);
 		testLeeren.setDisable(true);
+		
+		enableCodeArea();
 //		logKonsole(CodeTester.testCode(codeTextArea.getText()));
 	}
 	
-	public void logKonsole (String message){
-		konsoleTextArea.setText(message);
-		
-		
+	private void enableCodeArea(){
 		codeTextArea.setEditable(true);
 		codeTextArea.setStyle("");
 		codePruefen.setDisable(false);
 		codePruefenUndWechsel.setDisable(false);
 		codeLeeren.setDisable(false);
 	}
+	
+	public void logKonsole (String message){
+		konsoleTextArea.setText(message);
+	}
+	
 
 	public void appendKonsoleText(String message) {
 		konsoleTextArea.appendText(message);
