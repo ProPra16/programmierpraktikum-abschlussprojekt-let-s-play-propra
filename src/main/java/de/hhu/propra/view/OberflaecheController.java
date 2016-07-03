@@ -1,10 +1,10 @@
-package de.hhu.propra.view;
+package main.java.de.hhu.propra.view;
 
-import de.hhu.propra.CodeTester;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import main.java.de.hhu.propra.CodeTester;
 
 public class OberflaecheController {
 	@FXML
@@ -42,22 +42,22 @@ public class OberflaecheController {
 		codeTextArea.setStyle("");
 		codePruefen.setDisable(false);
 		codeLeeren.setDisable(false);
+		
 		for (int i=0;i<5;i++) {
 			fehlgeschlageneTests.getItems().add(i+"");
 		}
-		System.out.println("Test prüfen");
 	}
 	
 	@FXML
 	protected void handleTestLeeren(){
 		testTextArea.setText("");
-		System.out.println("Test geleert");
+		logKonsole("Test geleert");
 	}
 	
 	@FXML
 	protected void handleCodeLeeren(){
 		codeTextArea.setText("");
-		System.out.println("Code geleert");
+		logKonsole("Code geleert");
 	}
 	
 	@FXML
@@ -72,6 +72,11 @@ public class OberflaecheController {
 		//codePruefen.setDisable(true);
 		//codeLeeren.setDisable(true);
 		
-		CodeTester.testCode(codeTextArea.getText());
+		logKonsole(CodeTester.testCode(codeTextArea.getText()));
+		
+	}
+	
+	public void logKonsole (String message){
+		konsoleTextArea.setText(message);
 	}
 }

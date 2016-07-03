@@ -10,7 +10,7 @@
 <?import javafx.scene.control.ListView?>
 
 <BorderPane
-	fx:controller = "TDDTController"
+	fx:controller = "main.java.de.hhu.propra.view.OberflaecheController"
 	xmlns:fx = "http://javafx.com/fxml"
 	prefWidth = "800"
 	prefHeight = "600">
@@ -29,11 +29,11 @@
 							</padding>
 							<children>
 								<Button 
-									fx:id = "codePrüfen" 
+									fx:id = "codePruefen" 
 									text = "Code prüfen" 
 									maxWidth = "Infinity" 
 									HBox.hgrow = "ALWAYS"
-									onAction = "#handleCodePrüfen"
+									onAction = "#handleCodePruefen"
 									disable="true"/>
 								<Button 
 									fx:id = "codeLeeren" 
@@ -62,11 +62,11 @@
 							</padding>
 							<children>
 								<Button 
-									fx:id = "testPrüfen" 
+									fx:id = "testPruefen" 
 									text = "Tests prüfen" 
 									maxWidth = "Infinity" 
 									HBox.hgrow = "ALWAYS"
-									onAction = "#handleTestPrüfen"/>
+									onAction = "#handleTestPruefen"/>
 								<Button 
 									fx:id = "testLeeren" 
 									text = "Tests leeren" 
@@ -86,5 +86,7 @@
 			</children>
 		</HBox>
 	</center>
+	<bottom>
+		<TextArea fx:id = "konsoleTextArea" editable="false" style="-fx-control-inner-background: #000000"/>
+	</bottom>
 </BorderPane>
-	

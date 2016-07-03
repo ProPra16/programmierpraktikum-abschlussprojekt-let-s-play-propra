@@ -1,5 +1,5 @@
-package de.hhu.propra;
-	
+package main.java.de.hhu.propra;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
