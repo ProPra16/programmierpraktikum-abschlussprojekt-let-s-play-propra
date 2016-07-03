@@ -12,13 +12,13 @@
 <BorderPane
 	fx:controller = "main.java.de.hhu.propra.view.OberflaecheController"
 	xmlns:fx = "http://javafx.com/fxml"
-	prefWidth = "800"
-	prefHeight = "600">
+	prefWidth = "1024"
+	prefHeight = "768">
 	<center>
 		<HBox spacing = "10">
 			<children>
 				<BorderPane
-					fx:id = "code">
+					fx:id = "code" HBox.hgrow = "ALWAYS">
 					<padding>
 						<Insets top = "10" right = "10" bottom = "10" left = "10"/>
 					</padding>
@@ -36,6 +36,13 @@
 									onAction = "#handleCodePruefen"
 									disable="true"/>
 								<Button 
+									fx:id = "codePruefenUndWechsel" 
+									text = "Code prüfen/Wechsel zu Test" 
+									maxWidth = "Infinity" 
+									HBox.hgrow = "ALWAYS"
+									onAction = "#handleCodePruefenUndWechsel"
+									disable="true"/>
+								<Button 
 									fx:id = "codeLeeren" 
 									text = "Code leeren" 
 									maxWidth = "Infinity" 
@@ -46,12 +53,12 @@
 						</HBox>
 					</top>
 					<center>
-						<TextArea fx:id = "codeTextArea" text = "code" editable="false" style="-fx-control-inner-background: #555555"/>
+						<TextArea fx:id = "codeTextArea" text = "code" editable="false" style="-fx-control-inner-background: #555555" maxWidth = "Infinity"/>
 					</center>
 				</BorderPane>
 				
 				<BorderPane
-					fx:id = "test">
+					fx:id = "test" HBox.hgrow = "ALWAYS">
 					<padding>
 						<Insets top = "10" right = "10" bottom = "10" left = "10"/>
 					</padding>
@@ -68,6 +75,12 @@
 									HBox.hgrow = "ALWAYS"
 									onAction = "#handleTestPruefen"/>
 								<Button 
+									fx:id = "testPruefenUndWechsel" 
+									text = "Tests prüfen/Wechsel zu Code" 
+									maxWidth = "Infinity" 
+									HBox.hgrow = "ALWAYS"
+									onAction = "#handleTestPruefenUndWechsel"/>
+								<Button 
 									fx:id = "testLeeren" 
 									text = "Tests leeren" 
 									maxWidth = "Infinity" 
@@ -77,7 +90,7 @@
 						</HBox>
 					</top>
 					<center>
-						<TextArea fx:id = "testTextArea" text = "test"/>
+						<TextArea fx:id = "testTextArea" text = "test" maxWidth = "Infinity" />
 					</center>
 					<bottom>
 						<ListView fx:id="fehlgeschlageneTests" maxHeight="100"/>
