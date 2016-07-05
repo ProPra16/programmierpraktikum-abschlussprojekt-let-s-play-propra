@@ -83,15 +83,15 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	}
 	
 	@FXML
-	protected void handleCodePruefen(){
+	protected void handleCodePruefen() throws Exception{
 		wechsel = false;
-		System.out.println(CodeTester.testCode(codeTextArea.getText()));
+		logKonsole(CodeTester.testCode(codeTextArea.getText()));
 	}
 	
 	@FXML
-	protected void handleCodePruefenUndWechsel(){
+	protected void handleCodePruefenUndWechsel() throws Exception {
 		wechsel = true;
-		CodeTester.testCode(codeTextArea.getText());
+		logKonsole(CodeTester.testCode(codeTextArea.getText()));
 	}
 
 	public void disableCodeArea() {

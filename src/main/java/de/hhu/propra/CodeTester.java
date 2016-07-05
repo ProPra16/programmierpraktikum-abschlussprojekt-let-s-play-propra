@@ -1,7 +1,8 @@
 package de.hhu.propra;
 
+import java.io.BufferedReader;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.InputStreamReader;
 
 import vk.core.api.*;
 
@@ -12,32 +13,38 @@ public class CodeTester {
 		String dateiname = "Test";
 		CompilationUnit unit1 = new CompilationUnit(dateiname, code, false);
 		compiler = CompilerFactory.getCompiler(unit1);
-		
+
 		try {
 			compiler.compileAndRunTests();
 		} catch (Exception e){
-//			log("Fehler beim Codeausführen!");
+			return ("Fehler beim Codeausführen!" + e.toString());
 		}
-		
+
 		if (compiler.getCompilerResult().hasCompileErrors()){
 			return fehlerString(unit1);
 		}
-		
-		
-		
-		try {
-			FileWriter writer = new FileWriter("temp\\" + dateiname + ".java");
-			writer.write(code);
-			
-			Process process = Runtime.getRuntime().exec("cmd /c start temp\temp_compile.bat");
-			process.waitFor();
-			writer.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		return ("Fehlerfrei");
+        try {
+            FileWriter writer = new FileWriter("temp/" + dateiname + ".java");
+            writer.write(code);
+            writer.close();
+        } catch (Exception e){
+
+        }
+        String ergebnis = "Läuft    ";
+
+        try {
+            Process process = Runtime.getRuntime().exec("cmd /C start temp\\temp_compile.cmd");
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            String line = null;
+            while ((line = in.readLine()) != null) {
+                ergebnis += "\n" + line;
+            }
+        } catch (Exception e){
+           return e.toString();
+        }
+		return (ergebnis);
 	}
 	
 	private static String fehlerString(CompilationUnit unit){
@@ -50,9 +57,4 @@ public class CodeTester {
 		}
 		return fehler;
 	}
-	
-//	private static void log(String message){
-// Hier soll später statt println() dann die entsprechende Ausgabe auf der neuen, virtuellen Konsole stehen.
-//		System.out.println(message);
-//	}
 }
