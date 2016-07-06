@@ -1,6 +1,7 @@
 package de.hhu.propra.view;
 
 import de.hhu.propra.CodeTester;
+import de.hhu.propra.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -8,6 +9,7 @@ import javafx.scene.control.TextArea;
 
 public class OberflaecheController implements OberflaecheControllerInterface{
 
+	private Main main;
 	public static boolean wechsel = false;
 	
 	@FXML
@@ -130,11 +132,17 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	public void logKonsole (String message){
 		konsoleTextArea.setText(message);
 	}
-	
 
 	public void appendKonsoleText(String message) {
 		konsoleTextArea.appendText(message);
 	}
 	
-	
+	public void setMain(Main main){
+		this.main = main;
+	}
+
+    public void beenden(){
+        CodeTester.writeExternalFile(codeTextArea.getText());
+        // TODO: Katalog und Aufgabe in die Konfigdatei schreiben!
+    }
 }
