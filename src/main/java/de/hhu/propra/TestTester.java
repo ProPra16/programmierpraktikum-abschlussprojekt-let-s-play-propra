@@ -27,7 +27,7 @@ public class TestTester {
       try {
         Testcompiler.compileAndRunTests();
       } catch (Exception e) {
-        return ("Fehler beim Codeausführen!" + e.toString());
+        return ("Fehler beim Testausführen!" + e.toString());
       }
 
       if (Testcompiler.getCompilerResult().hasCompileErrors()) {
@@ -43,7 +43,7 @@ public class TestTester {
       }
       ergebnis = "Tests werden durchgeführt...";
 
-      try {
+      /*try {
         Process process = Runtime.getRuntime().exec("cmd /C start temp\\temp_compile.cmd");
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
@@ -55,7 +55,7 @@ public class TestTester {
       catch (Exception e)
       {
         return e.toString();
-      }
+      }*/
     }
     return (ergebnis);
   }

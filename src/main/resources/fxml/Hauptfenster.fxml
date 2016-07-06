@@ -6,25 +6,25 @@
 <?import javafx.scene.layout.BorderPane?>
 
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller = "de.hhu.propra.view.HauptfensterController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Menü">
             <items>
-              <MenuItem mnemonicParsing="false" text="Neue Übung" />
-                  <MenuItem mnemonicParsing="false" text="Programm beenden" />
+              <MenuItem mnemonicParsing="false" text="Neue Übung" onAction="#handleMenueNeueUebung"/>
+                  <MenuItem mnemonicParsing="false" text="Programm beenden" onAction="#handleMenueClose"/>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Katalog">
             <items>
-              <MenuItem mnemonicParsing="false" text="Katalog ändern" />
-                  <MenuItem mnemonicParsing="false" text="Aufgabe ändern" />
+              <MenuItem mnemonicParsing="false" text="Katalog ändern" onAction="#handleMenueKatalogAendern" />
+                  <MenuItem mnemonicParsing="false" text="Aufgabe ändern" onAction="#handleMenueAufgabeAendern"/>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Hilfe">
+          <Menu mnemonicParsing="false" text="Hilfe" onAction="#handleMenueHilfe">
             <items>
-              <MenuItem mnemonicParsing="false" text="Aufgabenstellung" />
+              <MenuItem mnemonicParsing="false" text="Aufgabenstellung" onAction="#handleMenueAufgabenstellung" />
             </items>
           </Menu>
         </menus>

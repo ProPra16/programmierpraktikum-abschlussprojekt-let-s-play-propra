@@ -17,7 +17,7 @@ public class CodeTester {
 		try {
 			compiler.compileAndRunTests();
 		} catch (Exception e){
-			return ("Fehler beim Codeausführen!" + e.toString());
+			return ("Fehler beim Codeausfuehren: " + e.toString());
 		}
 
 		if (compiler.getCompilerResult().hasCompileErrors()){
@@ -31,9 +31,9 @@ public class CodeTester {
         } catch (Exception e){
 
         }
-        String ergebnis = "Läuft    ";
+        String ergebnis = "Laeuft    ";
 
-        try {
+        /*try {
             Process process = Runtime.getRuntime().exec("cmd /C start temp\\temp_compile.cmd");
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(process.getInputStream()));
@@ -43,13 +43,13 @@ public class CodeTester {
             }
         } catch (Exception e){
            return e.toString();
-        }
+        }*/
 		return (ergebnis);
 	}
 	
 	private static String fehlerString(CompilationUnit unit){
 		String fehler = "";
-		fehler = "Dein Quellcode enthält Fehler";
+		fehler = "Dein Quellcode enthaelt Fehler";
 		for (CompileError error : compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(unit)){
 			fehler += "\nin Zeile " + error.getLineNumber() + ": " + error.getMessage() + ": \n";
 			fehler += error.getCodeLineContainingTheError() + "\n";
