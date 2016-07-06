@@ -4,6 +4,8 @@ import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import main.xmlparser.Aufgabe;
+import main.xmlparser.XMLParser;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import java.io.*;
@@ -80,5 +82,7 @@ public class Main extends Application {
             damit dieser die richtigen Inhalte auswählen kann
            4) Mit entsprechenden Inhalten das Hauptprogramm wählen
           */
+    	XMLParser parser= new XMLParser("aufgaben.xml");
+		Aufgabe[] aufgaben =parser.getAufgaben();
     }
 }
