@@ -41,10 +41,8 @@ public class Main extends Application {
 	public static void main(String[] args) throws URISyntaxException {
         String config = "";
 
-        System.out.println(DateiScanner.Scannen("testigertesttest"));
-
-        new TestWriter("JustWritten","iluvpizza");
-        DateiScanner.Scannen("testigertesttest");
+        //System.out.println(DateiScanner.Scannen("testigertesttest"));
+        //new TestWriter("JustWritten","iluvpizza");
         try {
             InputStream is = Main.class.getResourceAsStream("/config/config.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
