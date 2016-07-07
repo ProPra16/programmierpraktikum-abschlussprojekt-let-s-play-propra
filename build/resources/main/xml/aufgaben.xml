@@ -1,5 +1,5 @@
-<excercises>
-<exercise name="Auf_Faehre">
+<exercises>
+<exercise Aufgabenname="Auf_Faehre">
 <description>Schreiben Sie ein Programm, das den Beladevorgang einer Fähre simuliert. Dieser Vorgang soll ohne Benutzerinteraktion komplett zufällig ablaufen. D.h. eine Zufallsfunktion bestimmt den Typen des nächsten Fahrzeuges und dessen Eigenschaften (siehe Lösungsskelett). Der Programmablauf (die Simulation) soll in einer Klasse FaehreUI gesteuert/ gestartet werden. Es soll so lange geladen werden, bis entweder die Fläche, die restliche Traglast oder beides nicht mehr ausreicht, um das aktuell erzeugte Fahrzeug aufzuladen. Ist dieser Zeitpunkt erreicht, soll das Programm ausgeben, wie der Status der Fähre ist (siehe unten) und was der Grund für den Stopp der Beladung war (Platz, Gewicht, beides).
 
 BEISPIEL einer Ausgabe des Programmes: 
@@ -30,7 +30,7 @@ Breite zwischen 0.5-1.5m; Länge zwischen 1-3m; Gewicht zwischen 5-20kg; keine B
 Eine Person soll lediglich ihr Gewicht speichern können und dieses mitteilen können. Das Gewicht sollte zwischen 40 und 120kg liegen.
 </description>
 <classes>
-<class name="Faehre">
+<class Klassenname="Faehre">
 import java.util.ArrayList;
 
 public class Faehre {
@@ -82,7 +82,7 @@ public class Faehre {
 
 </class>
 
-<class name="FaehreUI">
+<class Klassenname="FaehreUI">
 public class FaehreUI {
 
 	public static void main (String[] args){
@@ -95,13 +95,13 @@ public class FaehreUI {
 }
 </class>
 
-<class name="Fahrrad">
+<class Klassenname="Fahrrad">
 public class Fahrrad extends Fahrzeug {
 
 }
 </class>
 
-<class name="Fahrzeug">
+<class Klassenname="Fahrzeug">
 public abstract class Fahrzeug {
 	// Konstruktor und Methoden (z.B. berechnegewicht...)
 	// Gegebene Methoden sind testrelevant, Namen nicht aendern
@@ -115,7 +115,7 @@ public abstract class Fahrzeug {
 }
 </class>
 
-<class name="Motorrad">
+<class Klassenname="Motorrad">
 import java.util.ArrayList;
 
 public class Motorrad extends Fahrzeug {
@@ -123,7 +123,7 @@ public class Motorrad extends Fahrzeug {
 }
 </class>
 
-<class name="Person">
+<class Klassenname="Person">
 public class Person {
 	// Eigenschaften und Methoden von Personen implementieren
 	// Gegebene Methoden sind testrelevant, Namen nicht ändern
@@ -132,7 +132,7 @@ public class Person {
 }
 </class>
 
-<class name="Pkw">
+<class Klassenname="Pkw">
 import java.util.ArrayList;
 
 public class Pkw extends Fahrzeug {
@@ -157,7 +157,7 @@ public class Pkw extends Fahrzeug {
 
 </classes>
 <tests>
-<test name="FaehreTest">
+<test Testname="FaehreTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 public class FaehreTest{
@@ -170,14 +170,14 @@ public void testSomething() {
 
 </exercise>
 
-<exercise name="Ordnungsrechner">
+<exercise Aufgabenname="Ordnungsrechner">
 <description>Schreiben Sie ein Programm, dass in einem (multiplikativen) Restklassenring (a mod p) die Ordnung des Elements a bestimmt. (Ordnung von a ist n, für das gilt: a^n mod p = 1).
 Es soll erst die "Gruppengröße" (p) eingelesen werden und dann das Element dessen Ordnung (a) zu prüfen ist. Sie müssen nicht prüfen, ob p prim ist, sondern können dies als gegeben annehmen. 
 Lagern Sie die Rechnung in eine Funktion public int bstOrdnung(int p, int a) aus, die die Ordnung des Elements zurückgibt.
 </description>
 
 <classes>
-<class name="Ordnungsrechner">
+<class Klassenname="Ordnungsrechner">
 public class Ordnungsrechner {
 	// main-Methode und bstOrdnung-Methode implementieren
 }
@@ -185,7 +185,7 @@ public class Ordnungsrechner {
 </classes>
 
 <tests>
-<test name="OrdnungsrechnerTest">
+<test Testname="OrdnungsrechnerTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -198,7 +198,7 @@ public void testSomething() {
 </tests>
 </exercise>
 
-<exercise name="Aufgabe1">
+<exercise Aufgabenname="Aufgabe1">
 <description>Lesen Sie alle Strings, die Sie als Kommandozeilenargumente Uebergeben bekommen, ein und geben Sie jeden String in einer neuen Zeile aus.
 
 --- Beispiel ---
@@ -212,7 +212,7 @@ c
 </description>
 
 <classes>
-<class name="Aufgabe1">
+<class Klassenname="Aufgabe1">
 /*****************************************************
  * Eingabe: Beliebig viele Strings als Kommandozeilen-
  *          argumente.
@@ -229,7 +229,7 @@ public class Aufgabe1{
 </classes>
 
 <tests>
-<test name="Aufgabe1Test">
+<test Testname="Aufgabe1Test">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -242,7 +242,7 @@ public void testSomething() {
 </tests>
 </exercise>
 
-<exercise name="Aufgabe2">
+<exercise Aufgabenname="Aufgabe2">
 <description>Schreiben sie eine Klasse Kunde, die im Konstruktor ein Integer fuer die Kundennummer und einen String fuer den Namen uebergeben bekommt und diese in Variabblen speichert. Implementieren sie zusaetzlich die Instanzmethoden int knr() und String name(), um die beiden gespeicherten Werte aus den Instanzen auszulesen, sowie eine Instanzmethode String toString(), die eine Stringrepraesentation der Kundeninstanz liefert. Die Stringrepraesentation habe die Form 
 "Kunde: *Namensstring*
 Knr.: *Kundennummer-Integer*"
@@ -256,7 +256,7 @@ Abfrage der Stringrepraesentation: a.toString()
 </description>
 
 <classes>
-<class name="Kunde">
+<class Klassenname="Kunde">
 public class Kunde{
     /* Hier Instanzvariablen implemetieren */
     
@@ -271,7 +271,7 @@ public class Kunde{
 </classes>
 
 <tests>
-<test name="Aufgabe2_Test">
+<test Testname="Aufgabe2_Test">
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -286,7 +286,7 @@ public class Aufgabe2_Test{
 </tests>
 </exercise>
 
-<exercise name="AnimalStats">
+<exercise Aufgabenname="AnimalStats">
 <description>In dieser Aufgabe geht es um die Erstellung einer Art Pokédex Eintrages für Tiere.
 Die Funktion wird mit "AnimalStats TIERNAME" aufgerufen. 
 Die Tiere, für die in dieser Aufgabe ein Eintrag erstellt werden soll, lauten Spatz, Biene, Echse, Dorsch und Hund. Wird das Programm mit einem unbekannten oder ohne Tier aufgerufen, kommt die Fehlermeldung "Ungültiges oder fehlendes Startargument".
@@ -350,42 +350,42 @@ Kaltblüter
 </description>
 
 <classes>
-<class name="Fisch">
+<class Klassenname="Fisch">
 
 public class Fisch extends Lebewesen implements Wasser,Wechselwarm {
     
 }
 </class>
 
-<class name="Insekt">
+<class Klassenname="Insekt">
 public class Insekt extends Lebewesen implements Wechselwarm,Flug{
 }
 </class>
 
-<class name="Lebewesen">
+<class Klassenname="Lebewesen">
 public class Lebewesen {
 }
 </class>
 
-<class name="Reptil">
+<class Klassenname="Reptil">
 public class Reptil extends Lebewesen implements Wechselwarm{
 }
 </class>
 
 
-<class name="Saeugetier">
+<class Klassenname="Saeugetier">
 public class Saeugetier extends Lebewesen implements Warmblueter{
 }
 </class>
 
 
-<class name="Vogel">
+<class Klassenname="Vogel">
 public class Vogel extends Lebewesen implements Flug,Warmblueter{
 }
 </class>
 
 
-<class name="AnimalStats">
+<class Klassenname="AnimalStats">
 import java.io.*;
 
 /**
@@ -463,7 +463,7 @@ public interface Wechselwarm {
 
 
 <tests>
-<test name="AnimalStats_Test">
+<test Testname="AnimalStats_Test">
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -478,7 +478,7 @@ public class AnimalStats_Test{
 </tests>
 </exercise>
 
-<exercise name="TaschenRechner">
+<exercise Aufgabenname="TaschenRechner">
 <description>In dieser Aufgabe geht es um die Erstellung eines kleinen Taschenrechners, der in der Kommandozeile mit drei Argumenten aufgerufen wird.
 Die Eingabe muss geprüft und die gewählte Aktion ausgeführt werden.
 Der Aufruf sieht wie folgt aus:
@@ -497,7 +497,7 @@ Switch-Anweisung um die verschiedenen Rechenoperationen zu unterscheiden.
 </description>
 
 <classes>
-<class name="TaschenRechner">
+<class Klassenname="TaschenRechner">
 import java.io.IOException;
 /**
 */
@@ -509,7 +509,7 @@ public class TaschenRechner {
 </classes>
 
 <tests>
-<test name="TaschenRechner_Test">
+<test Testname="TaschenRechner_Test">
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -524,7 +524,7 @@ public class TaschenRechner_Test{
 </exercise>
 
 
-<exercise name="Auto">
+<exercise Aufgabenname="Auto">
 <description>Objekt orientiertes Programmieren
 farbe - gibt dem Fahrzeug eine beliebige Farbe und gibt diese auch zurück
 raeder - legt die Anzahl der Räder des Fahrzeugs fest und gibt diese auch zurück
@@ -538,7 +538,7 @@ Diese Aufgabe wurde in Anlehnung an Aufgabe 5 der Probeklausur gestellt.
 </description>
 
 <classes>
-<class name="Auto">
+<class Klassenname="Auto">
 public class Auto implements Fahrzeug{
 
    //implementieren Sie hier ihre Lösung
@@ -556,7 +556,7 @@ public interface Fahrzeug{
 </interfaces>
 
 <tests>
-<test name="Auto_Test">
+<test Testname="Auto_Test">
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -571,13 +571,13 @@ public class Auto_Test{
 </exercise>
 
 
-<exercise name="NullstellenAnzahl">
+<exercise Aufgabenname="NullstellenAnzahl">
 <description>Gegeben sei eine quadratische Funktion der Form x²+px+q. Schreibe ein Programm anzahl, welches p und q als double übergeben bekommt und die Anzahl der reellen Nullstellen zurückgibt. Falls (p²/2²)-q kleiner als 0 ist soll ERROR ausgegeben werden.
 Hinweis: übergebe erst p und dann q
 </description>
 
 <classes>
-<class name="anzahl">
+<class Klassenname="anzahl">
 public class anzahl{
     public static void main(String[] args){
 	   //hier die Lösung implementieren
@@ -587,7 +587,7 @@ public class anzahl{
 </classes>
 
 <tests>
-<test name="Anzahl_Test">
+<test Testname="Anzahl_Test">
 import static org.junit.Assert.*;
 import org.junit.*;
 

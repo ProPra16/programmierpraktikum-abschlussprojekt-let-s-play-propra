@@ -4,8 +4,6 @@ import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import main.xmlparser.Aufgabe;
-import main.xmlparser.XMLParser;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import java.io.*;
@@ -51,9 +49,6 @@ public class Main extends Application {
                 line = reader.readLine();
             }
             startconfig = config.split("#");
-            for (String element : startconfig){
-                System.out.println(element);
-            }
         } catch (IOException e){
             System.err.println("Unable to find config.txt: " + e);
         }
@@ -66,7 +61,9 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         katalog = startconfig[1];
-        BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche.fxml"));
+
+        //BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche.fxml"));
+        BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche2.fxml"));
         ofController = new OberflaecheController();
         hauptfenster.setCenter(oberflaeche);
 

@@ -9,8 +9,9 @@ import vk.core.api.*;
 public class CodeTester {
 	private static JavaStringCompiler compiler;
 	private static String dateiname;
-	public static String testCode(String code){
-		dateiname = "Test";
+
+	public static String testCode(String code, String tabname){
+		dateiname = tabname;
 		CompilationUnit unit1 = new CompilationUnit(dateiname, code, false);
 		compiler = CompilerFactory.getCompiler(unit1);
 

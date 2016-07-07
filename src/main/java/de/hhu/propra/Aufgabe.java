@@ -1,4 +1,4 @@
-package main.xmlparser;
+package de.hhu.propra;
 
 public class Aufgabe {
 String Name;

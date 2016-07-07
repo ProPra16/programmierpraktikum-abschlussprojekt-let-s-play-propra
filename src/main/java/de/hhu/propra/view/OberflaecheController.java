@@ -1,10 +1,10 @@
 package de.hhu.propra.view;
 
-import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
 public class OberflaecheController implements OberflaecheControllerInterface{
@@ -25,8 +25,14 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	private Button testLeeren;
 	
 	@FXML
-	private TextArea codeTextArea;
-	
+	private TextArea codeTextMainArea;
+
+	@FXML
+	private TextArea codeTextKlasseArea;
+
+	@FXML
+	private TabPane codeTab;
+
 	@FXML
 	private Button codePruefen;
 	
@@ -45,15 +51,8 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	@FXML
 	protected void handleTestPruefen(){
 		
-		testTextArea.setEditable(false);
-		testTextArea.setStyle("-fx-control-inner-background: #555555");
-		testPruefen.setDisable(true);
-		testLeeren.setDisable(true);
-		
-		codeTextArea.setEditable(true);
-		codeTextArea.setStyle("");
-		codePruefen.setDisable(false);
-		codeLeeren.setDisable(false);
+		disableTestArea();
+        enableCodeArea();
 
 		wechsel = false;
 		for (int i=0;i<5;i++) {
@@ -80,31 +79,29 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	
 	@FXML
 	protected void handleCodeLeeren(){
-		codeTextArea.setText("");
+		codeTextMainArea.setText("");
 		logKonsole("Code geleert");
 	}
 	
 	@FXML
 	protected void handleCodePruefen() throws Exception{
 		wechsel = false;
-		logKonsole(CodeTester.testCode(codeTextArea.getText()));
+		//logKonsole();
+		//logKonsole(CodeTester.testCode(codeTextKlasseArea.getText()), );
+		//logKonsole(CodeTester.testCode(codeTextMainArea.getText()));
 	}
 	
 	@FXML
 	protected void handleCodePruefenUndWechsel() throws Exception {
 		wechsel = true;
-		logKonsole(CodeTester.testCode(codeTextArea.getText()));
+		//logKonsole(CodeTester.testCode(codeTextArea.getText()));
 	}
 
 	public void disableCodeArea() {
-		testTextArea.setEditable(true);
-		testTextArea.setStyle("");
-		testPruefen.setDisable(false);
-		testPruefenUndWechsel.setDisable(false);
-		testLeeren.setDisable(false);
-		
-		codeTextArea.setEditable(false);
-		codeTextArea.setStyle("-fx-control-inner-background: #555555");
+		enableTextArea();
+
+		codeTab.setDisable(true);
+		codeTab.setStyle("-fx-control-inner-background: #555555");
 		codePruefen.setDisable(true);
 		codePruefenUndWechsel.setDisable(true);
 		codeLeeren.setDisable(true);
@@ -120,10 +117,25 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 		enableCodeArea();
 //		logKonsole(CodeTester.testCode(codeTextArea.getText()));
 	}
-	
+
+
+    private void enableTextArea(){
+        testTextArea.setEditable(true);
+        testTextArea.setStyle("");
+        testPruefen.setDisable(false);
+        testPruefenUndWechsel.setDisable(false);
+        testLeeren.setDisable(false);
+    }
+
 	private void enableCodeArea(){
-		codeTextArea.setEditable(true);
-		codeTextArea.setStyle("");
+        codeTab.setDisable(false);
+
+		codeTextMainArea.setEditable(true);
+        codeTextKlasseArea.setEditable(true);
+
+		codeTextKlasseArea.setStyle("");
+        codeTextMainArea.setStyle("");
+
 		codePruefen.setDisable(false);
 		codePruefenUndWechsel.setDisable(false);
 		codeLeeren.setDisable(false);
@@ -142,7 +154,8 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	}
 
     public void beenden(){
-        CodeTester.writeExternalFile(codeTextArea.getText());
+        // CodeTester.writeExternalFile(codeTextMainArea.getText());
+        System.exit(20);
         // TODO: Katalog und Aufgabe in die Konfigdatei schreiben!
     }
 }

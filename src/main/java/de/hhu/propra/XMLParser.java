@@ -1,4 +1,4 @@
-package main.xmlparser;
+package de.hhu.propra;
 import java.io.File;
 import java.io.IOException;
 
