@@ -1,8 +1,6 @@
 package de.hhu.propra;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
+import java.io.*;
 
 import vk.core.api.*;
 
@@ -12,8 +10,8 @@ public class CodeTester {
 
 	public static String testCode(String code, String tabname){
 		dateiname = tabname;
-		CompilationUnit unit1 = new CompilationUnit(dateiname, code, false);
-		compiler = CompilerFactory.getCompiler(unit1);
+		CompilationUnit unit = new CompilationUnit(dateiname, code, false);
+		compiler = CompilerFactory.getCompiler(unit);
 
 		try {
 			compiler.compileAndRunTests();
@@ -22,18 +20,20 @@ public class CodeTester {
 		}
 
 		if (compiler.getCompilerResult().hasCompileErrors()){
-			return fehlerString(unit1);
+			return fehlerString(unit, tabname);
 		}
 
         writeExternalFile(code);
 
-		return externCompile();
+		return "Erfolgreich compiliert.";
 	}
+
+	/* Das funktioniert nicht ! Wieso nicht? Weiﬂ ich auch nicht !
 
 	private static String externCompile() {
 		String ergebnis = "";
 		try {
-			Process process = Runtime.getRuntime().exec("cmd /C start code\\temp_compile.cmd");
+			Process process = Runtime.getRuntime().exec("cmd /C start code/temp_compile2.bat");
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
 			String line = null;
@@ -41,18 +41,18 @@ public class CodeTester {
 				ergebnis += "\n" + line;
 			}
 		} catch (Exception e) {
-			return e.toString();
+			return "Fehler auﬂerhalb: " + e;
 		}
 		return ergebnis;
-	}
+	}*/
 
-	private static String fehlerString(CompilationUnit unit){
+	private static String fehlerString(CompilationUnit unit, String klasse){
 		String fehler = "";
-		fehler = "Dein Quellcode enthaelt Fehler";
+		fehler = "Klasse " + klasse + ": Dein Quellcode enthaelt Fehler";
 		for (CompileError error : compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(unit)){
-			fehler += "\nin Zeile " + error.getLineNumber() + ": " + error.getMessage() + ": \n";
-			fehler += error.getCodeLineContainingTheError() + "\n";
-			fehler += error.getMessage() + "\n";
+			fehler += "\n\tin Zeile " + error.getLineNumber() + ": " + error.getMessage() + ": \n\t";
+			fehler += error.getCodeLineContainingTheError() + "\n\t";
+			fehler += error.getMessage() + "\n\t";
 		}
 		return fehler;
 	}

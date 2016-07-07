@@ -1,6 +1,7 @@
 apply plugin: "java"
-apply plugin: "eclipse"
+apply plugin: "idea"
 apply plugin: "application"
+
 mainClassName ="de.hhu.propra.Main"
 repositories {
 	mavenCentral()
@@ -11,9 +12,11 @@ dependencies {
 	compile group: 'de.hhu.stups', name: 'virtual-kata-lib', version: '1.0.1'
 }
 
+
 jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 	manifest.attributes(
-		'Class-Path': configurations.runtime.files.collect { it.name }.join(' '),
+        'Class-Path': configurations.runtime.files.collect { it.name }.join(' '),
 		'Main-Class': 'de.hhu.propra.Main'
 	)
 }
