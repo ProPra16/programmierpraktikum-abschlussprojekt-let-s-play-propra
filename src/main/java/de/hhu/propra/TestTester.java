@@ -8,20 +8,26 @@ import vk.core.api.JavaStringCompiler;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Viktor on 06.07.2016.
  */
 import vk.core.api.*;
 public class TestTester {
-
+  private static int TestAnzahl=0;
+  private List<Test> Tests = new ArrayList<Test>();
   private static JavaStringCompiler Testcompiler;
-  //private static int TestAnzahl=0;
-  public static String derTest(String code,int TestAnzahl) {
-    String dateiname = "Test";
+  private static String testname;
+  public static String TesteTest(String code,int TestAnzahl, String tabname) {
+
     String ergebnis="";
     for (int TestNr = 0; TestNr <= TestAnzahl; TestNr++) {
-      CompilationUnit aktuellerTest = new CompilationUnit(dateiname, code, true);
+      //Tests.add(TestNr, new Test(DateiScanner));
+
+      testname = tabname;
+      CompilationUnit aktuellerTest = new CompilationUnit(testname, code, true);
       Testcompiler = CompilerFactory.getCompiler(aktuellerTest);
 
       try {
@@ -35,7 +41,7 @@ public class TestTester {
       }
 
       try {
-        FileWriter writer = new FileWriter("temp/" + dateiname + ".java");
+        FileWriter writer = new FileWriter("temp/" + testname + ".java");
         writer.write(code);
         writer.close();
       } catch (Exception e) {
@@ -43,19 +49,6 @@ public class TestTester {
       }
       ergebnis = "Tests werden durchgeführt...";
 
-      /*try {
-        Process process = Runtime.getRuntime().exec("cmd /C start temp\\temp_compile.cmd");
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(process.getInputStream()));
-        String line = null;
-        while ((line = in.readLine()) != null) {
-          ergebnis += "\n" + line;
-        }
-      }
-      catch (Exception e)
-      {
-        return e.toString();
-      }*/
     }
     return (ergebnis);
   }
@@ -71,4 +64,6 @@ public class TestTester {
     }
     return fehler;
   }
+
+
 }

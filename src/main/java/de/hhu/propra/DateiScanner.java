@@ -1,14 +1,19 @@
 package de.hhu.propra;
 
         import java.io.*;
+        import java.net.URISyntaxException;
 
 /**
  * Created by Viktor on 04.07.2016.
  */
 public class DateiScanner {
-  public DateiScanner(String DieDatei){
+  public static String Scannen(String DieDatei) throws URISyntaxException {
+    String RueckgabeString="";
+    String path = DateiScanner.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+    path=path.substring(1,path.lastIndexOf("/"));
+    path=path+"/";
     try {
-      File TempDatei = new File("DieDatei");
+      File TempDatei = new File(path+DieDatei+".txt");
       FileReader leseRatte= new FileReader(TempDatei);
       BufferedReader buffLeser= new BufferedReader(leseRatte);
       StringBuffer strBuff= new StringBuffer();
@@ -18,10 +23,11 @@ public class DateiScanner {
         strBuff.append("\n");
       }
       leseRatte.close();
-      System.out.println(strBuff.toString());
+      RueckgabeString=(strBuff.toString());
     } catch (IOException e) {
       e.printStackTrace();
     }
+    return RueckgabeString;
   }
 }
 
