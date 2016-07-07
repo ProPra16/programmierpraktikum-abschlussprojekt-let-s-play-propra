@@ -1,11 +1,11 @@
 package de.hhu.propra.view;
 
+import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+
+import java.util.List;
 
 public class OberflaecheController implements OberflaecheControllerInterface{
 
@@ -73,7 +73,6 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	@FXML
 	protected void handleTestLeeren(){
 		testTextArea.setText("");
-
 		logKonsole("Test geleert");
 	}
 	
@@ -86,9 +85,16 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	@FXML
 	protected void handleCodePruefen() throws Exception{
 		wechsel = false;
-		//logKonsole();
-		//logKonsole(CodeTester.testCode(codeTextKlasseArea.getText()), );
-		//logKonsole(CodeTester.testCode(codeTextMainArea.getText()));
+        konsoleTextArea.setText("");
+		List<Tab> tabs  = codeTab.getTabs();
+        String code = "";
+        for(Tab tab : tabs){
+            TextArea codeArea = (TextArea) tab.getContent();
+            code += "\n//NEUE KLASSSE\n";
+            code += codeArea.getText();
+        }
+
+        appendKonsoleText(CodeTester.testCode(code, tabs.get(0).getText()));
 	}
 	
 	@FXML
@@ -146,7 +152,7 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	}
 
 	public void appendKonsoleText(String message) {
-		konsoleTextArea.appendText(message);
+		konsoleTextArea.setText(konsoleTextArea.getText() + "\n" + message);
 	}
 	
 	public void setMain(Main main){

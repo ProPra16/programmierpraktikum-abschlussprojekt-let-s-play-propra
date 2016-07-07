@@ -1,5 +1,6 @@
 package de.hhu.propra;
 
+import de.hhu.propra.model.Aufgabe;
 import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
