@@ -12,6 +12,7 @@ public class TestWriter {
     String path = TestWriter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
     path=path.substring(1,path.lastIndexOf("/"));
     path=path+"/";
+
     try {
       FileWriter writer = new FileWriter(path+Dateiname + ".txt");
       writer.write("test\n"+Dateiinhalt);

@@ -38,14 +38,14 @@ public class CodeTester extends SimpleStringProperty {
 		String ergebnis = "";
 		try {
             String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            path = path.substring(1,path.lastIndexOf("/"));
-            path = path + "/code/";
+            path = path.substring (0 ,path.lastIndexOf("/"));
+            path = path.substring (0, path.lastIndexOf("/"));
+            path = path.substring (0, path.lastIndexOf("/"));
+            path = path + "/libs/code/";
 
 			Process process = Runtime.getRuntime().exec(path + "temp_compile.bat");
-            // process.waitFor();
 
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(process.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
 				ergebnis += line + "\n";
@@ -70,8 +70,10 @@ public class CodeTester extends SimpleStringProperty {
     public void writeExternalFile(String code) {
 		try {
 			String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			path = path.substring(1,path.lastIndexOf("/"));
-			path = path + "/code/";
+			path = path.substring(0,path.lastIndexOf("/"));
+            path = path.substring(0,path.lastIndexOf("/"));
+            path = path.substring(0,path.lastIndexOf("/"));
+			path = path + "/libs/code/";
 
             FileWriter writer = new FileWriter(path + dateiname + ".java");
             writer.write(code);

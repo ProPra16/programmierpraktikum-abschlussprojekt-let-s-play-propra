@@ -49,8 +49,11 @@ public class Main extends Application {
 
         try {
             String path = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            path=path.substring(1,path.lastIndexOf("/"));
-            path=path+"/config/";
+            path = path.substring (0, path.lastIndexOf("/"));
+            path = path.substring (0, path.lastIndexOf("/"));
+            path = path.substring (0, path.lastIndexOf("/"));
+
+            path = path + "/libs/config/";
 
             BufferedReader reader = new BufferedReader(new FileReader(path + "config.txt"));
             String line = reader.readLine();
