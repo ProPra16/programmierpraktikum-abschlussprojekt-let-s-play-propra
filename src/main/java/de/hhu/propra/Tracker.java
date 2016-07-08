@@ -1,5 +1,6 @@
 package de.hhu.propra;
 
+import de.hhu.propra.model.Analyse;
 import de.hhu.propra.view.OberflaecheController;
 
 import java.io.FileWriter;
@@ -16,8 +17,9 @@ public class Tracker {
     private long millisBeiLetztemWechsel;
     private long millisSeitStart;
     private long millisBeiStart;
-    private long millisInGreen;
-    private long millisInRed;
+    private long millisInGreen = 35;
+    private long millisInRed = 25;
+    private Analyse analyse;
 
     public Tracker(OberflaecheController ofController){
         this.ofController = ofController;
@@ -38,10 +40,13 @@ public class Tracker {
          millisBeiLetztemWechsel = aktuelleMillis;
     }
 
-    public void bearbeitungBeenden(){
+    public void analyseErstellen(){
         millisSeitStart = System.currentTimeMillis() - millisBeiStart;
-        Analysierer analysierer = new Analysierer(millisSeitStart, millisInGreen, millisInRed);
-        // analysierer
+        analyse = new Analyse(millisSeitStart, millisInGreen, millisInRed);
+    }
+
+    public Analyse getAnalyse(){
+        return this.analyse;
     }
 
     public void log(String changes){
@@ -49,10 +54,13 @@ public class Tracker {
         String uhrzeit = sdf.format(new Date());
 
         try{
-            FileWriter writer = new FileWriter("");
+            String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            path = path.substring(1,path.lastIndexOf("/"));
+            path = path + "/log/";
+            FileWriter writer = new FileWriter(path + "log.txt");
             writer.append(uhrzeit + ": " + changes);
             writer.close();
-        } catch (IOException e){
+        } catch (Exception e){
             ofController.appendKonsoleText("Tracking fehlgeschlagen: " + e);
         }
     }

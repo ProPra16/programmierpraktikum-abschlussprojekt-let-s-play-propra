@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.BorderPane?>
-
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller = "de.hhu.propra.view.HauptfensterController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Menü">
+          <Menu text="Menü">
             <items>
-              <MenuItem mnemonicParsing="false" text="Neue Übung" onAction="#handleMenueNeueUebung"/>
-                  <MenuItem mnemonicParsing="false" text="Programm beenden" onAction="#handleMenueClose"/>
+              <MenuItem text="Neue Übung" onAction="#handleMenueNeueUebung"/>
+                  <MenuItem text="Programm beenden" onAction="#handleMenueClose"/>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Katalog">
             <items>
-              <MenuItem mnemonicParsing="false" text="Katalog ändern" onAction="#handleMenueKatalogAendern" />
-                  <MenuItem mnemonicParsing="false" text="Aufgabe ändern" onAction="#handleMenueAufgabeAendern"/>
+              <MenuItem text="Katalog ändern" onAction="#handleMenueKatalogAendern" />
+                  <MenuItem text="Aufgabe ändern" onAction="#handleMenueAufgabeAendern"/>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Hilfe" onAction="#handleMenueHilfe">
+          <Menu text="Tracking">
+            <items>
+                <MenuItem text="Phasenanalyse anzeigen" onAction="#handleAnalyse"/>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Hilfe">
             <items>
               <MenuItem mnemonicParsing="false" text="Aufgabenstellung" onAction="#handleMenueAufgabenstellung" />
             </items>

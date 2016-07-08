@@ -1,9 +1,13 @@
 package de.hhu.propra;
 
+import de.hhu.propra.model.Analyse;
 import de.hhu.propra.model.Aufgabe;
+import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +18,8 @@ public class Main extends Application {
 	private Stage primaryStage;
     private BorderPane hauptfenster;
     private OberflaecheController ofController;
+    private HauptfensterController hfController;
+    private static Tracker tracker;
     private static String[] startconfig;
     private String katalog;
 	private static int KATALOG = 1;
@@ -42,8 +48,11 @@ public class Main extends Application {
         String config = "";
 
         try {
-            InputStream is = Main.class.getResourceAsStream("/config/config.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String path = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            path=path.substring(1,path.lastIndexOf("/"));
+            path=path+"/config/";
+
+            BufferedReader reader = new BufferedReader(new FileReader(path + "config.txt"));
             String line = reader.readLine();
 
             while (line != null){
@@ -58,7 +67,9 @@ public class Main extends Application {
 	}
 
     private void initHauptprogramm() throws IOException {
+
         hauptfenster = FXMLLoader.load(getClass().getResource("/fxml/Hauptfenster.fxml"));
+        hfController = new HauptfensterController();
         Scene scene = new Scene(hauptfenster);
 
         primaryStage.setScene(scene);
@@ -69,7 +80,30 @@ public class Main extends Application {
         ofController = new OberflaecheController();
         hauptfenster.setCenter(oberflaeche);
 
+        tracker = new Tracker(ofController);
+        hfController.setMain(this);
+
         primaryStage.show();
+    }
+
+    public void showAnalysePopup() {
+        try {
+            BorderPane analysePopup = FXMLLoader.load(getClass().getResource("/fxml/AnalysePopup.fxml"));
+            tracker.analyseErstellen();
+            analysePopup.setCenter(tracker.getAnalyse().getChart());
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Phasenanalyse");
+            popupStage.initOwner(primaryStage);
+            popupStage.initModality(Modality.NONE);
+
+            Scene scene = new Scene(analysePopup);
+            popupStage.setScene(scene);
+
+            popupStage.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void initialStart(){

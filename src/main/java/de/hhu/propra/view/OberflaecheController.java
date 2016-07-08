@@ -2,15 +2,20 @@ package de.hhu.propra.view;
 
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
+import de.hhu.propra.Tracker;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class OberflaecheController implements OberflaecheControllerInterface{
+public class OberflaecheController implements OberflaecheControllerInterface, Initializable {
 
 	private Main main;
 	public static boolean wechsel = false;
+	private CodeTester codeTester;
 	
 	@FXML
 	private TextArea testTextArea;
@@ -47,10 +52,16 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	
 	@FXML
 	private ListView<String> fehlgeschlageneTests;
-	
+
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle){
+		this.codeTester = new CodeTester();
+		konsoleTextArea.textProperty().bind(codeTester);
+	}
+
 	@FXML
 	protected void handleTestPruefen(){
-		
+
 		disableTestArea();
         enableCodeArea();
 
@@ -85,7 +96,6 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 	@FXML
 	protected void handleCodePruefen() throws Exception{
 		wechsel = false;
-        konsoleTextArea.setText("");
 		List<Tab> tabs  = codeTab.getTabs();
         String code = "";
         for(Tab tab : tabs){
@@ -93,14 +103,12 @@ public class OberflaecheController implements OberflaecheControllerInterface{
             code += "\n//NEUE KLASSSE\n";
             code += codeArea.getText();
         }
-
-        appendKonsoleText(CodeTester.testCode(code, tabs.get(0).getText()));
+        codeTester.testCode(code, tabs.get(0).getText());
 	}
 	
 	@FXML
 	protected void handleCodePruefenUndWechsel() throws Exception {
-		wechsel = true;
-		//logKonsole(CodeTester.testCode(codeTextArea.getText()));
+
 	}
 
 	public void disableCodeArea() {
@@ -121,7 +129,6 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 		testLeeren.setDisable(true);
 		
 		enableCodeArea();
-//		logKonsole(CodeTester.testCode(codeTextArea.getText()));
 	}
 
 
@@ -161,6 +168,7 @@ public class OberflaecheController implements OberflaecheControllerInterface{
 
     public void beenden(){
         // CodeTester.writeExternalFile(codeTextMainArea.getText());
+		// codeTester.speichern();
         System.exit(20);
         // TODO: Katalog und Aufgabe in die Konfigdatei schreiben!
     }

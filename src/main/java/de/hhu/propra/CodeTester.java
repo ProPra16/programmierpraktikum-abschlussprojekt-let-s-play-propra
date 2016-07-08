@@ -1,14 +1,17 @@
 package de.hhu.propra;
 
 import java.io.*;
+import java.net.URISyntaxException;
 
+import javafx.beans.property.SimpleStringProperty;
 import vk.core.api.*;
 
-public class CodeTester {
-	private static JavaStringCompiler compiler;
-	private static String dateiname;
+public class CodeTester extends SimpleStringProperty {
+	private JavaStringCompiler compiler;
+	private String dateiname;
 
-	public static String testCode(String code, String tabname){
+	public void testCode(String code, String tabname){
+        set("");
 		dateiname = tabname;
 		CompilationUnit unit = new CompilationUnit(dateiname, code, false);
 		compiler = CompilerFactory.getCompiler(unit);
@@ -16,37 +19,44 @@ public class CodeTester {
 		try {
 			compiler.compileAndRunTests();
 		} catch (Exception e){
-			return ("Fehler beim Codeausfuehren: " + e.toString());
+            set("Fehler beim Codeausfuehren: " + e);
+			return;
 		}
 
 		if (compiler.getCompilerResult().hasCompileErrors()){
-			return fehlerString(unit, tabname);
+			set(fehlerString(unit, tabname));
+            return;
 		}
 
         writeExternalFile(code);
-
-		return "Erfolgreich compiliert.";
+        set(externCompile());
 	}
 
-	/* Das funktioniert nicht ! Wieso nicht? Weiﬂ ich auch nicht !
+	// Das funktioniert nicht ! Wieso nicht? Weiﬂ ich auch nicht!
 
 	private static String externCompile() {
 		String ergebnis = "";
 		try {
-			Process process = Runtime.getRuntime().exec("cmd /C start code/temp_compile2.bat");
+            String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            path = path.substring(1,path.lastIndexOf("/"));
+            path = path + "/code/";
+
+			Process process = Runtime.getRuntime().exec(path + "temp_compile.bat");
+            // process.waitFor();
+
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
 			String line = null;
 			while ((line = in.readLine()) != null) {
-				ergebnis += "\n" + line;
+				ergebnis += line + "\n";
 			}
 		} catch (Exception e) {
 			return "Fehler auﬂerhalb: " + e;
 		}
 		return ergebnis;
-	}*/
+	}
 
-	private static String fehlerString(CompilationUnit unit, String klasse){
+	private String fehlerString(CompilationUnit unit, String klasse){
 		String fehler = "";
 		fehler = "Klasse " + klasse + ": Dein Quellcode enthaelt Fehler";
 		for (CompileError error : compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(unit)){
@@ -57,13 +67,21 @@ public class CodeTester {
 		return fehler;
 	}
 
-    public static void writeExternalFile(String code){
-        try {
-            FileWriter writer = new FileWriter("code/" + dateiname + ".java");
+    public void writeExternalFile(String code) {
+		try {
+			String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+			path = path.substring(1,path.lastIndexOf("/"));
+			path = path + "/code/";
+
+            FileWriter writer = new FileWriter(path + dateiname + ".java");
             writer.write(code);
             writer.close();
         } catch (Exception e) {
-            System.err.println("Konnte keine externen Dateien erstellen: " + e);
+            set("Konnte keine externen Dateien erstellen: " + e);
         }
+    }
+
+    public void speichern(){
+
     }
 }
