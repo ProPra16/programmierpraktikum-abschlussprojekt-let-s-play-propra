@@ -178,7 +178,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel=true;
         if (test) {
             codeTester.phasenWechselMerken("red");
-			Image image = new Image("test.png");
+			Image image = new Image("code.png");
 			phasenIcon.setImage(image);
             setButtonTextCode();
             disableTestArea();
@@ -186,14 +186,14 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             code = true;
         }
         else if (code) {
-			Image image = new Image("code.png");
+			Image image = new Image("refactor.png");
 			phasenIcon.setImage(image);
             codeTester.phasenWechselMerken("green");
             code=false;
             //TODO: wechseln zu refactor wenn code okay
         }
         else {
-			Image image = new Image("refactor.png");
+			Image image = new Image("test.png");
 			phasenIcon.setImage(image);
             disableCodeArea();
             setButtonTextTest();
