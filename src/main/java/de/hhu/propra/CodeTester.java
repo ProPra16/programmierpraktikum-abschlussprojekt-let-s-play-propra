@@ -7,7 +7,9 @@ import javafx.beans.property.SimpleStringProperty;
 import vk.core.api.*;
 
 public class CodeTester extends SimpleStringProperty {
+    private String letzterStandCode = "";
 	private JavaStringCompiler compiler;
+    private static Tracker tracker;
 	private String dateiname;
 
 	public void testCode(String code, String tabname){
@@ -30,19 +32,18 @@ public class CodeTester extends SimpleStringProperty {
 
         writeExternalFile(code);
         set(externCompile());
+
+        boolean trackFehler = tracker.ermittleNeuerung(code, letzterStandCode);
+        if (trackFehler){
+            set("Fehler beim Tracking");
+        }
+        letzterStandCode = code;
 	}
 
-	// Das funktioniert nicht ! Wieso nicht? Weiﬂ ich auch nicht!
-
-	private static String externCompile() {
+	private String externCompile() {
 		String ergebnis = "";
 		try {
-            String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            path = path.substring (0 ,path.lastIndexOf("/"));
-            path = path.substring (0, path.lastIndexOf("/"));
-            path = path.substring (0, path.lastIndexOf("/"));
-            path = path + "/libs/code/";
-
+			String path = getCorrectPath() + "/libs/code/";
 			Process process = Runtime.getRuntime().exec(path + "temp_compile.bat");
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -69,11 +70,7 @@ public class CodeTester extends SimpleStringProperty {
 
     public void writeExternalFile(String code) {
 		try {
-			String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			path = path.substring(0,path.lastIndexOf("/"));
-            path = path.substring(0,path.lastIndexOf("/"));
-            path = path.substring(0,path.lastIndexOf("/"));
-			path = path + "/libs/code/";
+			String path = getCorrectPath() + "/libs/code/";
 
             FileWriter writer = new FileWriter(path + dateiname + ".java");
             writer.write(code);
@@ -85,5 +82,19 @@ public class CodeTester extends SimpleStringProperty {
 
     public void speichern(){
 
+    }
+
+	public String getCorrectPath() throws URISyntaxException {
+		String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		path = path.substring(0,path.lastIndexOf("/"));
+		path = path.substring(0,path.lastIndexOf("/"));
+		path = path.substring(0,path.lastIndexOf("/"));
+
+		return path;
+	}
+
+
+    public void setTracker(Tracker tracker){
+        this.tracker = tracker;
     }
 }

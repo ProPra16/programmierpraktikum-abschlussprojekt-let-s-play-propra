@@ -3,13 +3,10 @@ package de.hhu.propra.view;
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
 import de.hhu.propra.Tracker;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.List;
@@ -19,6 +16,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	private Main main;
 	public static boolean wechsel = false;
+
 	private boolean test = true;
 	private boolean code = false;
 	private CodeTester codeTester;
@@ -29,15 +27,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	@FXML
 	private TextArea testTextArea;
 	
-	//@FXML
-	//private Button testPruefen;
-	
-	//@FXML
-	//private Button testPruefenUndWechsel;
-	
-	//@FXML
-	//private Button testLeeren;
-	
 	@FXML
 	private TextArea codeTextMainArea;
 
@@ -46,15 +35,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	@FXML
 	private TabPane codeTab;
-
-	//@FXML
-	//private Button codePruefen;
-	
-	//@FXML
-	//private Button codePruefenUndWechsel;
-	
-	//@FXML
-	//private Button codeLeeren;
 	
 	@FXML
 	private TextArea konsoleTextArea;
@@ -68,58 +48,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		konsoleTextArea.textProperty().bind(codeTester);
 		setWechselButtonText();
 	}
-
-	/*@FXML
-	protected void handleTestPruefen(){
-
-		disableTestArea();
-        enableCodeArea();
-
-		wechsel = false;
-		for (int i=0;i<5;i++) {
-			fehlgeschlageneTests.getItems().add(i+"");
-		}
-	}
-	
-	@FXML
-	protected void handleTestPruefenUndWechsel(){
-		disableTestArea();
-		wechsel = true;
-
-		for (int i=0;i<5;i++) {
-			fehlgeschlageneTests.getItems().add(i+"");
-		}
-	}
-	
-	@FXML
-	protected void handleTestLeeren(){
-		testTextArea.setText("");
-		logKonsole("Test geleert");
-	}
-	
-	@FXML
-	protected void handleCodeLeeren(){
-		codeTextMainArea.setText("");
-		logKonsole("Code geleert");
-	}
-	
-	@FXML
-	protected void handleCodePruefen() throws Exception{
-		wechsel = false;
-		List<Tab> tabs  = codeTab.getTabs();
-        String code = "";
-        for(Tab tab : tabs){
-            TextArea codeArea = (TextArea) tab.getContent();
-            code += "\n//NEUE KLASSSE\n";
-            code += codeArea.getText();
-        }
-        codeTester.testCode(code, tabs.get(0).getText());
-	}
-	
-	@FXML
-	protected void handleCodePruefenUndWechsel() throws Exception {
-
-	}*/
 
 	public void setWechselButtonText(){
 		Label label = new Label("Phase wechseln");
@@ -137,17 +65,11 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			codeArea.setStyle("-fx-control-inner-background: #555555");
 			codeArea.setEditable(false);
 		}
-		/*codePruefen.setDisable(true);
-		codePruefenUndWechsel.setDisable(true);
-		codeLeeren.setDisable(true);*/
 	}
 
 	public void disableTestArea() {
 		testTextArea.setEditable(false);
 		testTextArea.setStyle("-fx-control-inner-background: #555555");
-		/*testPruefen.setDisable(true);
-		testPruefenUndWechsel.setDisable(true);
-		testLeeren.setDisable(true);*/
 		
 		enableCodeArea();
 	}
@@ -156,9 +78,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     private void enableTextArea(){
         testTextArea.setEditable(true);
         testTextArea.setStyle("");
-        /*testPruefen.setDisable(false);
-        testPruefenUndWechsel.setDisable(false);
-        testLeeren.setDisable(false);*/
     }
 
 	private void enableCodeArea(){
@@ -169,10 +88,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 		codeTextKlasseArea.setStyle("");
         codeTextMainArea.setStyle("");
-
-		/*codePruefen.setDisable(false);
-		codePruefenUndWechsel.setDisable(false);
-		codeLeeren.setDisable(false);*/
 	}
 	
 	public void logKonsole (String message){
@@ -233,15 +148,19 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	public void handleLeeren() {
 		wechsel = false;
-		if(test){
+		if (test) {
 			// TODO auf Anfang zurücksetzen, e.g. testTextArea.setText(test)
 			testTextArea.setText("");
 		} else {
 			// TODO auf Anfang zurücksetzen, e.g. codeTextArea.setText(code)
-			for(Tab tab : codeTab.getTabs()){
+			for (Tab tab : codeTab.getTabs()) {
 				TextArea codeArea = (TextArea) tab.getContent();
 				codeArea.setText("");
 			}
 		}
+	}
+
+	public void reicheTrackerWeiter (Tracker tracker){
+		codeTester.setTracker(tracker);
 	}
 }
