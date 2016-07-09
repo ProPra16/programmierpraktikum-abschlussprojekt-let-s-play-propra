@@ -78,8 +78,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         katalog = startconfig[1];
 
-        //BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche.fxml"));
-        BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche2.fxml"));
+        BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche.fxml"));
+        //BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche2.fxml"));
         ofController = new OberflaecheController();
         hauptfenster.setCenter(oberflaeche);
 
