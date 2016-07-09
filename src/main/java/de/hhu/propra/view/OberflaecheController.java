@@ -27,11 +27,11 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	@FXML
 	private TextArea testTextArea;
 	
-	@FXML
+	/*@FXML
 	private TextArea codeTextMainArea;
 
 	@FXML
-	private TextArea codeTextKlasseArea;
+	private TextArea codeTextKlasseArea;*/
 
 	@FXML
 	private TabPane codeTab;
@@ -47,6 +47,20 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		this.codeTester = new CodeTester();
 		konsoleTextArea.textProperty().bind(codeTester);
 		setWechselButtonText();
+		fuelleCodeTab();
+	}
+
+	public void fuelleCodeTab(){
+		Tab testMain = new Tab("TestMain");
+		TextArea codeTextMainArea = new TextArea("code");
+		testMain.setContent(codeTextMainArea);
+
+		Tab testClass = new Tab("TestKlasse");
+		TextArea codeTextKlasseArea = new TextArea("code");
+		testClass.setContent(codeTextKlasseArea);
+
+		codeTab.getTabs().add(testMain);
+		codeTab.getTabs().add(testClass);
 	}
 
 	public void setWechselButtonText(){
@@ -82,12 +96,16 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	private void enableCodeArea(){
         codeTab.setDisable(false);
-
-		codeTextMainArea.setEditable(true);
+		for (Tab tab : codeTab.getTabs()) {
+			TextArea codeArea = (TextArea) tab.getContent();
+			codeArea.setEditable(true);
+			codeArea.setStyle("");
+		}
+		/*codeTextMainArea.setEditable(true);
         codeTextKlasseArea.setEditable(true);
 
 		codeTextKlasseArea.setStyle("");
-        codeTextMainArea.setStyle("");
+        codeTextMainArea.setStyle("");*/
 	}
 	
 	public void logKonsole (String message){

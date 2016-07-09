@@ -41,8 +41,8 @@
 						</HBox>
 					</top>
 					<center>
-						<TabPane fx:id="codeTab" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" maxWidth="Infinity" disable="true">
-							<tabs>
+						<TabPane fx:id="codeTab" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" maxWidth="Infinity" disable="true"/>
+							<!--<tabs>
 								<Tab text="TestMain">
 									<content>
 										<TextArea fx:id = "codeTextMainArea" text = "code" editable="false" style="-fx-control-inner-background: #555555" />
@@ -54,7 +54,7 @@
 									</content>
 								</Tab>
 							</tabs>
-						</TabPane>
+						</TabPane>-->
 					</center>
 				</BorderPane>
 				<VBox spacing="10">
