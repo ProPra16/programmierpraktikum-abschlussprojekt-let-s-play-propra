@@ -19,8 +19,8 @@ public class Tracker {
     private long millisBeiLetztemWechsel;
     private long millisSeitStart;
     private long millisBeiStart;
-    private long millisInGreen = 35;
-    private long millisInRed = 25;
+    private long millisInGreen = 0;
+    private long millisInRed = 0;
     private Analyse analyse;
 
     public Tracker(OberflaecheController ofController){
@@ -42,7 +42,8 @@ public class Tracker {
          millisBeiLetztemWechsel = aktuelleMillis;
     }
 
-    public void analyseErstellen(){
+    public void analyseErstellen(String von){
+        phasenWechselMerken(von);
         millisSeitStart = System.currentTimeMillis() - millisBeiStart;
         analyse = new Analyse(millisSeitStart, millisInGreen, millisInRed);
     }

@@ -93,6 +93,9 @@ public class CodeTester extends SimpleStringProperty {
 		return path;
 	}
 
+	public void phasenWechselMerken(String von){
+		tracker.phasenWechselMerken(von);
+	}
 
     public void setTracker(Tracker tracker){
         this.tracker = tracker;

@@ -93,7 +93,7 @@ public class Main extends Application {
     public void showAnalysePopup() {
         try {
             BorderPane analysePopup = FXMLLoader.load(getClass().getResource("/fxml/AnalysePopup.fxml"));
-            tracker.analyseErstellen();
+            tracker.analyseErstellen(ofController);
             analysePopup.setCenter(tracker.getAnalyse().getChart());
 
             Stage popupStage = new Stage();
