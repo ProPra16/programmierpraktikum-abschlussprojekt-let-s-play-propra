@@ -17,12 +17,18 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	private Main main;
 	public static boolean wechsel = false;
 
-	private static boolean test = true;
-	private static boolean code = false;
+	private boolean test = true;
+	private boolean code = false;
 	private static CodeTester codeTester;
 
 	@FXML
 	private Button phaseWechseln;
+
+	@FXML
+	private Button pruefen;
+
+	@FXML
+	private Button leeren;
 
 	@FXML
 	private TextArea testTextArea;
@@ -46,7 +52,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	public void initialize(URL url, ResourceBundle resourceBundle){
 		this.codeTester = new CodeTester();
 		konsoleTextArea.textProperty().bind(codeTester);
-		setWechselButtonText();
+		setButtonTextTest();
 		fuelleCodeTab();
 	}
 
@@ -63,10 +69,32 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		codeTab.getTabs().add(testClass);
 	}
 
-	public void setWechselButtonText(){
-		Label label = new Label("Phase wechseln");
-		label.setRotate(-90);
-		phaseWechseln.setGraphic(new Group(label));
+	public void setButtonTextTest(){
+		Label phaseLabel = new Label("Phase wechseln");
+		phaseLabel.setRotate(-90);
+		phaseWechseln.setGraphic(new Group(phaseLabel));
+
+		Label pruefenLabel = new Label("Test prüfen");
+		pruefenLabel.setRotate(-90);
+		pruefen.setGraphic(new Group(pruefenLabel));
+
+		Label leerenLabel = new Label("Test leeren");
+		leerenLabel.setRotate(-90);
+		leeren.setGraphic(new Group(leerenLabel));
+	}
+
+	public void setButtonTextCode(){
+		Label phaseLabel = new Label("Phase wechseln");
+		phaseLabel.setRotate(90);
+		phaseWechseln.setGraphic(new Group(phaseLabel));
+
+		Label pruefenLabel = new Label("Code prüfen");
+		pruefenLabel.setRotate(90);
+		pruefen.setGraphic(new Group(pruefenLabel));
+
+		Label leerenLabel = new Label("Code leeren");
+		leerenLabel.setRotate(90);
+		leeren.setGraphic(new Group(leerenLabel));
 	}
 
 	public void disableCodeArea() {
@@ -158,6 +186,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel=true;
         if (test) {
             codeTester.phasenWechselMerken("red");
+            setButtonTextCode();
             disableTestArea();
             test = false;
             code = true;
@@ -169,23 +198,24 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         }
         else {
             disableCodeArea();
+            setButtonTextTest();
             test=true;
         }
     }
 
-    public void handleLeeren() {
-        wechsel = false;
-        if (test) {
-            // TODO auf Anfang zurücksetzen, e.g. testTextArea.setText(test)
-            testTextArea.setText("");
-        } else {
-            // TODO auf Anfang zurücksetzen, e.g. codeTextArea.setText(code)
-            for (Tab tab : codeTab.getTabs()) {
-                TextArea codeArea = (TextArea) tab.getContent();
-                codeArea.setText("");
-            }
-        }
-    }
+	public void handleLeeren() {
+		wechsel = false;
+		if (test) {
+			// TODO auf Anfang zurücksetzen, e.g. testTextArea.setText(test)
+			testTextArea.setText("");
+		} else {
+			// TODO auf Anfang zurücksetzen, e.g. codeTextArea.setText(code)
+			for (Tab tab : codeTab.getTabs()) {
+				TextArea codeArea = (TextArea) tab.getContent();
+				codeArea.setText("");
+			}
+		}
+	}
 
     public void reicheTrackerWeiter (Tracker tracker){
         codeTester.setTracker(tracker);
