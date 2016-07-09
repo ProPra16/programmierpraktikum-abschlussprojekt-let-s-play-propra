@@ -85,6 +85,7 @@ public class Main extends Application {
 
         tracker = new Tracker(ofController);
         hfController.setMain(this);
+        ofController.reicheTrackerWeiter(tracker);
 
         primaryStage.show();
     }

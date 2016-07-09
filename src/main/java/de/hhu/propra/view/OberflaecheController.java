@@ -15,7 +15,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	private Main main;
 	public static boolean wechsel = false;
-	private CodeTester codeTester;
+	private static CodeTester codeTester;
 	
 	@FXML
 	private TextArea testTextArea;
@@ -98,10 +98,17 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		wechsel = false;
 		List<Tab> tabs  = codeTab.getTabs();
         String code = "";
+        int i = 0;
+        TextArea codeArea;
         for(Tab tab : tabs){
-            TextArea codeArea = (TextArea) tab.getContent();
-            code += "\n//NEUE KLASSSE\n";
-            code += codeArea.getText();
+            codeArea = (TextArea) tab.getContent();
+            if (i < tabs.size()-1){
+                code += "//Neue Klasse";
+            }
+            if (codeArea.getText().trim().length() > 0){
+                code += "\n" + codeArea.getText() + "\n";
+            }
+            i++;
         }
         codeTester.testCode(code, tabs.get(0).getText());
 	}
@@ -172,4 +179,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         System.exit(20);
         // TODO: Katalog und Aufgabe in die Konfigdatei schreiben!
     }
+
+	public void reicheTrackerWeiter (Tracker tracker){
+		codeTester.setTracker(tracker);
+	}
 }
