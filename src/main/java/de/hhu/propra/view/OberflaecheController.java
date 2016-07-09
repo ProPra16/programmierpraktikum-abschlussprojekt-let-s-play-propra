@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.List;
@@ -31,13 +33,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	private Button leeren;
 
 	@FXML
-	private TextArea testTextArea;
-	
-	/*@FXML
-	private TextArea codeTextMainArea;
+	private ImageView phasenIcon;
 
 	@FXML
-	private TextArea codeTextKlasseArea;*/
+	private TextArea testTextArea;
 
 	@FXML
 	private TabPane codeTab;
@@ -54,6 +53,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		konsoleTextArea.textProperty().bind(codeTester);
 		setButtonTextTest();
 		fuelleCodeTab();
+		Image image = new Image("test.png");
+		phasenIcon.setImage(image);
 	}
 
 	public void fuelleCodeTab(){
@@ -99,9 +100,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	public void disableCodeArea() {
 		enableTextArea();
-
-		//codeTab.setDisable(true);
-		//codeTab.setStyle("-fx-control-inner-background: #555555");
 		for(Tab tab : codeTab.getTabs()){
 			TextArea codeArea = (TextArea) tab.getContent();
 			codeArea.setStyle("-fx-control-inner-background: #555555");
@@ -112,7 +110,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	public void disableTestArea() {
 		testTextArea.setEditable(false);
 		testTextArea.setStyle("-fx-control-inner-background: #555555");
-		
 		enableCodeArea();
 	}
 
@@ -129,11 +126,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			codeArea.setEditable(true);
 			codeArea.setStyle("");
 		}
-		/*codeTextMainArea.setEditable(true);
-        codeTextKlasseArea.setEditable(true);
-
-		codeTextKlasseArea.setStyle("");
-        codeTextMainArea.setStyle("");*/
 	}
 	
 	public void logKonsole (String message){
@@ -186,17 +178,23 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel=true;
         if (test) {
             codeTester.phasenWechselMerken("red");
+			Image image = new Image("test.png");
+			phasenIcon.setImage(image);
             setButtonTextCode();
             disableTestArea();
             test = false;
             code = true;
         }
         else if (code) {
+			Image image = new Image("code.png");
+			phasenIcon.setImage(image);
             codeTester.phasenWechselMerken("green");
             code=false;
             //TODO: wechseln zu refactor wenn code okay
         }
         else {
+			Image image = new Image("refactor.png");
+			phasenIcon.setImage(image);
             disableCodeArea();
             setButtonTextTest();
             test=true;

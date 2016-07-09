@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane
 	fx:controller = "de.hhu.propra.view.OberflaecheController"
@@ -22,23 +23,13 @@
 					<padding>
 						<Insets top = "10" right = "10" bottom = "10" left = "10"/>
 					</padding>
-					<!--<top>
-						<HBox spacing = "10" alignment="BASELINE_CENTER" >
-							<padding>
-								<Insets top = "0" right = "0" bottom = "10" left = "0"/>
-							</padding>
-							<children>
-								<Button
-										fx:id = "Pruefen"
-										text = "Prüfen"
-										maxWidth = "Infinity"
-										HBox.hgrow = "ALWAYS"
-										onAction = "#handlePruefen"/>
-							</children>
-						</HBox>
-					</top>-->
 					<center>
-						<TabPane fx:id="codeTab" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" maxWidth="Infinity" disable="true"/>
+						<TabPane
+							fx:id="codeTab"
+							tabClosingPolicy="UNAVAILABLE"
+							BorderPane.alignment="CENTER"
+							maxWidth="Infinity"
+							disable="true"/>
 					</center>
 				</BorderPane>
 				<VBox spacing="10" alignment="CENTER" maxWidth="-Infinity">
@@ -46,6 +37,9 @@
 						<Insets top = "10" right = "0" bottom = "10" left = "0"/>
 					</padding>
 					<children>
+						<ImageView
+							fx:id="phasenIcon"
+							VBox.vgrow="ALWAYS"/>
 						<Button
 							fx:id = "leeren"
 							maxHeight = "Infinity"
@@ -54,7 +48,6 @@
 						<Button
 							fx:id = "phaseWechseln"
 							maxHeight = "Infinity"
-							VBox.vgrow = "ALWAYS"
 							onAction = "#handleWechseln"/>
 						<Button
 							fx:id = "pruefen"
@@ -68,21 +61,6 @@
 					<padding>
 						<Insets top = "10" right = "10" bottom = "10" left = "10"/>
 					</padding>
-					<!--<top>
-						<HBox spacing = "10" alignment="BASELINE_CENTER" >
-							<padding>
-								<Insets top = "0" right = "0" bottom = "10" left = "0"/>
-							</padding>
-							<children>
-								<Button
-										fx:id = "Leeren"
-										text = "Leeren"
-										maxWidth = "Infinity"
-										HBox.hgrow = "ALWAYS"
-										onAction = "#handleLeeren"/>
-							</children>
-						</HBox>
-					</top>-->
 					<center>
 						<TextArea fx:id = "testTextArea" text = "test" maxWidth = "Infinity" />
 					</center>
