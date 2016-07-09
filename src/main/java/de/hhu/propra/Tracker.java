@@ -4,6 +4,7 @@ import de.hhu.propra.model.Analyse;
 import de.hhu.propra.view.OberflaecheController;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URISyntaxException;
@@ -56,13 +57,12 @@ public class Tracker {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String uhrzeit = sdf.format(new Date());
         try{
-            /*String path = getCorrectPath() + "/log/";
-            FileWriter writer = new FileWriter(path + "log.txt");
-            writer.append(uhrzeit + ": " + changes);
-            writer.close();*/
+            String path = getCorrectPath() + "/libs/log/";
+            FileWriter writer = new FileWriter(path + "log.txt", true);
             if (changes.trim().length() > 0){
-                System.out.println(uhrzeit + ": " + changes);
+                writer.write(uhrzeit + ": " + changes + "\n");
             }
+            writer.close();
         } catch (Exception e){
             ofController.appendKonsoleText("Tracking fehlgeschlagen: " + e);
         }
@@ -129,7 +129,7 @@ public class Tracker {
                 }
             }
 
-            /* while (aktZeileAlterCode != null){
+            while (aktZeileAlterCode != null){
                 if (lastChange.equals("deleted")){
                     aenderung += "\n\t\t" + aktZeileAlterCode;
                 } else {
@@ -137,7 +137,7 @@ public class Tracker {
                     lastChange = "deleted";
                 }
                 aktZeileAlterCode = alterCodeReader.readLine();
-            } */
+            }
             log(aenderung);
         } catch (IOException e) {
             return true;

@@ -14,78 +14,79 @@ import java.util.ResourceBundle;
 
 public class OberflaecheController implements OberflaecheControllerInterface, Initializable {
 
-    private Main main;
-    public static boolean wechsel = false;
+	private Main main;
+	public static boolean wechsel = false;
 
-    private boolean test = true;
-    private boolean code = false;
-    private CodeTester codeTester;
+	private static boolean test = true;
+	private static boolean code = false;
+	private static CodeTester codeTester;
 
-    @FXML
-    private Button phaseWechseln;
+	@FXML
+	private Button phaseWechseln;
 
-    @FXML
-    private TextArea testTextArea;
-
+	@FXML
+	private TextArea testTextArea;
+	
 	/*@FXML
 	private TextArea codeTextMainArea;
+
 	@FXML
 	private TextArea codeTextKlasseArea;*/
 
-    @FXML
-    private TabPane codeTab;
+	@FXML
+	private TabPane codeTab;
+	
+	@FXML
+	private TextArea konsoleTextArea;
+	
+	@FXML
+	private ListView<String> fehlgeschlageneTests;
 
-    @FXML
-    private TextArea konsoleTextArea;
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle){
+		this.codeTester = new CodeTester();
+		konsoleTextArea.textProperty().bind(codeTester);
+		setWechselButtonText();
+		fuelleCodeTab();
+	}
 
-    @FXML
-    private ListView<String> fehlgeschlageneTests;
+	public void fuelleCodeTab(){
+		Tab testMain = new Tab("TestMain");
+		TextArea codeTextMainArea = new TextArea("code");
+		testMain.setContent(codeTextMainArea);
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
-        this.codeTester = new CodeTester();
-        konsoleTextArea.textProperty().bind(codeTester);
-        setWechselButtonText();
-        fuelleCodeTab();
-    }
+		Tab testClass = new Tab("TestKlasse");
+		TextArea codeTextKlasseArea = new TextArea("code");
+		testClass.setContent(codeTextKlasseArea);
 
-    public void fuelleCodeTab(){
-        Tab testMain = new Tab("TestMain");
-        TextArea codeTextMainArea = new TextArea("code");
-        testMain.setContent(codeTextMainArea);
+		codeTab.getTabs().add(testMain);
+		codeTab.getTabs().add(testClass);
+	}
 
-        Tab testClass = new Tab("TestKlasse");
-        TextArea codeTextKlasseArea = new TextArea("code");
-        testClass.setContent(codeTextKlasseArea);
+	public void setWechselButtonText(){
+		Label label = new Label("Phase wechseln");
+		label.setRotate(-90);
+		phaseWechseln.setGraphic(new Group(label));
+	}
 
-        codeTab.getTabs().add(testMain);
-        codeTab.getTabs().add(testClass);
-    }
+	public void disableCodeArea() {
+		enableTextArea();
 
-    public void setWechselButtonText(){
-        Label label = new Label("Phase wechseln");
-        label.setRotate(-90);
-        phaseWechseln.setGraphic(new Group(label));
-    }
+		//codeTab.setDisable(true);
+		//codeTab.setStyle("-fx-control-inner-background: #555555");
+		for(Tab tab : codeTab.getTabs()){
+			TextArea codeArea = (TextArea) tab.getContent();
+			codeArea.setStyle("-fx-control-inner-background: #555555");
+			codeArea.setEditable(false);
+		}
+	}
 
-    public void disableCodeArea() {
-        enableTextArea();
-
-        //codeTab.setDisable(true);
-        //codeTab.setStyle("-fx-control-inner-background: #555555");
-        for(Tab tab : codeTab.getTabs()){
-            TextArea codeArea = (TextArea) tab.getContent();
-            codeArea.setStyle("-fx-control-inner-background: #555555");
-            codeArea.setEditable(false);
-        }
-    }
-
-    public void disableTestArea() {
-        testTextArea.setEditable(false);
-        testTextArea.setStyle("-fx-control-inner-background: #555555");
-
-        enableCodeArea();
-    }
+	public void disableTestArea() {
+		testTextArea.setEditable(false);
+		testTextArea.setStyle("-fx-control-inner-background: #555555");
+		
+		enableCodeArea();
+	}
 
 
     private void enableTextArea(){
@@ -93,34 +94,35 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         testTextArea.setStyle("");
     }
 
-    private void enableCodeArea(){
+	private void enableCodeArea(){
         codeTab.setDisable(false);
-        for (Tab tab : codeTab.getTabs()) {
-            TextArea codeArea = (TextArea) tab.getContent();
-            codeArea.setEditable(true);
-            codeArea.setStyle("");
-        }
+		for (Tab tab : codeTab.getTabs()) {
+			TextArea codeArea = (TextArea) tab.getContent();
+			codeArea.setEditable(true);
+			codeArea.setStyle("");
+		}
 		/*codeTextMainArea.setEditable(true);
         codeTextKlasseArea.setEditable(true);
+
 		codeTextKlasseArea.setStyle("");
         codeTextMainArea.setStyle("");*/
-    }
+	}
+	
+	public void logKonsole (String message){
+		konsoleTextArea.setText(message);
+	}
 
-    public void logKonsole (String message){
-        konsoleTextArea.setText(message);
-    }
-
-    public void appendKonsoleText(String message) {
-        konsoleTextArea.setText(konsoleTextArea.getText() + "\n" + message);
-    }
-
-    public void setMain(Main main){
-        this.main = main;
-    }
+	public void appendKonsoleText(String message) {
+		konsoleTextArea.setText(konsoleTextArea.getText() + "\n" + message);
+	}
+	
+	public void setMain(Main main){
+		this.main = main;
+	}
 
     public void beenden(){
         // CodeTester.writeExternalFile(codeTextMainArea.getText());
-        // codeTester.speichern();
+		// codeTester.speichern();
         System.exit(20);
         // TODO: Katalog und Aufgabe in die Konfigdatei schreiben!
     }
@@ -148,7 +150,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 i++;
             }
             codeTester.testCode(code, tabs.get(0).getText());
-
         }
     }
 
@@ -156,11 +157,13 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         // TODO wechsel nur dann true wenn es okay ist zu wechseln
         wechsel=true;
         if (test) {
+            codeTester.phasenWechselMerken("red");
             disableTestArea();
             test = false;
             code = true;
         }
         else if (code) {
+            codeTester.phasenWechselMerken("green");
             code=false;
             //TODO: wechseln zu refactor wenn code okay
         }
@@ -186,5 +189,14 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
     public void reicheTrackerWeiter (Tracker tracker){
         codeTester.setTracker(tracker);
+    }
+
+    public String getAktuellePhase(){
+        if(test){
+            return "red";
+        } else if(code){
+            return "green";
+        }
+        return "";
     }
 }
