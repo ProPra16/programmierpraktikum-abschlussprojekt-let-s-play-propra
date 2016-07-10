@@ -3,6 +3,7 @@ package de.hhu.propra.view;
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
 import de.hhu.propra.Tracker;
+import de.hhu.propra.model.Aufgabe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -71,6 +72,16 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		codeTab.getTabs().add(testMain);
 		codeTab.getTabs().add(testClass);
 	}
+
+	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
+		codeTab.getTabs().clear();
+		for(int i=0; i<aktaufgabe.getKlassen().length; i++){
+			Tab temp =new Tab(aktaufgabe.getKlassen()[i].getName());
+			temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
+			codeTab.getTabs().add(temp);
+		}
+	}
+
 
 	public void setButtonTextTest(){
 		Label phaseLabel = new Label("Phase wechseln");
