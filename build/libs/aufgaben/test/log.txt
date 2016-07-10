@@ -64,3 +64,14 @@
 				System.out.println("Hallo Welt");
 			}
 		}
+18:40:12: 
+	Hinzugefuegt: 
+		public class Ordnungsrechner {
+			// main-Methode und bstOrdnung-Methode implementieren
+		}
+18:40:17: 
+	Geloescht: 
+		
+18:40:27: 
+	Geloescht: 
+		
