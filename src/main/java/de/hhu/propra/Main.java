@@ -143,6 +143,7 @@ public class Main extends Application {
     }
     public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
         setNameAufgabe(aufgaben[k].getName());
+        ofController.aktualisiereCodeTab(aufgaben[k]);
         return aufgaben[k];
     }
 

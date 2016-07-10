@@ -3,6 +3,7 @@ package de.hhu.propra.view;
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
 import de.hhu.propra.Tracker;
+import de.hhu.propra.model.Aufgabe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -70,6 +71,18 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 		codeTab.getTabs().add(testMain);
 		codeTab.getTabs().add(testClass);
+
+	}
+
+	public void aktualisiereCodeTab(Aufgabe aktuelleAufgabe) {
+		codeTab.getTabs().clear();
+		TabPane neuetabpane= new TabPane();
+		for (int k=0;k<aktuelleAufgabe.getKlassen().length;k++) {
+			Tab temp = new Tab(aktuelleAufgabe.getKlassen()[k].getName());
+			TextArea tempinhalt = new TextArea(aktuelleAufgabe.getKlassen()[k].getText());
+			temp.setContent(tempinhalt);
+			codeTab.getTabs().add(temp);
+		}
 	}
 
 	public void setButtonTextTest(){
