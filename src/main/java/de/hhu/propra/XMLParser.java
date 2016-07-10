@@ -89,7 +89,13 @@ public class XMLParser {
 				}
 				interfaace[j]= new Inhalt(Interfacename, InterfaceText);
 			}
-			aufgaben[i]=new Aufgabe(Aufgabenname, Beschreibung, klassen, interfaace, test);
+			NodeList Babystepss  = element.getElementsByTagName("babysteps");
+			Node node3 = Babystepss.item(0);
+			boolean valueBabysteps = false;
+					Element element3 = (Element) node3;
+					valueBabysteps=Boolean.parseBoolean(element3.getAttribute("value"));
+		
+			aufgaben[i]=new Aufgabe(Aufgabenname, Beschreibung, klassen, interfaace, test, valueBabysteps);
 		}
 		
 		
