@@ -10,7 +10,12 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.util.Duration;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,6 +30,12 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     private boolean refactor = false;
 	private static CodeTester codeTester;
     private static Tracker tracker;
+
+	private boolean babysteps = true;
+	private boolean babystepsFail = false;
+	private int start = 10;
+	private IntegerProperty babytime = new SimpleIntegerProperty(start);
+	private Timeline babystepsAnimation = new Timeline();
 
 	@FXML
 	private Button phaseWechseln;
@@ -50,6 +61,9 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	@FXML
 	private ListView<String> fehlgeschlageneTests;
 
+	@FXML
+	private Label timerLabel;
+
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
 		this.codeTester = new CodeTester();
@@ -58,6 +72,23 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		fuelleCodeTab();
 		Image image = new Image("test.png");
 		phasenIcon.setImage(image);
+		starteTimer();
+	}
+
+	public void starteTimer(){
+		if (babysteps) {
+			if (babystepsAnimation != null) {
+				babystepsAnimation.stop();
+			}
+			timerLabel.textProperty().bind(babytime.asString());
+			babytime.set(start);
+			babystepsAnimation = new Timeline();
+			babystepsAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(start+1), new KeyValue(babytime, 0)));
+			babystepsAnimation.playFromStart();
+			if (babytime.getValue()==0){
+				babystepsFail = true;
+			}
+		}
 	}
 
 	public void fuelleCodeTab(){
@@ -164,6 +195,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel = false;
         if (test){
             // TODO fehlgeschlagene Tests in die Liste einfügen
+			// leert die Liste damit neu befüllt werden kann
+			fehlgeschlageneTests.getItems().clear();
             for (int i=0;i<5;i++) {
                 fehlgeschlageneTests.getItems().add(i+"");
             }
@@ -190,6 +223,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         // TODO wechsel nur dann true wenn es okay ist zu wechseln
         wechsel=true;
         if (test) {
+			babystepsFail = false;
             codeTester.phasenWechselMerken("red");
 			Image image = new Image("code.png");
 			phasenIcon.setImage(image);
@@ -197,6 +231,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             disableTestArea();
             test = false;
             code = true;
+			starteTimer();
         }
         else if (code) {
 			Image image = new Image("refactor.png");
@@ -204,9 +239,15 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             codeTester.phasenWechselMerken("green");
             code=false;
             refactor = true;
+			if (babystepsAnimation != null) {
+				babystepsAnimation.stop();
+			}
+			babystepsAnimation = null;
+			babytime.set(0);
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         }
         else {
+			babystepsFail = false;
 			Image image = new Image("test.png");
 			phasenIcon.setImage(image);
 			codeTester.phasenWechselMerken("refactor");
@@ -214,6 +255,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             setButtonTextTest();
             test=true;
             refactor = false;
+			starteTimer();
         }
     }
 
