@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 
 <BorderPane
 	fx:controller = "de.hhu.propra.view.OberflaecheController"
@@ -40,6 +41,7 @@
 						<ImageView
 							fx:id="phasenIcon"
 							VBox.vgrow="ALWAYS"/>
+						<Label fx:id="timerLabel"/>
 						<Button
 							fx:id = "leeren"
 							maxHeight = "Infinity"
