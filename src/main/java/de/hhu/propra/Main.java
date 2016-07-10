@@ -5,7 +5,9 @@ import de.hhu.propra.view.AnalysePopupController;
 import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -24,14 +26,15 @@ public class Main extends Application {
     private static String[] startconfig;
     private String katalog;
 	private static int KATALOG = 1;
+    private Aufgabe[] aufgaben;
 
-	@Override
+    @Override
 	public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("TDDT");
 
         if (!startconfig[KATALOG].equals("")) {
-            // initialStart();
+            initialStart();
         } else {
             try {
                 initHauptprogramm();
@@ -69,11 +72,16 @@ public class Main extends Application {
         FXMLLoader hfL = new FXMLLoader(getClass().getResource("/fxml/Hauptfenster.fxml"));
         hauptfenster = hfL.load();
         hfController = hfL.getController();
+
+        //hfController.anderetext("lalilu");
         Scene scene = new Scene(hauptfenster);
 
         primaryStage.setScene(scene);
         katalog = startconfig[1];
-
+        initialStart();
+        for (int k=0; k<aufgaben.length;k++) {
+            hfController.addAufgabe(aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
+        }
 
         FXMLLoader obL = new FXMLLoader(getClass().getResource("/fxml/Oberflaeche.fxml"));
         BorderPane oberflaeche = obL.load();
@@ -85,6 +93,7 @@ public class Main extends Application {
         ofController.reicheTrackerWeiter(tracker);
 
         primaryStage.show();
+
     }
 
     public void showAnalysePopup() {
@@ -120,7 +129,8 @@ public class Main extends Application {
            4) Mit entsprechenden Inhalten das Hauptprogramm wählen
           */
     	XMLParser parser= new XMLParser("aufgaben.xml");
-		Aufgabe[] aufgaben =parser.getAufgaben();
+		aufgaben =parser.getAufgaben();
+        System.out.println("Ich wurde geladen");
     }
 
     public static String getCorrectPath() throws URISyntaxException {

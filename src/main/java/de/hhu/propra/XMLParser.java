@@ -1,5 +1,6 @@
 package de.hhu.propra;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,6 +21,11 @@ public class XMLParser {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		try {
+
+//			try(  FileWriter out = new FileWriter( "filename.txt" )  ){
+//				out.write("test");
+//                out.close();
+//			}
 			builder = factory.newDocumentBuilder();
 		
 		Document doc = builder.parse(new File(Filename)); //hier muss rein wo der Katalog zu finden ist
@@ -28,6 +34,7 @@ public class XMLParser {
 	}catch (ParserConfigurationException | SAXException | IOException e) {
 		// TODO Auto-generated catch block
 		//e.printStackTrace();
+			System.out.println("KONNTE DATEI NICHT FINDEN");
 	}
 		}
 
