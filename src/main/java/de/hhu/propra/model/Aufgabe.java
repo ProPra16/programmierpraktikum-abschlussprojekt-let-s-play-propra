@@ -6,14 +6,16 @@ String Beschreibung;
 Inhalt[] Klassen;
 Inhalt[] Interfaace;
 Inhalt Test;
+boolean valueBabysteps;
 
-public Aufgabe(String name, String beschreibung, Inhalt[] klassen, Inhalt[] interface1, Inhalt test) {
+public Aufgabe(String name, String beschreibung, Inhalt[] klassen, Inhalt[] interface1, Inhalt test, boolean valueBabysteps) {
 	
 	Name = name;
 	Beschreibung = beschreibung;
 	Klassen = klassen;
 	Interfaace = interface1;
 	Test = test;
+	this.valueBabysteps=valueBabysteps;
 }
 
 public String getName() {
@@ -35,6 +37,8 @@ public Inhalt[] getInterfaace() {
 public Inhalt getTest() {
 	return Test;
 }
-
+public boolean getValueBabysteps(){
+	return valueBabysteps;
+}
 
 }
