@@ -2,9 +2,14 @@ package de.hhu.propra.view;
 
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
+import de.hhu.propra.model.Aufgabe;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
+import javafx.scene.control.TextArea;
 
 import static javafx.scene.input.KeyCode.F;
 
@@ -15,6 +20,9 @@ public class HauptfensterController {
 
     private static Main main;
     private CodeTester codeTester;
+    private Aufgabe aktuelleaufgabe;
+    private String aktuelleraufgabenname="keine Aufgabe ausgewählt";
+    private  String aktuelleaufgabenstellung="Es wurde noch keine Aufgabe ausgewählt";
 
     @FXML
     private Menu aufgabenmenu;
@@ -38,7 +46,10 @@ public class HauptfensterController {
     }
 
     @FXML
-    private void handleMenueAufgabeAendern(){
+    private void handleMenueAufgabeAendern(ActionEvent event){
+        MenuItem temp = (MenuItem)event.getSource();
+        int k= (int)temp.getUserData();
+//System.out.println("Hallo?"+k);
 
     }
 
@@ -54,15 +65,35 @@ public class HauptfensterController {
 
     @FXML
     private void handleMenueAufgabenstellung(){
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Aufgabenstellung für "+aktuelleraufgabenname);
+        alert.setHeaderText(null);
+        //alert.setContentText(aktuelleaufgabenstellung);
+        alert.setResizable(true);
+        alert.getDialogPane().setContent(new TextArea(aktuelleaufgabenstellung));
+        alert.showAndWait();
     }
 
-    public void addAufgabe(String nameAufgabe, boolean babystep) {
+    public void addAufgabe(int id, String nameAufgabe, boolean babystep) {
+        Menu tempmenu;
         if (babystep==false) {
-            aufgabenmenu.getItems().add(new MenuItem(nameAufgabe));
+            tempmenu=aufgabenmenu;
+
         } else {
-            babymenu.getItems().add(new MenuItem(nameAufgabe));
+            tempmenu=babymenu;
         }
+
+        MenuItem temp = new MenuItem(nameAufgabe);
+        temp.setUserData(id);
+        temp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                //System.out.println("Hab auf Item " + id + "geklickt");
+                aktuelleaufgabe=main.aktualisiereAufgabe(id);
+                aktuelleraufgabenname=aktuelleaufgabe.getName();
+                aktuelleaufgabenstellung=aktuelleaufgabe.getBeschreibung();
+            }
+        });
+        tempmenu.getItems().add(temp);
     }
 
     public void setMain(Main main){

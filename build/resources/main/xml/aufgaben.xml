@@ -167,7 +167,10 @@ public void testSomething() {
 }
 </test>
 </tests>
-
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 <exercise Aufgabenname="Ordnungsrechner">
@@ -196,6 +199,10 @@ public void testSomething() {
 }
 </test>
 </tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 <exercise Aufgabenname="Aufgabe1">
@@ -240,6 +247,10 @@ public void testSomething() {
 }
 </test>
 </tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 <exercise Aufgabenname="Aufgabe2">
@@ -284,6 +295,10 @@ public class Aufgabe2_Test{
 
 </test>
 </tests>
+<config> 
+<babysteps value="True" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 <exercise Aufgabenname="AnimalStats">
@@ -476,6 +491,10 @@ public class AnimalStats_Test{
 
 </test>
 </tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 <exercise Aufgabenname="TaschenRechner">
@@ -521,6 +540,10 @@ public class TaschenRechner_Test{
 }
 </test>
 </tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 
@@ -568,6 +591,10 @@ public class Auto_Test{
 }
 </test>
 </tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
 
 
@@ -599,5 +626,59 @@ public class Anzahl_Test{
 }
 </test>
 </tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
 </exercise>
+<exercise Aufgabenname="Primzahl">
+<description>Aufgabenstellung:
+Schreiben Sie ein Programm "Primzahl", welches testet ob eine übergebene ganze Zahl eine Primzahl ist.
+
+Verwenden Sie hierbei eine Methode "isPrime" die einen int-Wert x entgegen nimmt und einen boolean-Wert zurückgibt.
+
+Beispiel:
+
+java Primzahl 3
+true
+
+java Primzahl 4
+false
+
+
+</description>
+
+<classes>
+<class Klassenname="Primzahl">
+public class Primzahl {
+	public static void main(String[] args) {
+
+	}
+    public static boolean isPrime(int x) { 
+        
+    }
+}
+
+</class>
+</classes>
+
+<tests>
+<test Testname="Primzahl_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class Primzahl_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+</test>
+</tests>
+<config> 
+<babysteps value="True" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
 </exercises>

@@ -15,8 +15,8 @@
           <Menu mnemonicParsing="false" text="Katalog">
             <items>
               <MenuItem text="Katalog ändern" onAction="#handleMenueKatalogAendern" />
-                  <Menu  fx:id="aufgabenmenu" text="Aufgaben" onAction="#handleMenueAufgabeAendern"/>
-                <Menu  fx:id="babymenu" text="Babystepaufgaben" onAction="#handleMenueAufgabeAendern"/>
+                  <Menu  fx:id="aufgabenmenu" text="Aufgaben"/>
+                <Menu  fx:id="babymenu" text="Babystepaufgaben"/>
             </items>
           </Menu>
           <Menu text="Tracking">

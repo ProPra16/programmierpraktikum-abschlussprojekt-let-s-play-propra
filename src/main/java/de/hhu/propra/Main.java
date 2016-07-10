@@ -21,7 +21,7 @@ public class Main extends Application {
     private OberflaecheController ofController;
     private HauptfensterController hfController;
     private String aktuellerKatalog=""; // TODO: Siehe nameAufgabe!!!
-    private String nameAufgabe = "test"; // TODO: Bei Auswahl übers Menü  mit setNameAufgabe(String nameAufgabe) hier den richtigen Wert setzen!
+    private String nameAufgabe = "test";
     private static Tracker tracker;
     private static String[] startconfig;
     private String katalog;
@@ -80,7 +80,7 @@ public class Main extends Application {
         katalog = startconfig[1];
         initialStart();
         for (int k=0; k<aufgaben.length;k++) {
-            hfController.addAufgabe(aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
+            hfController.addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
         }
 
         FXMLLoader obL = new FXMLLoader(getClass().getResource("/fxml/Oberflaeche.fxml"));
@@ -128,9 +128,9 @@ public class Main extends Application {
             damit dieser die richtigen Inhalte auswählen kann
            4) Mit entsprechenden Inhalten das Hauptprogramm wählen
           */
+        //TODO: Die aufgaben.xml datei lässt sich nur aus dem hauptverzeichnis lesen (warum auch immer)
     	XMLParser parser= new XMLParser("aufgaben.xml");
 		aufgaben =parser.getAufgaben();
-        System.out.println("Ich wurde geladen");
     }
 
     public static String getCorrectPath() throws URISyntaxException {
@@ -140,6 +140,10 @@ public class Main extends Application {
         path = path.substring(0,path.lastIndexOf("/"));
 
         return path;
+    }
+    public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
+        setNameAufgabe(aufgaben[k].getName());
+        return aufgaben[k];
     }
 
     public void setNameAufgabe(String nameAufgabe){
