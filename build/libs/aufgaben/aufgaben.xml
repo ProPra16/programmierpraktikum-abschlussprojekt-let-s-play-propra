@@ -1,0 +1,684 @@
+<exercises>
+<exercise Aufgabenname="Auf_Faehre">
+<description>Schreiben Sie ein Programm, das den Beladevorgang einer Fähre simuliert. Dieser Vorgang soll ohne Benutzerinteraktion komplett zufällig ablaufen. D.h. eine Zufallsfunktion bestimmt den Typen des nächsten Fahrzeuges und dessen Eigenschaften (siehe Lösungsskelett). Der Programmablauf (die Simulation) soll in einer Klasse FaehreUI gesteuert/ gestartet werden. Es soll so lange geladen werden, bis entweder die Fläche, die restliche Traglast oder beides nicht mehr ausreicht, um das aktuell erzeugte Fahrzeug aufzuladen. Ist dieser Zeitpunkt erreicht, soll das Programm ausgeben, wie der Status der Fähre ist (siehe unten) und was der Grund für den Stopp der Beladung war (Platz, Gewicht, beides).
+
+BEISPIEL einer Ausgabe des Programmes: 
+Beladene Fahrzeuge: 329x PKW / 543x Motorrad / 307x Fahrrad
+Aktuelle Nutzflaeche: 12999m²
+Aktuelles Nutzgewicht: 1004955kg
+Die Fähre bietet nicht genug Platz, um ein weiteres Fahrzeug aufzunehmen.
+
+Die Eigenschaften der Fähre:
+Die Fähre soll hier eine Kapazität von 750000kg und 10000m² haben.
+Die Fähre soll zu jedem Zeitpunkt wissen, wie viele Fahrzeuge welchen Types auf ihr geladen sind. Aufgeladene Fahrzeuge können z.B. in einer ArrayList gespeichert werden. Desweiteren soll festgehalten werden, wie viel Fläche und Gewicht nach einem Aufladevorgang noch übrig ist.
+
+Erstellen Sie die folgenden Fahrzeugtypen: Fahrrad, Motorrad und PKW. 
+Als Oberklasse dieser Typen soll eine Klasse Fahrzeug erstellt werden, die gemeinsame Eigenschaften und Funktionen beinhaltet.
+
+Fahrzeuge haben folgende Eigenschaften: Breite, Länge, Gewicht und Gesamtgewicht (inkl. Personen). Außerdem befinden sich in jedem Fahrzeug ein Fahrer und ggf. Beifahrer (welche z.B. wieder in einer ArrayList gespeichert werden können).
+Jedes Fahrzeug soll sein(e) benötigte(s) Fläche(benötige Fläche= Fläche des PKWs * 1.5) und Gewicht berechnen können.
+
+Zusätzliche Eigenschaften eines PKW:
+Breite zwischen 2-4m; Länge zwischen 3-7m; Gewicht zwischen 1000-2800kg; bis zu 3 Beifahrer
+
+Zusätzliche Eigenschaften eines Motorrads:
+Breite zwischen 1-3m; Länge zwischen 1.5-4m; Gewicht zwischen 150-400kg; bis zu 2 Beifahrer
+
+Zusätzliche Eigenschaften eines Fahrrads:
+Breite zwischen 0.5-1.5m; Länge zwischen 1-3m; Gewicht zwischen 5-20kg; keine Beifahrer
+
+Eine Person soll lediglich ihr Gewicht speichern können und dieses mitteilen können. Das Gewicht sollte zwischen 40 und 120kg liegen.
+</description>
+<classes>
+<class Klassenname="Faehre">
+import java.util.ArrayList;
+
+public class Faehre {
+ /* Eigenschaften u. Methoden teilweise vorgegeben für Tests
+	private double maxNutzGewicht = 0.0;
+	private double maxNutzFlaeche = 0.0;
+	private double restFlaeche = 0.0;
+	private double restGewicht = 0.0;
+
+	public Faehre(double maxNutzGewicht, double maxNutzFlaeche){
+		// Konstruktor schreiben
+	}
+	
+	public int aufladen (Fahrzeug fahrzeug){
+		ggf. benoetigte Variablen: status und String typ;
+		
+		// Flaeche des Fahrzeugs bestimmen 
+		// Gewicht des Fahrzeugs bestimmen
+		
+		// Typ des Fahrzeuges erfragen
+		
+	    if (genug Platz und ausreichend restliche Traglast){
+			// Aufladen!
+			
+			switch (typ){
+				// entsprechende Anzahl erhoehen!
+			}
+			
+			// Aufladen erfolgreich:
+			status = 1;
+			
+		} else if (zu wenig Platz oder Gewicht oder beides){
+			// status 2: zu wenig Platz
+			// status 3: zu wenig restl. Traglast
+			// status 4: beides zu wenig!
+			
+		}
+		return status; */
+	} 
+	
+	public void gibLadung(){
+		// oberste Zeile der Ausgabe: Beladene Fahrzeuge:
+	}
+	
+	public void gibRest(){
+		// 2 u. 3 Zeile der Ausgabe: restliche KapazitÃ¤ten
+	}
+}
+
+</class>
+
+<class Klassenname="FaehreUI">
+public class FaehreUI {
+
+	public static void main (String[] args){
+		// Neue Fähre erstellen, Simulation des Aufladens implementieren (Fahrzeuge erstellen mit jeweiligen Insassen etc. und verladen, Ausgabe nach Beenden des Ladevorgangs
+	}
+	
+	public static double zufallszahl(double min, double max){
+		
+	}
+}
+</class>
+
+<class Klassenname="Fahrrad">
+public class Fahrrad extends Fahrzeug {
+
+}
+</class>
+
+<class Klassenname="Fahrzeug">
+public abstract class Fahrzeug {
+	// Konstruktor und Methoden (z.B. berechnegewicht...)
+	// Gegebene Methoden sind testrelevant, Namen nicht aendern
+	protected Fahrzeug(Person fahrer, double breite, double laenge, double gewicht){
+		
+	}
+	
+	public double berechneFlaeche(){
+		
+	}
+}
+</class>
+
+<class Klassenname="Motorrad">
+import java.util.ArrayList;
+
+public class Motorrad extends Fahrzeug {
+	// Wie PKW!
+}
+</class>
+
+<class Klassenname="Person">
+public class Person {
+	// Eigenschaften und Methoden von Personen implementieren
+	// Gegebene Methoden sind testrelevant, Namen nicht ändern
+	public Person(double gewicht){
+	}
+}
+</class>
+
+<class Klassenname="Pkw">
+import java.util.ArrayList;
+
+public class Pkw extends Fahrzeug {
+	// Gegebene Methoden sind testrelevant, Namen nicht ändern
+	// angesprochene ArrayList fÃ¼r Beifahrer?
+
+	// Konstruktor und Methode zur Gewichtsbestimmung (Achtung: Override der Gewichtsberechnung der Oberklasse!)
+	public Pkw(Person fahrer, double breite, double laenge, double gewicht){
+	}
+
+	@Override
+	public void berechneGewicht(){
+		// Gewicht der Insassen zum Fahrzeuggewicht addieren
+	}
+	
+	public void setBeifahrer(double gewicht){
+		// neuen Beifahrer dem Fahrzeug zufuegen
+	}
+}
+
+</class>
+
+</classes>
+<tests>
+<test Testname="FaehreTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+public class FaehreTest{
+@Test
+public void testSomething() {
+}
+}
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+<exercise Aufgabenname="Ordnungsrechner">
+<description>Schreiben Sie ein Programm, dass in einem (multiplikativen) Restklassenring (a mod p) die Ordnung des Elements a bestimmt. (Ordnung von a ist n, für das gilt: a^n mod p = 1).
+Es soll erst die "Gruppengröße" (p) eingelesen werden und dann das Element dessen Ordnung (a) zu prüfen ist. Sie müssen nicht prüfen, ob p prim ist, sondern können dies als gegeben annehmen. 
+Lagern Sie die Rechnung in eine Funktion public int bstOrdnung(int p, int a) aus, die die Ordnung des Elements zurückgibt.
+</description>
+
+<classes>
+<class Klassenname="Ordnungsrechner">
+public class Ordnungsrechner {
+	// main-Methode und bstOrdnung-Methode implementieren
+}
+</class>
+</classes>
+
+<tests>
+<test Testname="OrdnungsrechnerTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class OrdnungsrechnerTest {
+@Test
+public void testSomething() {
+}
+}
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+<exercise Aufgabenname="Aufgabe1">
+<description>Lesen Sie alle Strings, die Sie als Kommandozeilenargumente Uebergeben bekommen, ein und geben Sie jeden String in einer neuen Zeile aus.
+
+--- Beispiel ---
+Befehl fuer die Kommandozeile:
+java Aufgabe1 a b c
+
+Ausgabe:
+a
+b
+c
+</description>
+
+<classes>
+<class Klassenname="Aufgabe1">
+/*****************************************************
+ * Eingabe: Beliebig viele Strings als Kommandozeilen-
+ *          argumente.
+ * Ausgabe: Jeder der Eingabestrings in einer eigenen
+ *          Zeile auf der Konsole.
+ *****************************************************/
+public class Aufgabe1{
+    public static void main (String[] args){
+        /* Implementieren Sie hier ihre Loesung. */
+    }
+} 
+
+</class>
+</classes>
+
+<tests>
+<test Testname="Aufgabe1Test">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class Aufgabe1Test {
+@Test
+public void testSomething() {
+}
+}
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+<exercise Aufgabenname="Aufgabe2">
+<description>Schreiben sie eine Klasse Kunde, die im Konstruktor ein Integer fuer die Kundennummer und einen String fuer den Namen uebergeben bekommt und diese in Variabblen speichert. Implementieren sie zusaetzlich die Instanzmethoden int knr() und String name(), um die beiden gespeicherten Werte aus den Instanzen auszulesen, sowie eine Instanzmethode String toString(), die eine Stringrepraesentation der Kundeninstanz liefert. Die Stringrepraesentation habe die Form 
+"Kunde: *Namensstring*
+Knr.: *Kundennummer-Integer*"
+(siehe Testdatei).
+
+--- Beispiel ---
+Instanzierung: Kunde a = new Kunde(0,"Informatik, Propra");
+Abfrage des Namensstrings: a.name()
+Abfrage der Kundennummer: a.knr()
+Abfrage der Stringrepraesentation: a.toString()
+</description>
+
+<classes>
+<class Klassenname="Kunde">
+public class Kunde{
+    /* Hier Instanzvariablen implemetieren */
+    
+    /* Hier Konstruktor implemetieren*/
+    
+    /* Hier Instanzmethoden implemetieren*/
+    
+}
+
+
+</class>
+</classes>
+
+<tests>
+<test Testname="Aufgabe2_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class Aufgabe2_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+
+</test>
+</tests>
+<config> 
+<babysteps value="True" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+<exercise Aufgabenname="AnimalStats">
+<description>In dieser Aufgabe geht es um die Erstellung einer Art Pokédex Eintrages für Tiere.
+Die Funktion wird mit "AnimalStats TIERNAME" aufgerufen. 
+Die Tiere, für die in dieser Aufgabe ein Eintrag erstellt werden soll, lauten Spatz, Biene, Echse, Dorsch und Hund. Wird das Programm mit einem unbekannten oder ohne Tier aufgerufen, kommt die Fehlermeldung "Ungültiges oder fehlendes Startargument".
+
+Die Klasse AnimalStats soll nur die Objekte erzeugen, die ganzen Funktionen für die Ausgabe der Werte werden in Oberklassen und Interfaces geregelt.
+Ein Skelett für diese Klasse liegt dieser Textdatei bei.
+Wie die Ausgabe formatiert sein soll, und welche Werte übermittelt werden sollen, finden Sie am Ende dieser Aufgabenstellung.
+
+Folgende Klassen sollen erstellt werden:
+Fisch,Insekt,Lebewesen,Saeugetier,Reptil,Vogel
+In den jeweiligen Klassen sollen für die Tierart logische Einträge untergebracht werden. Als Oberklasse aller anderen Klassen ist Lebewesen zu wählen. 
+
+Folgende Interfaces können verwendet werden:
+Flug,Warmblueter,Wechselwarm,Wasser  (Wasser soll bei Lebewesen genutzt werden, welche hauptsächlich in Wasser leben)
+Ob Sie mehr oder weniger Interfaces verwenden ist Ihnen überlassen.
+
+
+Die Ausgabe enthält pro Zeile eine Eigenschaft, diese müssen Sie in Ihrer Lösung ebenfalls in der angegebenen Reihenfolge angeben, da sonst der Test nicht funktioniert.
+
+Spatz Eintrag:
+Gewicht: 0.8kg
+Größe: 15cm
+Tierart: Vogel
+kann Fliegen
+hat Federn
+hat Flügel
+Warmblüter
+
+Hund Eintrag:
+Gewicht: 20.0kg
+Größe: 100cm
+Tierart: Säugetier
+hat Fell
+Warmblüter
+
+Dorsch Eintrag:
+Gewicht: 14.0kg
+Größe: 140cm
+Tierart: Fisch
+lebt in Gewässern
+legt Eier
+hat Schuppen
+Kaltblüter
+
+Biene Eintrag:
+Gewicht: 0.05kg
+Größe: 3cm
+Tierart: Insekt
+kann Fliegen
+hat Flügel
+hat einen Chitinpanzer
+Kaltblüter
+
+Echse Eintrag:
+Gewicht: 3.0kg
+Größe: 60cm
+Tierart: Reptil
+legt Eier
+hat Hornschuppen
+Kaltblüter
+</description>
+
+<classes>
+<class Klassenname="Fisch">
+
+public class Fisch extends Lebewesen implements Wasser,Wechselwarm {
+    
+}
+</class>
+
+<class Klassenname="Insekt">
+public class Insekt extends Lebewesen implements Wechselwarm,Flug{
+}
+</class>
+
+<class Klassenname="Lebewesen">
+public class Lebewesen {
+}
+</class>
+
+<class Klassenname="Reptil">
+public class Reptil extends Lebewesen implements Wechselwarm{
+}
+</class>
+
+
+<class Klassenname="Saeugetier">
+public class Saeugetier extends Lebewesen implements Warmblueter{
+}
+</class>
+
+
+<class Klassenname="Vogel">
+public class Vogel extends Lebewesen implements Flug,Warmblueter{
+}
+</class>
+
+
+<class Klassenname="AnimalStats">
+import java.io.*;
+
+/**
+ * Print stats of animals
+ *
+ */
+public class AnimalStats {
+    public static void main(String[]args){
+    if(args.length==1) {
+        String b = args[0];
+        switch (b) {
+            case "Spatz":
+                Vogel Spatz = new Vogel(//VARIABLEN);
+
+                break;
+            case "Biene":
+                
+                Insekt Biene = new Insekt(//VARIABLEN);
+
+                break;
+            case "Echse":
+                
+                Reptil Echse = new Reptil(//VARIABLEN);
+
+                break;
+            case "Dorsch":
+                
+                Fisch Dorsch = new Fisch(//VARIABLEN);
+
+                break;
+            case "Hund":
+                
+                Saeugetier Hund = new Saeugetier(//VARIABLEN);
+
+                break;
+            default:
+                System.out.println(//Fehlermeldung);
+        }
+    }
+        else {
+        System.out.println(//Fehlermeldung);
+    }
+    }
+}
+</class>
+
+</classes>
+
+<interfaces>
+<interface name="Flug">
+public interface Flug {
+}
+</interface>
+
+<interface name="Warmblueter">
+public interface Warmblueter {
+    
+}
+</interface>
+
+<interface name="Wasser">
+public interface Wasser {
+  
+}
+</interface>
+
+<interface name="Wechselwarm">
+public interface Wechselwarm {
+
+}
+
+</interface>
+
+</interfaces>
+
+
+<tests>
+<test Testname="AnimalStats_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class AnimalStats_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+<exercise Aufgabenname="TaschenRechner">
+<description>In dieser Aufgabe geht es um die Erstellung eines kleinen Taschenrechners, der in der Kommandozeile mit drei Argumenten aufgerufen wird.
+Die Eingabe muss geprüft und die gewählte Aktion ausgeführt werden.
+Der Aufruf sieht wie folgt aus:
+TaschenRechner ZAHL1 AKTION ZAHL2
+Zahl1 und 2 sind hierbei als doubles abzuspeichern, also sind auch Kommazahlen erlaubt.
+Die Rechenoperationen lauten "mult","add","sub","div","mod" und stehen für Multiplizieren, addieren, subtrahieren, dividieren und modulo Division der Werte.
+Es gibt diverse Fehlerzustände, welche mit bestimmten Ausgaben beschrieben werden sollen:
+Ist eine der Zahlen fehlerhaft (z.B. 4fgh4 oder 3..2), dann soll die Meldung "Eine der Zahlen stimmt nicht" ausgegeben werden.
+Bei falscher Argumentanzahl wird  "Ungültige Anzahl an Argumenten" zurückgegeben.
+Bei versuchter Division durch 0 "Never divide through zero!"
+Bei versuchter Modulo Division mit etwas anderem als Ganzzahlen soll die Meldung "Modulo nur mit Ganzzahlen" erscheinen.
+Ist die Rechenoperationen nicht korrekt, dann wird  "Ungültige Rechenoperation" ausgegeben.
+Die korrekten Ergebnisse werden im Terminal ausgegeben mit dem Format "Ergebnis: ZAHL"
+Ein Lösungsskelett wird für eine Aufgabe mit diesem Schwerigkeitsgrad nicht nötig sein. Als Tipp: Nutzen Sie eine
+Switch-Anweisung um die verschiedenen Rechenoperationen zu unterscheiden.
+</description>
+
+<classes>
+<class Klassenname="TaschenRechner">
+import java.io.IOException;
+/**
+*/
+public class TaschenRechner {
+    public static void main(String[] args) throws IOException {
+}
+}
+</class>
+</classes>
+
+<tests>
+<test Testname="TaschenRechner_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class TaschenRechner_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+
+<exercise Aufgabenname="Auto">
+<description>Objekt orientiertes Programmieren
+farbe - gibt dem Fahrzeug eine beliebige Farbe und gibt diese auch zurück
+raeder - legt die Anzahl der Räder des Fahrzeugs fest und gibt diese auch zurück
+kmh - gibt die aktuelle geschwindigkeit zurück (double)
+bremsen - das Fahrzeug verringert seine kmh um m; falls m größer als die aktuelle Geschwindigkeit ist geht diese auf 0
+beschleunigen - das Fahrzeug erhöht seine kmh um n
+a) Schreibe ein Interface Fahrzeug für die oben beschriebene API
+b) Schreibe eine Klasse Auto, die das Interface implementiert. Das Auto soll eine Startgeschwindigkeit g=50.0 haben; Ein Auto hat 4 Räder.
+
+Diese Aufgabe wurde in Anlehnung an Aufgabe 5 der Probeklausur gestellt.
+</description>
+
+<classes>
+<class Klassenname="Auto">
+public class Auto implements Fahrzeug{
+
+   //implementieren Sie hier ihre Lösung
+}
+
+</class>
+</classes>
+
+<interfaces>
+<interface name="Fahrzeug">
+public interface Fahrzeug{
+    //implementiere hier deine Lösung
+}
+</interface>
+</interfaces>
+
+<tests>
+<test Testname="Auto_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class Auto_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+
+<exercise Aufgabenname="NullstellenAnzahl">
+<description>Gegeben sei eine quadratische Funktion der Form x²+px+q. Schreibe ein Programm anzahl, welches p und q als double übergeben bekommt und die Anzahl der reellen Nullstellen zurückgibt. Falls (p²/2²)-q kleiner als 0 ist soll ERROR ausgegeben werden.
+Hinweis: übergebe erst p und dann q
+</description>
+
+<classes>
+<class Klassenname="anzahl">
+public class anzahl{
+    public static void main(String[] args){
+	   //hier die Lösung implementieren
+    }
+}
+</class>
+</classes>
+
+<tests>
+<test Testname="Anzahl_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class Anzahl_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+</test>
+</tests>
+<config> 
+<babysteps value="False" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+<exercise Aufgabenname="Primzahl">
+<description>Aufgabenstellung:
+Schreiben Sie ein Programm "Primzahl", welches testet ob eine übergebene ganze Zahl eine Primzahl ist.
+
+Verwenden Sie hierbei eine Methode "isPrime" die einen int-Wert x entgegen nimmt und einen boolean-Wert zurückgibt.
+
+Beispiel:
+
+java Primzahl 3
+true
+
+java Primzahl 4
+false
+
+
+</description>
+
+<classes>
+<class Klassenname="Primzahl">
+public class Primzahl {
+	public static void main(String[] args) {
+
+	}
+    public static boolean isPrime(int x) { 
+        
+    }
+}
+
+</class>
+</classes>
+
+<tests>
+<test Testname="Primzahl_Test">
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class Primzahl_Test{
+    @Test
+    public void TesteEtwas(){
+        
+    }
+}
+</test>
+</tests>
+<config> 
+<babysteps value="True" />
+<timetracking value="True" /> 
+</config> 
+</exercise>
+
+</exercises>
