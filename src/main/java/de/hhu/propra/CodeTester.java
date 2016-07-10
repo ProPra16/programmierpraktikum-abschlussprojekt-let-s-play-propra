@@ -2,12 +2,16 @@ package de.hhu.propra;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javafx.beans.property.SimpleStringProperty;
 import vk.core.api.*;
 
 public class CodeTester extends SimpleStringProperty {
     private String letzterStandCode = "";
+	private String nameAufgabe = "test";
 	private JavaStringCompiler compiler;
     private static Tracker tracker;
 	private String dateiname;
@@ -35,7 +39,7 @@ public class CodeTester extends SimpleStringProperty {
 
         boolean trackFehler = tracker.ermittleNeuerung(code, letzterStandCode);
         if (trackFehler){
-            set("Fehler beim Tracking");
+            set(tracker.getFehler());
         }
         letzterStandCode = code;
 	}
@@ -43,8 +47,9 @@ public class CodeTester extends SimpleStringProperty {
 	private String externCompile() {
 		String ergebnis = "";
 		try {
-			String path = getCorrectPath() + "/libs/code/";
-			Process process = Runtime.getRuntime().exec(path + "temp_compile.bat");
+			String path = getCorrectPath() + "/libs/config/";
+            ProcessBuilder pb = new ProcessBuilder(path + "temp_compile.bat", nameAufgabe);
+            Process process = pb.start();
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = null;
@@ -70,7 +75,14 @@ public class CodeTester extends SimpleStringProperty {
 
     public void writeExternalFile(String code) {
 		try {
-			String path = getCorrectPath() + "/libs/code/";
+			String path = getCorrectPath() + "/libs/aufgaben/" + nameAufgabe + "/";
+			File subdir = new File(path);
+			if (!subdir.exists()){
+				if (!subdir.mkdir()){
+					set("Konnte Unterverzeichnis nicht erstellen");
+                    return;
+				}
+			}
 
             FileWriter writer = new FileWriter(path + dateiname + ".java");
             writer.write(code);
@@ -78,10 +90,6 @@ public class CodeTester extends SimpleStringProperty {
         } catch (Exception e) {
             set("Konnte keine externen Dateien erstellen: " + e);
         }
-    }
-
-    public void speichern(){
-
     }
 
 	public String getCorrectPath() throws URISyntaxException {

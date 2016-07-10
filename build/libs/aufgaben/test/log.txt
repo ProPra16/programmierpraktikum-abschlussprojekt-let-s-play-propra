@@ -1,0 +1,66 @@
+12:13:42: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+			public static void main(String[] args){
+				System.out.println("Hallo");
+			}
+		}
+12:24:06: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+			public static void main(String[] args){
+				System.out.println("Hallo");
+			}
+		}
+12:28:26: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+			public static void main(String[] args){
+				System.out.println("Hallo");
+			}
+		}
+12:30:59: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+			public static void main(String[] args){
+				System.out.println("Hallo");
+			}
+		}
+12:31:14: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+			public static void main(String[] args){
+				System.out.println("Hallo");
+			}
+		}
+12:31:59: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+			public static void main(String[] args){
+				System.out.println("Hallo");
+			}
+		}
+12:33:13: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+		}
+12:34:52: 
+	Hinzugefuegt: 
+		//Neue Klasse
+		public class TestMain{
+		}
+12:35:48: 
+	Geaendert:
+		alt: }
+		neu: public static void main(String[] args){
+	Hinzugefuegt: 
+				System.out.println("Hallo Welt");
+			}
+		}

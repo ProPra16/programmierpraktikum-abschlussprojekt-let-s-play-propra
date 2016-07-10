@@ -1,14 +1,11 @@
 package de.hhu.propra;
 
-import de.hhu.propra.model.Analyse;
 import de.hhu.propra.model.Aufgabe;
 import de.hhu.propra.view.AnalysePopupController;
 import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -21,6 +18,8 @@ public class Main extends Application {
     private BorderPane hauptfenster;
     private OberflaecheController ofController;
     private HauptfensterController hfController;
+    private String aktuellerKatalog=""; // TODO: Siehe nameAufgabe!!!
+    private String nameAufgabe = "test"; // TODO: Bei Auswahl übers Menü  mit setNameAufgabe(String nameAufgabe) hier den richtigen Wert setzen!
     private static Tracker tracker;
     private static String[] startconfig;
     private String katalog;
@@ -42,7 +41,7 @@ public class Main extends Application {
         }
 
         this.primaryStage.setOnCloseRequest(close -> {
-            ofController.beenden();
+            beenden();
         });
 	}
 
@@ -78,11 +77,10 @@ public class Main extends Application {
 
         FXMLLoader obL = new FXMLLoader(getClass().getResource("/fxml/Oberflaeche.fxml"));
         BorderPane oberflaeche = obL.load();
-        //BorderPane oberflaeche = FXMLLoader.load(getClass().getResource("/fxml/Oberflaeche2.fxml"));
         ofController = obL.getController();
         hauptfenster.setCenter(oberflaeche);
 
-        tracker = new Tracker(ofController);
+        tracker = new Tracker(ofController, nameAufgabe);
         hfController.setMain(this);
         ofController.reicheTrackerWeiter(tracker);
 
@@ -97,7 +95,7 @@ public class Main extends Application {
             tracker.analyseErstellen(ofController.getAktuellePhase());
             analysePopup.setCenter(tracker.getAnalyse().getChart());
 
-            apController.fuelleTextArea(getCorrectPath() + "/libs/log/log.txt");
+            apController.fuelleTextArea(getCorrectPath() + "/libs/aufgaben/" + nameAufgabe + "/log.txt");
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Phasenanalyse");
@@ -132,5 +130,26 @@ public class Main extends Application {
         path = path.substring(0,path.lastIndexOf("/"));
 
         return path;
+    }
+
+    public void setNameAufgabe(String nameAufgabe){
+        this.nameAufgabe = nameAufgabe;
+    }
+
+    public void beenden() {
+        startconfig[1] = aktuellerKatalog;
+        startconfig[3] = nameAufgabe;
+
+        try {
+            FileWriter writer = new FileWriter(getCorrectPath() + "/libs/config/config.txt");
+            for(String element : startconfig) {
+                writer.write(element + "#");
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.err.println("Unable to save.");
+        }
+
+        System.exit(20);
     }
 }

@@ -21,7 +21,9 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	private boolean test = true;
 	private boolean code = false;
+    private boolean refactor = false;
 	private static CodeTester codeTester;
+    private static Tracker tracker;
 
 	@FXML
 	private Button phaseWechseln;
@@ -190,14 +192,17 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			phasenIcon.setImage(image);
             codeTester.phasenWechselMerken("green");
             code=false;
-            //TODO: wechseln zu refactor wenn code okay
+            refactor = true;
+            //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         }
         else {
 			Image image = new Image("test.png");
 			phasenIcon.setImage(image);
+			codeTester.phasenWechselMerken("refactor");
             disableCodeArea();
             setButtonTextTest();
             test=true;
+            refactor = false;
         }
     }
 
@@ -224,6 +229,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             return "red";
         } else if(code){
             return "green";
+        } else if (refactor){
+            return "refactor";
         }
         return "";
     }

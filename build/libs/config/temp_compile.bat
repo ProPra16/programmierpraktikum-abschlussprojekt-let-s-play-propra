@@ -1,5 +1,5 @@
 @echo off
-cd build\libs\code
+cd build\libs\aufgaben\%1
 for /F %%f in ('dir /b *.java') do (
 	javac %%f
 	java %%~nf

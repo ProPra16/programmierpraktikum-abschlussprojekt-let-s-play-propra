@@ -4,14 +4,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.ImageView?>
+
 <BorderPane
 	fx:controller = "de.hhu.propra.view.OberflaecheController"
 	xmlns:fx = "http://javafx.com/fxml"
@@ -25,68 +23,44 @@
 					<padding>
 						<Insets top = "10" right = "10" bottom = "10" left = "10"/>
 					</padding>
-					<top>
-						<HBox spacing = "10" alignment="BASELINE_CENTER" >
-							<padding>
-								<Insets top = "0" right = "0" bottom = "10" left = "0"/>
-							</padding>
-							<children>
-								<Button
-										fx:id = "Pruefen"
-										text = "Prüfen"
-										maxWidth = "Infinity"
-										HBox.hgrow = "ALWAYS"
-										onAction = "#handlePruefen"/>
-							</children>
-						</HBox>
-					</top>
 					<center>
-						<TabPane fx:id="codeTab" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" maxWidth="Infinity" disable="true"/>
-							<!--<tabs>
-								<Tab text="TestMain">
-									<content>
-										<TextArea fx:id = "codeTextMainArea" text = "code" editable="false" style="-fx-control-inner-background: #555555" />
-									</content>
-								</Tab>
-								<Tab text="TestKlasse">
-									<content>
-										<TextArea fx:id = "codeTextKlasseArea" text = "code" editable="false" style="-fx-control-inner-background: #555555" />
-									</content>
-								</Tab>
-							</tabs>
-						</TabPane>-->
+						<TabPane
+							fx:id="codeTab"
+							tabClosingPolicy="UNAVAILABLE"
+							BorderPane.alignment="CENTER"
+							maxWidth="Infinity"
+							disable="true"/>
 					</center>
 				</BorderPane>
-				<VBox spacing="10">
+				<VBox spacing="10" alignment="CENTER" maxWidth="-Infinity">
 					<padding>
 						<Insets top = "10" right = "0" bottom = "10" left = "0"/>
 					</padding>
-					<Button
-						fx:id = "phaseWechseln"
-						maxHeight = "Infinity"
-						onAction = "#handleWechseln"
-						VBox.vgrow="ALWAYS"/>
+					<children>
+						<ImageView
+							fx:id="phasenIcon"
+							VBox.vgrow="ALWAYS"/>
+						<Button
+							fx:id = "leeren"
+							maxHeight = "Infinity"
+							VBox.vgrow = "ALWAYS"
+							onAction = "#handleLeeren"/>
+						<Button
+							fx:id = "phaseWechseln"
+							maxHeight = "Infinity"
+							onAction = "#handleWechseln"/>
+						<Button
+							fx:id = "pruefen"
+							maxHeight = "Infinity"
+							VBox.vgrow = "ALWAYS"
+							onAction = "#handlePruefen"/>
+					</children>
 				</VBox>
 				<BorderPane
 					HBox.hgrow = "ALWAYS">
 					<padding>
 						<Insets top = "10" right = "10" bottom = "10" left = "10"/>
 					</padding>
-					<top>
-						<HBox spacing = "10" alignment="BASELINE_CENTER" >
-							<padding>
-								<Insets top = "0" right = "0" bottom = "10" left = "0"/>
-							</padding>
-							<children>
-								<Button
-										fx:id = "Leeren"
-										text = "Leeren"
-										maxWidth = "Infinity"
-										HBox.hgrow = "ALWAYS"
-										onAction = "#handleLeeren"/>
-							</children>
-						</HBox>
-					</top>
 					<center>
 						<TextArea fx:id = "testTextArea" text = "test" maxWidth = "Infinity" />
 					</center>

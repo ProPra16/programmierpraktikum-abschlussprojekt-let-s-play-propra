@@ -19,8 +19,7 @@ public class HauptfensterController {
 
     @FXML
     private void handleMenueClose(){
-        // codeTester.speichern();
-        System.exit(20);
+        main.beenden();
     }
 
     @FXML

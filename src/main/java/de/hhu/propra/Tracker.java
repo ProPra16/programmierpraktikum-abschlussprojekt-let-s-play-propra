@@ -21,13 +21,17 @@ public class Tracker {
     private long millisSeitStart;
     private long millisBeiStart;
     private long millisInGreen = 0;
+    private long millisInRefactor = 0;
     private long millisInRed = 0;
+    private String fehler;
+    private String nameAufgabe;
     private Analyse analyse;
 
-    public Tracker(OberflaecheController ofController){
+    public Tracker(OberflaecheController ofController, String nameAufgabe){
         this.ofController = ofController;
         millisBeiStart = System.currentTimeMillis();
         millisBeiLetztemWechsel = millisBeiStart;
+        this.nameAufgabe = nameAufgabe;
     }
 
     public void phasenWechselMerken(String von){
@@ -39,6 +43,9 @@ public class Tracker {
              case "red":
                     millisInRed += aktuelleMillis - millisBeiLetztemWechsel;
                  break;
+             case "refactor":
+                    millisInRefactor += aktuelleMillis - millisBeiLetztemWechsel;
+                 break;
          }
          millisBeiLetztemWechsel = aktuelleMillis;
     }
@@ -46,26 +53,28 @@ public class Tracker {
     public void analyseErstellen(String von){
         phasenWechselMerken(von);
         millisSeitStart = System.currentTimeMillis() - millisBeiStart;
-        analyse = new Analyse(millisSeitStart, millisInGreen, millisInRed);
+        analyse = new Analyse(millisSeitStart, millisInGreen, millisInRed, millisInRefactor);
     }
 
     public Analyse getAnalyse(){
         return this.analyse;
     }
 
-    public void log(String changes){
+    public boolean log(String changes){
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String uhrzeit = sdf.format(new Date());
         try{
-            String path = getCorrectPath() + "/libs/log/";
-            FileWriter writer = new FileWriter(path + "log.txt", true);
+            String path = getCorrectPath() + "/libs/aufgaben/" + nameAufgabe;
+            FileWriter writer = new FileWriter(path + "/log.txt", true);
             if (changes.trim().length() > 0){
                 writer.write(uhrzeit + ": " + changes + "\n");
             }
             writer.close();
         } catch (Exception e){
-            ofController.appendKonsoleText("Tracking fehlgeschlagen: " + e);
+            fehler = "Fehler beim loggen: " + e;
+            return false;
         }
+        return true;
     }
 
     public String getCorrectPath() throws URISyntaxException {
@@ -138,10 +147,17 @@ public class Tracker {
                 }
                 aktZeileAlterCode = alterCodeReader.readLine();
             }
-            log(aenderung);
+            if (!log(aenderung)){
+                return true;
+            }
         } catch (IOException e) {
+            fehler = "Fehler beim loggen: " + e;
             return true;
         }
         return false;
+    }
+
+    public String getFehler(){
+        return this.fehler;
     }
 }
