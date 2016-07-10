@@ -11,8 +11,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
 
-import static javafx.scene.input.KeyCode.F;
-
 /**
  * Created by FreddyG on 06.07.16.
  */
@@ -49,7 +47,7 @@ public class HauptfensterController {
     private void handleMenueAufgabeAendern(ActionEvent event){
         MenuItem temp = (MenuItem)event.getSource();
         int k= (int)temp.getUserData();
-//System.out.println("Hallo?"+k);
+        //System.out.println("Hallo?"+k);
 
     }
 

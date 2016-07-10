@@ -11,14 +11,16 @@ import vk.core.api.*;
 
 public class CodeTester extends SimpleStringProperty {
     private String letzterStandCode = "";
-	private String nameAufgabe = "test";
+	private String nameAufgabe;
 	private JavaStringCompiler compiler;
+    private static Main main;
     private static Tracker tracker;
 	private String dateiname;
 
 	public void testCode(String code, String tabname){
         set("");
 		dateiname = tabname;
+        nameAufgabe = main.getNameAufgabe();
 		CompilationUnit unit = new CompilationUnit(dateiname, code, false);
 		compiler = CompilerFactory.getCompiler(unit);
 
@@ -108,5 +110,9 @@ public class CodeTester extends SimpleStringProperty {
 
     public void setTracker(Tracker tracker){
         this.tracker = tracker;
+    }
+
+    public void setMain(Main main){
+        this.main = main;
     }
 }

@@ -161,4 +161,8 @@ public class Tracker {
     public String getFehler(){
         return this.fehler;
     }
+
+    public void setNameAufgabe(String nameAufgabe){
+        this.nameAufgabe = nameAufgabe;
+    }
 }

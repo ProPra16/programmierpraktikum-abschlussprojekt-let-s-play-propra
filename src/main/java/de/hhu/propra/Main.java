@@ -21,7 +21,7 @@ public class Main extends Application {
     private OberflaecheController ofController;
     private HauptfensterController hfController;
     private String aktuellerKatalog=""; // TODO: Siehe nameAufgabe!!!
-    private String nameAufgabe = "test";
+    private String nameAufgabe = "";
     private static Tracker tracker;
     private static String[] startconfig;
     private String katalog;
@@ -86,6 +86,7 @@ public class Main extends Application {
         FXMLLoader obL = new FXMLLoader(getClass().getResource("/fxml/Oberflaeche.fxml"));
         BorderPane oberflaeche = obL.load();
         ofController = obL.getController();
+        ofController.reicheMainWeiter(this);
         hauptfenster.setCenter(oberflaeche);
 
         tracker = new Tracker(ofController, nameAufgabe);
@@ -154,6 +155,7 @@ public class Main extends Application {
     }
 
     public void setNameAufgabe(String nameAufgabe){
+        tracker.setNameAufgabe(nameAufgabe);
         this.nameAufgabe = nameAufgabe;
     }
 
@@ -172,5 +174,9 @@ public class Main extends Application {
         }
 
         System.exit(20);
+    }
+
+    public String getNameAufgabe(){
+        return this.nameAufgabe;
     }
 }

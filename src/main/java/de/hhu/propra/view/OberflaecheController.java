@@ -245,4 +245,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         }
         return "";
     }
+
+    public void reicheMainWeiter(Main main){
+        codeTester.setMain(main);
+    }
 }
