@@ -47,7 +47,7 @@ public class CodeTester extends SimpleStringProperty {
 	private String externCompile() {
 		String ergebnis = "";
 		try {
-			String path = getCorrectPath() + "/libs/config/";
+			String path = getCorrectPath() + "/config/";
             ProcessBuilder pb = new ProcessBuilder(path + "temp_compile.bat", nameAufgabe);
             Process process = pb.start();
 
@@ -75,7 +75,7 @@ public class CodeTester extends SimpleStringProperty {
 
     public void writeExternalFile(String code) {
 		try {
-			String path = getCorrectPath() + "/libs/aufgaben/" + nameAufgabe + "/";
+			String path = getCorrectPath() + "/aufgaben/" + nameAufgabe + "/";
 			File subdir = new File(path);
 			if (!subdir.exists()){
 				if (!subdir.mkdir()){
@@ -97,6 +97,7 @@ public class CodeTester extends SimpleStringProperty {
 		path = path.substring(0,path.lastIndexOf("/"));
 		path = path.substring(0,path.lastIndexOf("/"));
 		path = path.substring(0,path.lastIndexOf("/"));
+		path += "/build/libs";
 
 		return path;
 	}

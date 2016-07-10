@@ -52,7 +52,7 @@ public class Main extends Application {
         String config = "";
 
         try {
-            String path = getCorrectPath() + "/libs/config/";
+            String path = getCorrectPath() + "/config/";
 
             BufferedReader reader = new BufferedReader(new FileReader(path + "config.txt"));
             String line = reader.readLine();
@@ -104,7 +104,7 @@ public class Main extends Application {
             tracker.analyseErstellen(ofController.getAktuellePhase());
             analysePopup.setCenter(tracker.getAnalyse().getChart());
 
-            apController.fuelleTextArea(getCorrectPath() + "/libs/aufgaben/" + nameAufgabe + "/log.txt");
+            apController.fuelleTextArea(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/log.txt");
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Phasenanalyse");
@@ -129,8 +129,13 @@ public class Main extends Application {
            4) Mit entsprechenden Inhalten das Hauptprogramm wählen
           */
         //TODO: Die aufgaben.xml datei lässt sich nur aus dem hauptverzeichnis lesen (warum auch immer)
-    	XMLParser parser= new XMLParser("aufgaben.xml");
-		aufgaben =parser.getAufgaben();
+        try {
+            String path = getCorrectPath() + "/aufgaben/aufgaben.xml";
+            XMLParser parser= new XMLParser(path);
+            aufgaben =parser.getAufgaben();
+        } catch (Exception e){
+            System.out.print("Fehler");
+        }
     }
 
     public static String getCorrectPath() throws URISyntaxException {
@@ -138,6 +143,7 @@ public class Main extends Application {
         path = path.substring(0,path.lastIndexOf("/"));
         path = path.substring(0,path.lastIndexOf("/"));
         path = path.substring(0,path.lastIndexOf("/"));
+        path += "/build/libs";
 
         return path;
     }
@@ -156,7 +162,7 @@ public class Main extends Application {
         startconfig[3] = nameAufgabe;
 
         try {
-            FileWriter writer = new FileWriter(getCorrectPath() + "/libs/config/config.txt");
+            FileWriter writer = new FileWriter(getCorrectPath() + "/config/config.txt");
             for(String element : startconfig) {
                 writer.write(element + "#");
             }

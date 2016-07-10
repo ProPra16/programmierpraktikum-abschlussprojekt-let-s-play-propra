@@ -64,7 +64,7 @@ public class Tracker {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String uhrzeit = sdf.format(new Date());
         try{
-            String path = getCorrectPath() + "/libs/aufgaben/" + nameAufgabe;
+            String path = getCorrectPath() + "/aufgaben/" + nameAufgabe;
             FileWriter writer = new FileWriter(path + "/log.txt", true);
             if (changes.trim().length() > 0){
                 writer.write(uhrzeit + ": " + changes + "\n");
@@ -82,6 +82,7 @@ public class Tracker {
         path = path.substring(0,path.lastIndexOf("/"));
         path = path.substring(0,path.lastIndexOf("/"));
         path = path.substring(0,path.lastIndexOf("/"));
+        path += "/build/libs";
 
         return path;
     }
