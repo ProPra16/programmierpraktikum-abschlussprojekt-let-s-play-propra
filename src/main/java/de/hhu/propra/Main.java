@@ -41,7 +41,7 @@ public class Main extends Application {
         if (startconfig[KATALOG].equals("")) {
             initialStart();
         } else{
-            aktuellerKatalog = new File(startconfig[KATALOG]);
+            aktuellerKatalog = new File(getCorrectPath()+"/aufgaben/aufgaben.xml");
         }
         try {
             initHauptprogramm();
@@ -82,7 +82,7 @@ public class Main extends Application {
         Scene scene = new Scene(hauptfenster);
 
         primaryStage.setScene(scene);
-        katalog = getCorrectPath()+"/config/aufgaben.xml";
+        katalog = getCorrectPath()+"/aufgaben/aufgaben.xml";
         ladeAufgaben(aktuellerKatalog);
         for (int k=0; k < aufgaben.length;k++) {
             hfController.addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
