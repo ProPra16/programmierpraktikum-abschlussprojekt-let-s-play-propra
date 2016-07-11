@@ -82,7 +82,7 @@ public class Main extends Application {
         Scene scene = new Scene(hauptfenster);
 
         primaryStage.setScene(scene);
-        katalog = startconfig[1];
+        katalog = getCorrectPath()+"/config/aufgaben.xml";
         ladeAufgaben(aktuellerKatalog);
         for (int k=0; k < aufgaben.length;k++) {
             hfController.addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
