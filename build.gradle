@@ -3,6 +3,10 @@ apply plugin: "idea"
 apply plugin: "application"
 
 mainClassName ="de.hhu.propra.Main"
+
+sourceCompatibility="1.8"
+targetCompatibility="1.8"
+
 repositories {
 	mavenCentral()
 }
