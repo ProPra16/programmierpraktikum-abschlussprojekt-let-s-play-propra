@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 /**
  * Created by FreddyG on 06.07.16.
@@ -19,6 +20,7 @@ public class HauptfensterController {
     private static Main main;
     private CodeTester codeTester;
     private Aufgabe aktuelleaufgabe;
+    private static Stage stage;
     private String aktuelleraufgabenname="keine Aufgabe ausgewählt";
     private  String aktuelleaufgabenstellung="Es wurde noch keine Aufgabe ausgewählt";
 
@@ -40,14 +42,18 @@ public class HauptfensterController {
 
     @FXML
     private void handleMenueKatalogAendern(){
-
+        main.aenderungenSpeichern();
+        main.katalogLaden();
+        Aufgabe[] aufgaben = main.getAufgaben();
+        for (int k=0; k < aufgaben.length; k++){
+            addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
+        }
     }
 
     @FXML
     private void handleMenueAufgabeAendern(ActionEvent event){
         MenuItem temp = (MenuItem)event.getSource();
-        int k= (int)temp.getUserData();
-        //System.out.println("Hallo?"+k);
+        int k = (int)temp.getUserData();
 
     }
 
@@ -86,6 +92,7 @@ public class HauptfensterController {
         temp.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 //System.out.println("Hab auf Item " + id + "geklickt");
+                main.aenderungenSpeichern();
                 aktuelleaufgabe=main.aktualisiereAufgabe(id);
                 aktuelleraufgabenname=aktuelleaufgabe.getName();
                 aktuelleaufgabenstellung=aktuelleaufgabe.getBeschreibung();
@@ -100,5 +107,9 @@ public class HauptfensterController {
 
     public void setCodeTester(CodeTester codeTester){
         this.codeTester = codeTester;
+    }
+
+    public void setStage (Stage stage){
+        this.stage = stage;
     }
 }

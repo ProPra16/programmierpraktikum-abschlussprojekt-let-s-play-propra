@@ -17,7 +17,8 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 	Element WurzelExercise;
-	public XMLParser(String Filename){
+	public XMLParser(File katalog){
+		// Änderung von Freddy: Da der Katalog über einen FileChooser gewählt wird, kann hier direkt ein File übergeben werden!
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		try {
@@ -28,7 +29,8 @@ public class XMLParser {
 //			}
 			builder = factory.newDocumentBuilder();
 		
-		Document doc = builder.parse(new File(Filename)); //hier muss rein wo der Katalog zu finden ist
+		// Document doc = builder.parse(new File(Filename)); //hier muss rein wo der Katalog zu finden ist
+		Document doc = builder.parse(katalog);
 		WurzelExercise = doc.getDocumentElement();
 
 	}catch (ParserConfigurationException | SAXException | IOException e) {

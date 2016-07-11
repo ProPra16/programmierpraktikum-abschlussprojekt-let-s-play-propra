@@ -7,21 +7,26 @@ import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 public class Main extends Application {
 	private Stage primaryStage;
     private BorderPane hauptfenster;
     private OberflaecheController ofController;
     private HauptfensterController hfController;
-    private String aktuellerKatalog=""; // TODO: Siehe nameAufgabe!!!
-    private String nameAufgabe = "";
+    private File aktuellerKatalog;
+    private String nameAufgabe = " ";
     private static Tracker tracker;
     private static String[] startconfig;
     private String katalog;
@@ -33,14 +38,15 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("TDDT");
 
-        if (!startconfig[KATALOG].equals("")) {
+        if (startconfig[KATALOG].equals("")) {
             initialStart();
-        } else {
-            try {
-                initHauptprogramm();
-            } catch (IOException e) {
-                System.err.println("Unable to load Resources: " + e);
-            }
+        } else{
+            aktuellerKatalog = new File(startconfig[KATALOG]);
+        }
+        try {
+            initHauptprogramm();
+        } catch (IOException e) {
+            System.err.println("Unable to load Resources: " + e);
         }
 
         this.primaryStage.setOnCloseRequest(close -> {
@@ -50,7 +56,6 @@ public class Main extends Application {
 
 	public static void main(String[] args) throws URISyntaxException {
         String config = "";
-
         try {
             String path = getCorrectPath() + "/config/";
 
@@ -72,14 +77,14 @@ public class Main extends Application {
         FXMLLoader hfL = new FXMLLoader(getClass().getResource("/fxml/Hauptfenster.fxml"));
         hauptfenster = hfL.load();
         hfController = hfL.getController();
+        hfController.setStage(primaryStage);
 
-        //hfController.anderetext("lalilu");
         Scene scene = new Scene(hauptfenster);
 
         primaryStage.setScene(scene);
         katalog = startconfig[1];
-        initialStart();
-        for (int k=0; k<aufgaben.length;k++) {
+        ladeAufgaben(aktuellerKatalog);
+        for (int k=0; k < aufgaben.length;k++) {
             hfController.addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
         }
 
@@ -121,33 +126,58 @@ public class Main extends Application {
     }
 
     private void initialStart(){
+        katalogLaden();
+
         // TODO: Kerstin und David
         /* 1) Gebrauchsanweisung anzeigen
-           2) Erstmalige Katalogauswahl
-           3) Aufgabenauswahl
-            Erstellt für 3 und 4 am besten einen public String oben in der Klasse, welcher dann vom OberflächenControllern abgefragt wird,
-            damit dieser die richtigen Inhalte auswählen kann
-           4) Mit entsprechenden Inhalten das Hauptprogramm wählen
+           2) Erstmalige Katalogauswahl: Erledigt von Freddy
+
+           4) Mit entsprechenden Inhalten das Hauptprogramm wählen: Ebenfalls von Freddy erledigt...
           */
-        //TODO: Die aufgaben.xml datei lässt sich nur aus dem hauptverzeichnis lesen (warum auch immer)
+    }
+
+    public void katalogLaden(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Katalogdatei auswählen");
+
+        File tempFile = fileChooser.showOpenDialog(primaryStage);
+
+        if (tempFile != null){
+            setAktuellerKatalog(tempFile);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Keine Datei ausgewaehlt");
+            alert.setHeaderText("Bitte Datei auswaehlen!");
+            alert.showAndWait();
+            katalogLaden();
+        }
+    }
+
+    public static String getCorrectPath() {
+
         try {
-            String path = getCorrectPath() + "/aufgaben/aufgaben.xml";
-            XMLParser parser= new XMLParser(path);
-            aufgaben =parser.getAufgaben();
+            String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            path = path.substring(0, path.lastIndexOf("/"));
+            path = path.substring(0, path.lastIndexOf("/"));
+            path = path.substring(0, path.lastIndexOf("/"));
+            path += "/build/libs";
+
+            return path;
+        } catch (Exception e) {
+            return "Fehler beim Pfad ermitteln: " + e;
+        }
+    }
+
+    private void ladeAufgaben(File katalog){
+        try {
+            // String path = getCorrectPath() + "/aufgaben/aufgaben.xml";
+            XMLParser parser= new XMLParser(katalog);
+            aufgaben = parser.getAufgaben();
         } catch (Exception e){
             System.out.print("Fehler");
         }
     }
 
-    public static String getCorrectPath() throws URISyntaxException {
-        String path = CodeTester.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-        path = path.substring(0,path.lastIndexOf("/"));
-        path = path.substring(0,path.lastIndexOf("/"));
-        path = path.substring(0,path.lastIndexOf("/"));
-        path += "/build/libs";
-
-        return path;
-    }
     public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
         setNameAufgabe(aufgaben[k].getName());
         ofController.aktualisiereCodeTab(aufgaben[k]);
@@ -159,10 +189,31 @@ public class Main extends Application {
         this.nameAufgabe = nameAufgabe;
     }
 
-    public void beenden() {
-        startconfig[1] = aktuellerKatalog;
-        startconfig[3] = nameAufgabe;
+    public void setAktuellerKatalog(File katalog){
+        this.aktuellerKatalog = katalog;
+    }
 
+    public void aenderungenSpeichern(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Zwischenergebnisse speichern?");
+        alert.setHeaderText("Moechtest du deine Aenderunden speichern?");
+
+        ButtonType bTJa = new ButtonType("Ja");
+        ButtonType bTNein = new ButtonType("Nein");
+
+        alert.getButtonTypes().setAll(bTJa, bTNein);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == bTJa){
+            ofController.getCodeTester().writeExternalFile();
+            // TODO: Viktor, hier müssten dann noch alle Tests geschrieben werden!
+        }
+    }
+
+    public void beenden() {
+        startconfig[1] = aktuellerKatalog.toString();
+        startconfig[3] = nameAufgabe;
+        aenderungenSpeichern();
         try {
             FileWriter writer = new FileWriter(getCorrectPath() + "/config/config.txt");
             for(String element : startconfig) {
@@ -172,11 +223,35 @@ public class Main extends Application {
         } catch (Exception e) {
             System.err.println("Unable to save.");
         }
-
         System.exit(20);
     }
 
     public String getNameAufgabe(){
         return this.nameAufgabe;
+    }
+
+    public Aufgabe[] getAufgaben(){ return this.aufgaben; }
+
+    public boolean schonBearbeitet(String nameAufgabe){
+        File verzeichnis = new File(getCorrectPath() + "/aufgaben/" + nameAufgabe);
+        return verzeichnis.exists();
+
+    }
+
+    public String getCode(String nameAufgabe, String nameHauptklasse){
+        String code = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/" + nameHauptklasse + ".java"));
+            String line = reader.readLine();
+
+            while (line != null){
+                code += line;
+                line = reader.readLine();
+            }
+            return code;
+        } catch (Exception e) {
+            System.err.println("Fehler beim Quellcodeladen: " + e);
+        }
+        return code;
     }
 }

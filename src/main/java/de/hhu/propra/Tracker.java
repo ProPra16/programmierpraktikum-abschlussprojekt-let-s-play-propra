@@ -87,7 +87,7 @@ public class Tracker {
         return path;
     }
 
-    public boolean ermittleNeuerung(String neuerCode, String letzterStandCode) {
+    public boolean ermittleNeuerung(String neuerCode, String letzterStandCode, boolean isFehler, String fehler) {
         String aenderung = "";
         String lastChange = "";
         BufferedReader alterCodeReader = new BufferedReader(new StringReader(letzterStandCode));
@@ -128,6 +128,9 @@ public class Tracker {
                             lastChange = "added";
                         } else {
                             if (!aktZeileNeuerCode.equals(aktZeileAlterCode)) {
+                                if (aktZeileAlterCode.trim().length() == 0){
+                                    aenderung += aenderung += "\n\tGeloescht: " + "\n\t\t" + aktZeileAlterCode;
+                                }
                                 aenderung += "\n\tGeaendert:\n\t\talt: " + aktZeileAlterCode.trim() + "\n\t\tneu: " + aktZeileNeuerCode.trim();
                             }
                             aktZeileAlterCode = alterCodeReader.readLine();
@@ -140,14 +143,22 @@ public class Tracker {
             }
 
             while (aktZeileAlterCode != null){
-                if (lastChange.equals("deleted")){
-                    aenderung += "\n\t\t" + aktZeileAlterCode;
-                } else {
-                    aenderung += "\n\tGeloescht: " + "\n\t\t" +aktZeileAlterCode;
-                    lastChange = "deleted";
+                if (aktZeileAlterCode.trim().length() > 0) {
+                    if (lastChange.equals("deleted")) {
+                        aenderung += "\n\t\t" + aktZeileAlterCode;
+                    } else {
+                        aenderung += "\n\tGeloescht: " + "\n\t\t" + aktZeileAlterCode;
+                        System.out.println("Hier");
+                        lastChange = "deleted";
+                    }
                 }
                 aktZeileAlterCode = alterCodeReader.readLine();
             }
+
+            if (isFehler){
+                aenderung += "Nicht kompilierbar, Fehler:" + fehler;
+            }
+
             if (!log(aenderung)){
                 return true;
             }

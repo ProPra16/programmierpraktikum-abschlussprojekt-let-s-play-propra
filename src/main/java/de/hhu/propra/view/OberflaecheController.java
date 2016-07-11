@@ -16,6 +16,8 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
+
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +29,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	private boolean test = true;
 	private boolean code = false;
+    private String letzterStandCode="";
     private boolean refactor = false;
 	private static CodeTester codeTester;
     private static Tracker tracker;
@@ -106,11 +109,16 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
 		codeTab.getTabs().clear();
-		for(int i=0; i<aktaufgabe.getKlassen().length; i++){
-			Tab temp =new Tab(aktaufgabe.getKlassen()[i].getName());
-			temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
-			codeTab.getTabs().add(temp);
-		}
+        if (main.schonBearbeitet(aktaufgabe.getName())){
+            main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
+        } else {
+            for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
+                Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
+                temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
+                letzterStandCode += "//Neue Klasse\n" + aktaufgabe.getKlassen()[i].getText();
+                codeTab.getTabs().add(temp);
+            }
+        }
 	}
 
 
@@ -291,4 +299,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     public void reicheMainWeiter(Main main){
         codeTester.setMain(main);
     }
+
+	public CodeTester getCodeTester(){
+		return codeTester;
+	}
 }

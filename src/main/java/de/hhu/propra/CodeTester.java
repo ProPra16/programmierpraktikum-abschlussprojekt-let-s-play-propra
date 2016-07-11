@@ -2,9 +2,7 @@ package de.hhu.propra;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Collection;
 
 import javafx.beans.property.SimpleStringProperty;
 import vk.core.api.*;
@@ -14,12 +12,15 @@ public class CodeTester extends SimpleStringProperty {
 	private String nameAufgabe;
 	private JavaStringCompiler compiler;
     private static Main main;
+	private String code;
     private static Tracker tracker;
 	private String dateiname;
 
 	public void testCode(String code, String tabname){
         set("");
+		this.code = code;
 		dateiname = tabname;
+		boolean fehler = false;
         nameAufgabe = main.getNameAufgabe();
 		CompilationUnit unit = new CompilationUnit(dateiname, code, false);
 		compiler = CompilerFactory.getCompiler(unit);
@@ -32,17 +33,15 @@ public class CodeTester extends SimpleStringProperty {
 		}
 
 		if (compiler.getCompilerResult().hasCompileErrors()){
-			set(fehlerString(unit, tabname));
+			set(fehlerString(unit));
+			fehler = true;
+			logging(code, letzterStandCode, fehler, fehlerString(unit));
             return;
 		}
-
-        writeExternalFile(code);
+		logging(code, letzterStandCode, fehler, fehlerString(unit));
+        writeExternalFile();
         set(externCompile());
 
-        boolean trackFehler = tracker.ermittleNeuerung(code, letzterStandCode);
-        if (trackFehler){
-            set(tracker.getFehler());
-        }
         letzterStandCode = code;
 	}
 
@@ -64,18 +63,21 @@ public class CodeTester extends SimpleStringProperty {
 		return ergebnis;
 	}
 
-	private String fehlerString(CompilationUnit unit, String klasse){
+	private Collection<CompileError> ermittleFehler(CompilationUnit unit){
+		return compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(unit);
+	}
+
+	private String fehlerString(CompilationUnit unit){
 		String fehler = "";
-		fehler = "Klasse " + klasse + ": Dein Quellcode enthaelt Fehler";
-		for (CompileError error : compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(unit)){
+		fehler = "Dein Quellcode enthaelt Fehler";
+		for (CompileError error : ermittleFehler(unit)){
 			fehler += "\n\tin Zeile " + error.getLineNumber() + ": " + error.getMessage() + ": \n\t";
 			fehler += error.getCodeLineContainingTheError() + "\n\t";
-			fehler += error.getMessage() + "\n\t";
 		}
 		return fehler;
 	}
 
-    public void writeExternalFile(String code) {
+    public void writeExternalFile() {
 		try {
 			String path = getCorrectPath() + "/aufgaben/" + nameAufgabe + "/";
 			File subdir = new File(path);
@@ -102,6 +104,14 @@ public class CodeTester extends SimpleStringProperty {
 		path += "/build/libs";
 
 		return path;
+	}
+
+	private void logging(String code, String letzterStandCode, boolean fehler, String fehlerString){
+		boolean trackFehler = tracker.ermittleNeuerung(code, letzterStandCode, fehler, fehlerString);
+
+		if (trackFehler){
+			set(tracker.getFehler());
+		}
 	}
 
 	public void phasenWechselMerken(String von){
