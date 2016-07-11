@@ -1,9 +1,9 @@
 language: java
 jdk: oraclejdk8
 
-install: /bin/true
-
 addons:
   apt:
     packages:
-- oracle-java8-installer
+      - oracle-java8-installer
+      
+install: /bin/true
