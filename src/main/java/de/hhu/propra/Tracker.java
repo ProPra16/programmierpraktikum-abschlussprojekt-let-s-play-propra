@@ -61,7 +61,7 @@ public class Tracker {
     }
 
     public boolean log(String changes){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         String uhrzeit = sdf.format(new Date());
         try{
             String path = getCorrectPath() + "/aufgaben/" + nameAufgabe;
@@ -82,7 +82,12 @@ public class Tracker {
         path = path.substring(0,path.lastIndexOf("/"));
         path = path.substring(0,path.lastIndexOf("/"));
         path = path.substring(0,path.lastIndexOf("/"));
-        path += "/build/libs";
+        if (path.endsWith("build")){
+            path+="/libs";
+        }
+        else {
+            path += "/build/libs";
+        }
 
         return path;
     }

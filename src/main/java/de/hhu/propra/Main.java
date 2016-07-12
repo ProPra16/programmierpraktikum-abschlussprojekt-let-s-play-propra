@@ -83,7 +83,7 @@ public class Main extends Application {
         Scene scene = new Scene(hauptfenster);
 
         primaryStage.setScene(scene);
-        katalog = getCorrectPath()+"/aufgaben/aufgaben.xml";
+        katalog = getCorrectPath() + "/aufgaben/aufgaben.xml";
         ladeAufgaben(aktuellerKatalog);
         for (int k=0; k < aufgaben.length;k++) {
             hfController.addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
@@ -258,11 +258,12 @@ public class Main extends Application {
                     if(anzahlKlassen > 0){
                         klassen.put(name, code);
                     }
-                    name = line.substring(13);
+                    name = line.substring(14);
                     anzahlKlassen++;
+                    line = reader.readLine();
                     continue;
                 }
-                code += line;
+                code += line + "\n";
                 line = reader.readLine();
             }
             klassen.put(name, code);

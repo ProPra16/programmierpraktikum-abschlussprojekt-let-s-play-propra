@@ -3,7 +3,6 @@ package de.hhu.propra;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.Collection;
-
 import javafx.beans.property.SimpleStringProperty;
 import vk.core.api.*;
 
@@ -12,11 +11,13 @@ public class CodeTester extends SimpleStringProperty {
 	private String nameAufgabe;
 	private JavaStringCompiler compiler;
     private static Main main;
+    private boolean getestetUndFehlerfrei;
 	private String code;
     private static Tracker tracker;
 	private String dateiname;
 
 	public void testCode(String code, String tabname){
+        getestetUndFehlerfrei = false;
         set("");
 		this.code = code;
 		dateiname = tabname;
@@ -41,7 +42,7 @@ public class CodeTester extends SimpleStringProperty {
 
 		logging(code, letzterStandCode, fehler, fehlerString(unit));
         set(externCompile());
-
+        getestetUndFehlerfrei = true;
         letzterStandCode = code;
 	}
 
@@ -101,7 +102,12 @@ public class CodeTester extends SimpleStringProperty {
 		path = path.substring(0,path.lastIndexOf("/"));
 		path = path.substring(0,path.lastIndexOf("/"));
 		path = path.substring(0,path.lastIndexOf("/"));
-		path += "/build/libs";
+        if (path.endsWith("build")){
+            path+="/libs";
+        }
+        else {
+            path += "/build/libs";
+        }
 
 		return path;
 	}
@@ -124,5 +130,17 @@ public class CodeTester extends SimpleStringProperty {
 
     public void setMain(Main main){
         this.main = main;
+    }
+
+    public void setLetzterStandCode(String code){
+        this.letzterStandCode = code;
+    }
+
+    public boolean isGetestetUndFehlerfrei(){
+        return this.getestetUndFehlerfrei;
+    }
+
+    public void setGetestetUndFehlerfrei(boolean bool){
+        this.getestetUndFehlerfrei = bool;
     }
 }

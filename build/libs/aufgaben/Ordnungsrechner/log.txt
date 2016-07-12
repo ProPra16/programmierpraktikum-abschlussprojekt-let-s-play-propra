@@ -1,0 +1,17 @@
+17:22:50: 
+	Hinzugefuegt: 
+		//Neue Klasse Ordnungsrechner
+		public class Ordnungsrechner {
+			// main-Methode und bstOrdnung-Methode implementieren
+		}
+12.07.2016 17:55:36: 
+	Geaendert:
+		alt: //Neue Klasse Ordnungsrechner
+		neu: //Neue Klasse  OrdnungsrechnerNicht kompilierbar, Fehler:Dein Quellcode enthaelt Fehler
+	in Zeile 3: class Ordnungsrechner is public, should be declared in a file named Ordnungsrechner.java: 
+	public class Ordnungsrechner {
+	
+12.07.2016 17:57:08: 
+	Geaendert:
+		alt: //Neue KlasseOrdnungsrechner
+		neu: //Neue Klasse Ordnungsrechner

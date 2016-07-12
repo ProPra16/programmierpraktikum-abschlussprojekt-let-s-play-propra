@@ -41,9 +41,7 @@ public class XMLParser {
 		}
 
 	public Aufgabe[] getAufgaben(){
-		
-		
-		
+
 		NodeList ExerciseList = WurzelExercise.getElementsByTagName("exercise");
 		Aufgabe[] aufgaben = new Aufgabe[ExerciseList.getLength()];
 		for (int i = 0; i < ExerciseList.getLength(); i++) {

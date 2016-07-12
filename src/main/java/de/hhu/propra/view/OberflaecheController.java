@@ -115,20 +115,20 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             for (String key : klassen.keySet()){
                 Tab temp = new Tab(key);
                 temp.setContent(new TextArea(klassen.get(key)));
-                letzterStandCode += "//Neue Klasse" + key + "\n" + klassen.get(key);
+                codeTester.setLetzterStandCode("//Neue Klasse" + key + "\n" + klassen.get(key));
                 codeTab.getTabs().add(temp);
             }
         } else {
             for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
                 Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
                 temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
-                letzterStandCode += "//Neue Klasse" + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText();
+                codeTester.setLetzterStandCode("//Neue Klasse" + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText());
                 codeTab.getTabs().add(temp);
             }
 			for (int i = 0; i < aktaufgabe.getInterfaace().length; i++) {
 				Tab temp = new Tab(aktaufgabe.getInterfaace()[i].getName());
 				temp.setContent(new TextArea(aktaufgabe.getInterfaace()[i].getText()));
-				letzterStandCode += "//Neues Interface\n" + aktaufgabe.getInterfaace()[i].getText();
+                codeTester.setLetzterStandCode("//Neues Interface\n" + aktaufgabe.getInterfaace()[i].getText());
 				codeTab.getTabs().add(temp);
 			}
         }
@@ -247,7 +247,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 }
                 i++;
             }
-            System.out.println(code);
             codeTester.testCode(code, tabs.get(0).getText());
         }
     }
@@ -270,13 +269,14 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			Image image = new Image("refactor.png");
 			phasenIcon.setImage(image);
             codeTester.phasenWechselMerken("green");
-            code=false;
+            code = false;
             refactor = true;
 			if (babystepsAnimation != null) {
 				babystepsAnimation.stop();
 			}
 			babystepsAnimation = null;
 			babytime.set(0);
+            codeTester.setGetestetUndFehlerfrei(false);
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         }
         else {
