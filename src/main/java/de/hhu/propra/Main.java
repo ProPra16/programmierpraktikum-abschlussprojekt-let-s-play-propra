@@ -160,8 +160,12 @@ public class Main extends Application {
             path = path.substring(0, path.lastIndexOf("/"));
             path = path.substring(0, path.lastIndexOf("/"));
             path = path.substring(0, path.lastIndexOf("/"));
-            path += "/build/libs";
-
+            if (path.endsWith("build")){
+                path+="/libs";
+            }
+            else {
+                path += "/build/libs";
+            }
             return path;
         } catch (Exception e) {
             return "Fehler beim Pfad ermitteln: " + e;
@@ -181,6 +185,7 @@ public class Main extends Application {
     public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
         setNameAufgabe(aufgaben[k].getName());
         ofController.aktualisiereCodeTab(aufgaben[k]);
+        ofController.aktualisieretestTextArea(aufgaben[k]);
         return aufgaben[k];
     }
 

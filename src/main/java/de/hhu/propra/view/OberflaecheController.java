@@ -118,9 +118,18 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 letzterStandCode += "//Neue Klasse\n" + aktaufgabe.getKlassen()[i].getText();
                 codeTab.getTabs().add(temp);
             }
+			for (int i = 0; i < aktaufgabe.getInterfaace().length; i++) {
+				Tab temp = new Tab(aktaufgabe.getInterfaace()[i].getName());
+				temp.setContent(new TextArea(aktaufgabe.getInterfaace()[i].getText()));
+				letzterStandCode += "//Neues Interface\n" + aktaufgabe.getInterfaace()[i].getText();
+				codeTab.getTabs().add(temp);
+			}
         }
 	}
+	public void aktualisieretestTextArea(Aufgabe aktaufgabe){
+		testTextArea.setText(aktaufgabe.getTest().getText());
 
+}
 
 	public void setButtonTextTest(){
 		Label phaseLabel = new Label("Phase wechseln");
