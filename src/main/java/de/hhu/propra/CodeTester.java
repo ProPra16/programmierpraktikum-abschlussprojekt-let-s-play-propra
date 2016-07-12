@@ -31,15 +31,15 @@ public class CodeTester extends SimpleStringProperty {
             set("Fehler beim Codeausfuehren: " + e);
 			return;
 		}
-
+        writeExternalFile();
 		if (compiler.getCompilerResult().hasCompileErrors()){
 			set(fehlerString(unit));
 			fehler = true;
 			logging(code, letzterStandCode, fehler, fehlerString(unit));
             return;
 		}
+
 		logging(code, letzterStandCode, fehler, fehlerString(unit));
-        writeExternalFile();
         set(externCompile());
 
         letzterStandCode = code;

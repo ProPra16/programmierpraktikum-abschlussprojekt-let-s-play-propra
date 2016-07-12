@@ -19,6 +19,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -110,12 +111,18 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
 		codeTab.getTabs().clear();
         if (main.schonBearbeitet(aktaufgabe.getName())){
-            main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
+            HashMap<String, String> klassen = main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
+            for (String key : klassen.keySet()){
+                Tab temp = new Tab(key);
+                temp.setContent(new TextArea(klassen.get(key)));
+                letzterStandCode += "//Neue Klasse" + key + "\n" + klassen.get(key);
+                codeTab.getTabs().add(temp);
+            }
         } else {
             for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
                 Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
                 temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
-                letzterStandCode += "//Neue Klasse\n" + aktaufgabe.getKlassen()[i].getText();
+                letzterStandCode += "//Neue Klasse" + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText();
                 codeTab.getTabs().add(temp);
             }
 			for (int i = 0; i < aktaufgabe.getInterfaace().length; i++) {
@@ -128,8 +135,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	}
 	public void aktualisieretestTextArea(Aufgabe aktaufgabe){
 		testTextArea.setText(aktaufgabe.getTest().getText());
-
-}
+    }
 
 	public void setButtonTextTest(){
 		Label phaseLabel = new Label("Phase wechseln");
@@ -224,14 +230,24 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             TextArea codeArea;
             for(Tab tab : tabs){
                 codeArea = (TextArea) tab.getContent();
-                if (i < tabs.size()-1){
-                    code += "//Neue Klasse";
+                if (i > 0){
+                    String codeOhnePublicSubklassen = "";
+                    if(codeArea.getText().contains("public class")) {
+                        codeOhnePublicSubklassen = codeArea.getText().replace("public class", "class");
+                        codeArea.setText(codeOhnePublicSubklassen);
+                    } else if(codeArea.getText().contains("public abstract class")) {
+                        codeOhnePublicSubklassen = codeArea.getText().replace("public abstract class", "abstract class");
+                    }
+                }
+                if (i < tabs.size()){
+                    code += "//Neue Klasse " + tab.getText();
                 }
                 if (codeArea.getText().trim().length() > 0){
                     code += "\n" + codeArea.getText() + "\n";
                 }
                 i++;
             }
+            System.out.println(code);
             codeTester.testCode(code, tabs.get(0).getText());
         }
     }
@@ -306,7 +322,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     }
 
     public void reicheMainWeiter(Main main){
-        codeTester.setMain(main);
+        this.main = main;
+		codeTester.setMain(main);
     }
 
 	public CodeTester getCodeTester(){

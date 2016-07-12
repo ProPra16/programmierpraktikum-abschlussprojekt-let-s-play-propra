@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class Main extends Application {
@@ -239,20 +240,31 @@ public class Main extends Application {
 
     }
 
-    public String getCode(String nameAufgabe, String nameHauptklasse){
+    public HashMap<String, String> getCode(String nameAufgabe, String nameHauptklasse){
+        HashMap<String, String> klassen = new HashMap<>();
+        String name = "";
         String code = "";
+        int anzahlKlassen = 0;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/" + nameHauptklasse + ".java"));
             String line = reader.readLine();
 
             while (line != null){
+                if (line.startsWith("//Neue Klasse")){
+                    if(anzahlKlassen > 0){
+                        klassen.put(name, code);
+                    }
+                    name = line.substring(13);
+                    anzahlKlassen++;
+                    continue;
+                }
                 code += line;
                 line = reader.readLine();
             }
-            return code;
+            klassen.put(name, code);
         } catch (Exception e) {
             System.err.println("Fehler beim Quellcodeladen: " + e);
         }
-        return code;
+        return klassen;
     }
 }
