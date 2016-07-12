@@ -36,7 +36,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	private boolean babysteps = true;
 	private boolean babystepsFail = false;
-	private int start = 10;
+	public static int start = 10;
 	private IntegerProperty babytime = new SimpleIntegerProperty(start);
 	private Timeline babystepsAnimation = new Timeline();
 

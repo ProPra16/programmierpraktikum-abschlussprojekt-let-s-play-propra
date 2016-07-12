@@ -10,6 +10,7 @@
             <items>
               <MenuItem text="Neue Übung" onAction="#handleMenueNeueUebung"/>
                   <MenuItem text="Programm beenden" onAction="#handleMenueClose"/>
+                      <MenuItem text="Einstellungen" onAction="#handleMenueEinstellungen"/>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Katalog">
@@ -27,6 +28,7 @@
           <Menu mnemonicParsing="false" text="Hilfe">
             <items>
               <MenuItem mnemonicParsing="false" text="Aufgabenstellung" onAction="#handleMenueAufgabenstellung" />
+                <MenuItem text="Gebrauchsanweisung" onAction="#handleMenueGebrauchsanweisung"/>
             </items>
           </Menu>
         </menus>
