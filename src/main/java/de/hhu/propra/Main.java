@@ -52,7 +52,6 @@ public class Main extends Application {
         if (startconfig[KATALOG].equals("")) {
             initialStart();
         } else{
-            initialStart();
             aktuellerKatalog = new File(getCorrectPath()+"/aufgaben/aufgaben.xml");
         }
         try {
