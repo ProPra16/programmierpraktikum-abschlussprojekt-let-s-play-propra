@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public class HauptfensterController {
 
-    private static Main main;
+    public static Main main;
     private CodeTester codeTester;
     private Aufgabe aktuelleaufgabe;
     private static Stage stage;
@@ -118,9 +118,9 @@ public class HauptfensterController {
                 confirmation.setTitle("Achtung");
                 confirmation.setHeaderText("Ihre Eingabe wurde gespeichert.");
                 confirmation.showAndWait();
-                System.out.println(dauer);
+                //System.out.println(dauer);
                 OberflaecheController.start = dauer;
-                System.out.println(OberflaecheController.start); //Wie soll die Wertübergabe erfolgen?
+                //System.out.println(OberflaecheController.start); //Wie soll die Wertübergabe erfolgen?
             }
             catch (NumberFormatException dauer){
                 Alert warning = new Alert(Alert.AlertType.WARNING);

@@ -6,16 +6,25 @@ import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+
+import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -35,13 +44,15 @@ public class Main extends Application {
     private Aufgabe[] aufgaben;
 
     @Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("TDDT");
+        this.primaryStage.setFullScreen(false);
 
         if (startconfig[KATALOG].equals("")) {
             initialStart();
         } else{
+            initialStart();
             aktuellerKatalog = new File(getCorrectPath()+"/aufgaben/aufgaben.xml");
         }
         try {
@@ -126,8 +137,67 @@ public class Main extends Application {
         }
     }
 
-    private void initialStart(){
+    private void initialStart() throws Exception {
         katalogLaden();
+        //Stage stage = new Stage();
+
+        //Label label = new Label("Willkommen!");
+        //label.setFont(Font.font("Verdana", 50));
+
+        //Button select = new Button("Katalog auswählen");
+        //Button manual = new Button("Gebrauchsanweisung");
+        //Button exit = new Button("Programm beenden");
+
+        //select.setOnAction(new EventHandler<ActionEvent>(){
+
+        //public void handle(ActionEvent AE) {
+        //katalogLaden();
+        //stage.close();
+        //}
+        //});
+
+        //manual.setOnAction(new EventHandler<ActionEvent>(){
+
+        //public void handle(ActionEvent AE) {
+        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        //alert.setTitle("Gebrauchsanweisung");
+        //alert.setHeaderText(null);
+        //alert.setResizable(true);
+        //alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
+        //alert.showAndWait();
+                //Gebrauchsanweisung anzeigen
+        //}
+        //});
+
+        //exit.setOnAction(new EventHandler<ActionEvent>(){
+
+        //public void handle(ActionEvent AE) {
+        //HauptfensterController.main.beenden();
+        //}
+        //});
+
+        //HBox hbox = new HBox();
+        //VBox vbox = new VBox();
+        //hbox.getChildren().addAll(select, manual, exit);
+        //hbox.setSpacing(10);
+        //hbox.setPadding(new Insets(0, 0, 0, 50));
+        //vbox.getChildren().add(label);
+        //vbox.setPadding(new Insets(30, 0, 30, 75));
+
+        //BorderPane pane = new BorderPane();
+        //pane.setCenter(hbox);
+        //pane.setLeft(button);
+        //pane.setTop(vbox);
+
+        //Scene scene = new Scene(pane);
+
+        //stage.setTitle("Startbildschirm");
+        //stage.centerOnScreen();
+        //stage.setHeight(250.0);
+        //stage.setWidth(500.0);
+        //stage.setScene(scene);
+        //stage.setAlwaysOnTop(false);
+        //stage.show();
 
         // TODO: Kerstin und David
         /* 1) Gebrauchsanweisung anzeigen
@@ -135,7 +205,10 @@ public class Main extends Application {
 
            4) Mit entsprechenden Inhalten das Hauptprogramm wählen: Ebenfalls von Freddy erledigt...
           */
+        //Ich habe das Willkommensfenster fertig, allerdings stürzt das Programm noch ab, wenn die Config leer ist.
+        //Daher habe ich den Code erstmal auskommentiert.
     }
+
 
     public void katalogLaden(){
         FileChooser fileChooser = new FileChooser();
@@ -202,7 +275,7 @@ public class Main extends Application {
     public void aenderungenSpeichern(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Zwischenergebnisse speichern?");
-        alert.setHeaderText("Moechtest du deine Aenderunden speichern?");
+        alert.setHeaderText("Möchtest du deine Änderungen speichern?");
 
         ButtonType bTJa = new ButtonType("Ja");
         ButtonType bTNein = new ButtonType("Nein");
