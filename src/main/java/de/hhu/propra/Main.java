@@ -170,7 +170,7 @@ public class Main extends Application {
 
         public void handle(ActionEvent AE) {
             aktuellerKatalog = new File("");
-            beenden();
+            System.exit(20);
         }
         });
 
@@ -197,7 +197,7 @@ public class Main extends Application {
         stage.setAlwaysOnTop(false);
         stage.setOnCloseRequest(close ->{
             aktuellerKatalog = new File("");
-            beenden();
+            System.exit(20);
         });
         stage.showAndWait();
 
