@@ -1,9 +1,6 @@
 package de.hhu.propra.view;
 
-import de.hhu.propra.CodeTester;
-import de.hhu.propra.Main;
-import de.hhu.propra.TestTester;
-import de.hhu.propra.Tracker;
+import de.hhu.propra.*;
 import de.hhu.propra.model.Aufgabe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -76,7 +73,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	public void initialize(URL url, ResourceBundle resourceBundle){
 		this.codeTester = new CodeTester();
 		this.testTester = new TestTester();
-		konsoleTextArea.textProperty().bind(codeTester);
+		konsoleTextArea.textProperty().bind(testTester);
 		setButtonTextTest();
 		fuelleCodeTab();
 		Image image = new Image("test.png");
@@ -228,7 +225,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel = false;
 		List<Tab> tabs  = codeTab.getTabs();
         if (test){
-			try{testTester.testeTests(testTextArea.getText(),tabs.get(0).getText());
+			try{testTester.testeTests(testTextArea.getText(),main.getNameAufgabe());
 
 			}
 			catch (Exception e){
@@ -271,6 +268,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         // TODO wechsel nur dann true wenn es okay ist zu wechseln
         wechsel=true;
         if (test) {
+			if (TestTester.getAnzahlFehlerhaft()!=1)
 			babystepsFail = false;
 			Image image = new Image("code.png");
 			phasenIcon.setImage(image);
@@ -284,6 +282,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
             letzterStandCodeBS = "";
             letzterStandCodeBS = testTextArea.getText();
+			konsoleTextArea.textProperty().bind(codeTester);
         }
         else if (code) {
 			Image image = new Image("refactor.png");
@@ -316,6 +315,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             tracker.logPhasenWechsel("refactor");
 			starteTimer();
             letzterStandCodeBS = "";
+			konsoleTextArea.textProperty().bind(testTester);
             for (Tab tab : codeTab.getTabs()){
                 TextArea inhalt = (TextArea) tab.getContent();
                 letzterStandCodeBS += inhalt.getText();
