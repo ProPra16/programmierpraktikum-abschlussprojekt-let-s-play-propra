@@ -18,7 +18,6 @@ import java.util.Date;
 public class Tracker {
     private OberflaecheController ofController;
     private long millisBeiLetztemWechsel;
-    private long millisSeitStart;
     private long millisBeiStart;
     private long millisInGreen = 0;
     private long millisInRefactor = 0;
@@ -50,10 +49,23 @@ public class Tracker {
          millisBeiLetztemWechsel = aktuelleMillis;
     }
 
+    public void logPhasenWechsel(String von){
+        switch(von.toLowerCase()){
+            case "green":
+                log("Phase gewechselt: " + millisInGreen/1000 + "s fuer diese Green-Phase benoetigt");
+                break;
+            case "red":
+                log("Phase gewechselt: " + millisInRed/1000 + "s fuer diese Red-Phase benoetigt");
+                break;
+            case "refactor":
+                log("Phase gewechselt: " + millisInRefactor/1000 + "s fuer diese Refactor-Phase benoetigt");
+                break;
+        }
+    }
+
     public void analyseErstellen(String von){
         phasenWechselMerken(von);
-        millisSeitStart = System.currentTimeMillis() - millisBeiStart;
-        analyse = new Analyse(millisSeitStart, millisInGreen, millisInRed, millisInRefactor);
+        analyse = new Analyse(millisInGreen, millisInRed, millisInRefactor);
     }
 
     public Analyse getAnalyse(){
@@ -153,7 +165,6 @@ public class Tracker {
                         aenderung += "\n\t\t" + aktZeileAlterCode;
                     } else {
                         aenderung += "\n\tGeloescht: " + "\n\t\t" + aktZeileAlterCode;
-                        System.out.println("Hier");
                         lastChange = "deleted";
                     }
                 }
@@ -161,7 +172,7 @@ public class Tracker {
             }
 
             if (isFehler){
-                aenderung += "Nicht kompilierbar, Fehler:" + fehler;
+                aenderung += "\nNicht kompilierbar, Fehler:" + fehler;
             }
 
             if (!log(aenderung)){
@@ -180,5 +191,9 @@ public class Tracker {
 
     public void setNameAufgabe(String nameAufgabe){
         this.nameAufgabe = nameAufgabe;
+    }
+
+    public void setMillisBeiLetztemWechsel(long millisBeiLetztemWechsel){
+        this.millisBeiLetztemWechsel = millisBeiLetztemWechsel;
     }
 }

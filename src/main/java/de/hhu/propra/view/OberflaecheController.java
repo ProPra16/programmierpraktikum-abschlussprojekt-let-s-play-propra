@@ -110,28 +110,31 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
 		codeTab.getTabs().clear();
+		String letzterStandCode = "";
         if (main.schonBearbeitet(aktaufgabe.getName())){
             HashMap<String, String> klassen = main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
             for (String key : klassen.keySet()){
                 Tab temp = new Tab(key);
                 temp.setContent(new TextArea(klassen.get(key)));
-                codeTester.setLetzterStandCode("//Neue Klasse" + key + "\n" + klassen.get(key));
+				letzterStandCode += "//Neue Klasse " + key + "\n" + klassen.get(key);
                 codeTab.getTabs().add(temp);
             }
+
         } else {
             for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
                 Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
                 temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
-                codeTester.setLetzterStandCode("//Neue Klasse" + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText());
+				letzterStandCode += "//Neue Klasse " + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText();
                 codeTab.getTabs().add(temp);
             }
 			for (int i = 0; i < aktaufgabe.getInterfaace().length; i++) {
 				Tab temp = new Tab(aktaufgabe.getInterfaace()[i].getName());
 				temp.setContent(new TextArea(aktaufgabe.getInterfaace()[i].getText()));
-                codeTester.setLetzterStandCode("//Neues Interface\n" + aktaufgabe.getInterfaace()[i].getText());
+				letzterStandCode += "//Neues Interface " + aktaufgabe.getInterfaace()[i].getName() + "\n" + aktaufgabe.getInterfaace()[i].getText();
 				codeTab.getTabs().add(temp);
 			}
         }
+		codeTester.setLetzterStandCode(letzterStandCode);
 	}
 	public void aktualisieretestTextArea(Aufgabe aktaufgabe){
 		testTextArea.setText(aktaufgabe.getTest().getText());
@@ -207,13 +210,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		this.main = main;
 	}
 
-    public void beenden(){
-        // CodeTester.writeExternalFile(codeTextMainArea.getText());
-		// codeTester.speichern();
-        System.exit(20);
-        // TODO: Katalog und Aufgabe in die Konfigdatei schreiben!
-    }
-
     public void handlePruefen() {
         wechsel = false;
         if (test){
@@ -256,19 +252,19 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel=true;
         if (test) {
 			babystepsFail = false;
-            codeTester.phasenWechselMerken("red");
 			Image image = new Image("code.png");
 			phasenIcon.setImage(image);
             setButtonTextCode();
             disableTestArea();
             test = false;
             code = true;
+            tracker.phasenWechselMerken("red");
+            tracker.logPhasenWechsel("red");
 			starteTimer();
         }
         else if (code) {
 			Image image = new Image("refactor.png");
 			phasenIcon.setImage(image);
-            codeTester.phasenWechselMerken("green");
             code = false;
             refactor = true;
 			if (babystepsAnimation != null) {
@@ -276,6 +272,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			}
 			babystepsAnimation = null;
 			babytime.set(0);
+            tracker.phasenWechselMerken("green");
+            tracker.logPhasenWechsel("green");
             codeTester.setGetestetUndFehlerfrei(false);
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         }
@@ -283,11 +281,12 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			babystepsFail = false;
 			Image image = new Image("test.png");
 			phasenIcon.setImage(image);
-			codeTester.phasenWechselMerken("refactor");
             disableCodeArea();
             setButtonTextTest();
             test=true;
             refactor = false;
+            tracker.phasenWechselMerken("refactor");
+            tracker.logPhasenWechsel("refactor");
 			starteTimer();
         }
     }
@@ -307,6 +306,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	}
 
     public void reicheTrackerWeiter (Tracker tracker){
+        this.tracker = tracker;
         codeTester.setTracker(tracker);
     }
 

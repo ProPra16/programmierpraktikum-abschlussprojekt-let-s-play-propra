@@ -30,20 +30,6 @@ Breite zwischen 0.5-1.5m; Länge zwischen 1-3m; Gewicht zwischen 5-20kg; keine B
 Eine Person soll lediglich ihr Gewicht speichern können und dieses mitteilen können. Das Gewicht sollte zwischen 40 und 120kg liegen.
 </description>
 <classes>
-
-<class Klassenname="FaehreUI">
-public class FaehreUI {
-
-	public static void main (String[] args){
-		// Neue Fähre erstellen, Simulation des Aufladens implementieren (Fahrzeuge erstellen mit jeweiligen Insassen etc. und verladen, Ausgabe nach Beenden des Ladevorgangs
-	}
-	
-	public static double zufallszahl(double min, double max){
-		
-	}
-}
-</class>
-
 <class Klassenname="Faehre">
 import java.util.ArrayList;
 
@@ -96,13 +82,24 @@ public class Faehre {
 
 </class>
 
+<class Klassenname="FaehreUI">
+public class FaehreUI {
+
+	public static void main (String[] args){
+		// Neue Fähre erstellen, Simulation des Aufladens implementieren (Fahrzeuge erstellen mit jeweiligen Insassen etc. und verladen, Ausgabe nach Beenden des Ladevorgangs
+	}
+	
+	public static double zufallszahl(double min, double max){
+		
+	}
+}
+</class>
 
 <class Klassenname="Fahrrad">
 public class Fahrrad extends Fahrzeug {
 
 }
 </class>
-
 
 <class Klassenname="Fahrzeug">
 public abstract class Fahrzeug {
@@ -186,11 +183,6 @@ Lagern Sie die Rechnung in eine Funktion public int bstOrdnung(int p, int a) aus
 <class Klassenname="Ordnungsrechner">
 public class Ordnungsrechner {
 	// main-Methode und bstOrdnung-Methode implementieren
-	
-	public static void main (String[] args){
-		
-	}
-	
 }
 </class>
 </classes>
@@ -277,10 +269,6 @@ Abfrage der Stringrepraesentation: a.toString()
 <classes>
 <class Klassenname="Kunde">
 public class Kunde{
-
-	public static void main (String[] args){
-	}
-	
     /* Hier Instanzvariablen implemetieren */
     
     /* Hier Konstruktor implemetieren*/
@@ -377,6 +365,40 @@ Kaltblüter
 </description>
 
 <classes>
+<class Klassenname="Fisch">
+
+public class Fisch extends Lebewesen implements Wasser,Wechselwarm {
+    
+}
+</class>
+
+<class Klassenname="Insekt">
+public class Insekt extends Lebewesen implements Wechselwarm,Flug{
+}
+</class>
+
+<class Klassenname="Lebewesen">
+public class Lebewesen {
+}
+</class>
+
+<class Klassenname="Reptil">
+public class Reptil extends Lebewesen implements Wechselwarm{
+}
+</class>
+
+
+<class Klassenname="Saeugetier">
+public class Saeugetier extends Lebewesen implements Warmblueter{
+}
+</class>
+
+
+<class Klassenname="Vogel">
+public class Vogel extends Lebewesen implements Flug,Warmblueter{
+}
+</class>
+
 
 <class Klassenname="AnimalStats">
 import java.io.*;
@@ -424,43 +446,6 @@ public class AnimalStats {
     }
 }
 </class>
-
-<class Klassenname="Fisch">
-
-public class Fisch extends Lebewesen implements Wasser,Wechselwarm {
-    
-}
-</class>
-
-<class Klassenname="Insekt">
-public class Insekt extends Lebewesen implements Wechselwarm,Flug{
-}
-</class>
-
-<class Klassenname="Lebewesen">
-public class Lebewesen {
-}
-</class>
-
-<class Klassenname="Reptil">
-public class Reptil extends Lebewesen implements Wechselwarm{
-}
-</class>
-
-
-<class Klassenname="Saeugetier">
-public class Saeugetier extends Lebewesen implements Warmblueter{
-}
-</class>
-
-
-<class Klassenname="Vogel">
-public class Vogel extends Lebewesen implements Flug,Warmblueter{
-}
-</class>
-
-
-
 
 </classes>
 
@@ -579,11 +564,7 @@ Diese Aufgabe wurde in Anlehnung an Aufgabe 5 der Probeklausur gestellt.
 <class Klassenname="Auto">
 public class Auto implements Fahrzeug{
 
-//implementieren Sie hier ihre Lösung
-
-    public static void main(String[]args){
-
-   }
+   //implementieren Sie hier ihre Lösung
 }
 
 </class>

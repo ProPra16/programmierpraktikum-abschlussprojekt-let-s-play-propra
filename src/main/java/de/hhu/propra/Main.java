@@ -136,80 +136,78 @@ public class Main extends Application {
         }
     }
 
-    private void initialStart() throws Exception {
-        katalogLaden();
-        //Stage stage = new Stage();
+    private void initialStart() {
+        Stage stage = new Stage();
 
-        //Label label = new Label("Willkommen!");
-        //label.setFont(Font.font("Verdana", 50));
+        Label label = new Label("Willkommen!");
+        label.setFont(Font.font("Verdana", 50));
+        Button select = new Button("Katalog auswählen");
+        Button manual = new Button("Gebrauchsanweisung");
+        Button exit = new Button("Programm beenden");
 
-        //Button select = new Button("Katalog auswählen");
-        //Button manual = new Button("Gebrauchsanweisung");
-        //Button exit = new Button("Programm beenden");
+        select.setOnAction(new EventHandler<ActionEvent>(){
 
-        //select.setOnAction(new EventHandler<ActionEvent>(){
+        public void handle(ActionEvent AE) {
+            if (katalogLaden())
+                stage.close();
+        }
+        });
 
-        //public void handle(ActionEvent AE) {
-        //katalogLaden();
-        //stage.close();
-        //}
-        //});
-
-        //manual.setOnAction(new EventHandler<ActionEvent>(){
-
-        //public void handle(ActionEvent AE) {
-        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        //alert.setTitle("Gebrauchsanweisung");
-        //alert.setHeaderText(null);
-        //alert.setResizable(true);
-        //alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
-        //alert.showAndWait();
+        manual.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent AE) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Gebrauchsanweisung");
+                alert.setHeaderText(null);
+                alert.setResizable(true);
+                alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
+                alert.showAndWait();
                 //Gebrauchsanweisung anzeigen
-        //}
-        //});
+        }
+        });
 
-        //exit.setOnAction(new EventHandler<ActionEvent>(){
+        exit.setOnAction(new EventHandler<ActionEvent>(){
 
-        //public void handle(ActionEvent AE) {
-        //HauptfensterController.main.beenden();
-        //}
-        //});
+        public void handle(ActionEvent AE) {
+            aktuellerKatalog = new File("");
+            beenden();
+        }
+        });
 
-        //HBox hbox = new HBox();
-        //VBox vbox = new VBox();
-        //hbox.getChildren().addAll(select, manual, exit);
-        //hbox.setSpacing(10);
-        //hbox.setPadding(new Insets(0, 0, 0, 50));
-        //vbox.getChildren().add(label);
-        //vbox.setPadding(new Insets(30, 0, 30, 75));
+        HBox hbox = new HBox();
+        VBox vbox = new VBox();
+        hbox.getChildren().addAll(select, manual, exit);
+        hbox.setSpacing(10);
+        hbox.setPadding(new Insets(0, 0, 0, 50));
+        vbox.getChildren().add(label);
+        vbox.setPadding(new Insets(30, 0, 30, 75));
 
-        //BorderPane pane = new BorderPane();
-        //pane.setCenter(hbox);
-        //pane.setLeft(button);
-        //pane.setTop(vbox);
+        BorderPane pane = new BorderPane();
+        pane.setCenter(hbox);
+        // pane.setLeft(button);
+        pane.setTop(vbox);
 
-        //Scene scene = new Scene(pane);
+        Scene scene = new Scene(pane);
 
-        //stage.setTitle("Startbildschirm");
-        //stage.centerOnScreen();
-        //stage.setHeight(250.0);
-        //stage.setWidth(500.0);
-        //stage.setScene(scene);
-        //stage.setAlwaysOnTop(false);
-        //stage.show();
+        stage.setTitle("Startbildschirm");
+        stage.centerOnScreen();
+        stage.setHeight(250.0);
+        stage.setWidth(500.0);
+        stage.setScene(scene);
+        stage.setAlwaysOnTop(false);
+        stage.setOnCloseRequest(close ->{
+            aktuellerKatalog = new File("");
+            beenden();
+        });
+        stage.showAndWait();
 
-        // TODO: Kerstin und David
-        /* 1) Gebrauchsanweisung anzeigen
-           2) Erstmalige Katalogauswahl: Erledigt von Freddy
-
-           4) Mit entsprechenden Inhalten das Hauptprogramm wählen: Ebenfalls von Freddy erledigt...
-          */
-        //Ich habe das Willkommensfenster fertig, allerdings stürzt das Programm noch ab, wenn die Config leer ist.
-        //Daher habe ich den Code erstmal auskommentiert.
+        /* TODO: David
+            1) Gebrauchsanweisung anzeigen
+            2) FXML Datei hierraus erstellen? Wäre die schönere Variante
+        */
     }
 
 
-    public void katalogLaden(){
+    public boolean katalogLaden(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Katalogdatei auswählen");
 
@@ -217,13 +215,9 @@ public class Main extends Application {
 
         if (tempFile != null){
             setAktuellerKatalog(tempFile);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Keine Datei ausgewaehlt");
-            alert.setHeaderText("Bitte Datei auswaehlen!");
-            alert.showAndWait();
-            katalogLaden();
+            return true;
         }
+        return false;
     }
 
     public static String getCorrectPath() {
@@ -246,19 +240,16 @@ public class Main extends Application {
     }
 
     private void ladeAufgaben(File katalog){
-        try {
-            // String path = getCorrectPath() + "/aufgaben/aufgaben.xml";
-            XMLParser parser= new XMLParser(katalog);
-            aufgaben = parser.getAufgaben();
-        } catch (Exception e){
-            System.out.print("Fehler");
-        }
+        // String path = getCorrectPath() + "/aufgaben/aufgaben.xml";
+        XMLParser parser= new XMLParser(katalog);
+        aufgaben = parser.getAufgaben();
     }
 
     public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
         setNameAufgabe(aufgaben[k].getName());
         ofController.aktualisiereCodeTab(aufgaben[k]);
         ofController.aktualisieretestTextArea(aufgaben[k]);
+        tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
         return aufgaben[k];
     }
 
@@ -284,6 +275,7 @@ public class Main extends Application {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == bTJa){
             ofController.getCodeTester().writeExternalFile();
+            tracker.phasenWechselMerken(ofController.getAktuellePhase());
             // TODO: Viktor, hier müssten dann noch alle Tests geschrieben werden!
         }
     }

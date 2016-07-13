@@ -36,7 +36,7 @@ public class XMLParser {
 	}catch (ParserConfigurationException | SAXException | IOException e) {
 		// TODO Auto-generated catch block
 		//e.printStackTrace();
-			System.out.println("KONNTE DATEI NICHT FINDEN");
+			System.err.println("Konnte Aufgabenkatalog nicht laden: " + e);
 	}
 		}
 

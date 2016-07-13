@@ -11,14 +11,12 @@ public class Analyse {
     private int sekundenInGreen = 0;
     private int sekundenInRed = 0;
     private int sekundenInRefactor = 0;
-    private int sekundenSeitStart;
     private PieChart chart;
 
-    public Analyse(long millisSeitStart, long millisInGreen, long millisInRed, long millisInRefactor){
+    public Analyse(long millisInGreen, long millisInRed, long millisInRefactor){
         this.sekundenInGreen = (int) millisInGreen/1000;
         this.sekundenInRefactor = (int) millisInRefactor/1000;
         this.sekundenInRed = (int) millisInRed/1000;
-        this.sekundenSeitStart = (int) millisSeitStart/1000;
         erstelleDiagramm();
     }
 
