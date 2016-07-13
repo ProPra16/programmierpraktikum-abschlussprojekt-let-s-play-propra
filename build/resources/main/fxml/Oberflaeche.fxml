@@ -66,9 +66,9 @@
 					<center>
 						<TextArea fx:id = "testTextArea" text = "test" maxWidth = "Infinity" />
 					</center>
-					<bottom>
+					<!--<bottom>
 						<ListView fx:id="fehlgeschlageneTests" maxHeight="100"/>
-					</bottom>
+					</bottom>-->
 				</BorderPane>
 			</children>
 		</HBox>

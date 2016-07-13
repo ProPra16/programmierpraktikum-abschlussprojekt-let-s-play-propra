@@ -2,6 +2,7 @@ package de.hhu.propra.view;
 
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
+import de.hhu.propra.TestTester;
 import de.hhu.propra.model.Aufgabe;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +26,7 @@ public class HauptfensterController {
 
     public static Main main;
     private CodeTester codeTester;
+    private TestTester testTester;
     private Aufgabe aktuelleaufgabe;
     private static Stage stage;
     private String aktuelleraufgabenname="keine Aufgabe ausgewählt";
@@ -35,6 +37,7 @@ public class HauptfensterController {
 
     @FXML
     private Menu babymenu;
+
 
     @FXML
     private void handleMenueNeueUebung(){
@@ -151,6 +154,9 @@ public class HauptfensterController {
 
     public void setCodeTester(CodeTester codeTester){
         this.codeTester = codeTester;
+    }
+    public void setTestTester(TestTester testTester){
+        this.testTester = testTester;
     }
 
     public void setStage (Stage stage){

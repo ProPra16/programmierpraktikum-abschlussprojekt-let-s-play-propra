@@ -33,6 +33,7 @@ public class CodeTester extends SimpleStringProperty {
 			return;
 		}
         writeExternalFile();
+		tracker.aktuellerStandtoFile();
 		if (compiler.getCompilerResult().hasCompileErrors()){
 			set(fehlerString(unit));
 			fehler = true;
@@ -143,4 +144,4 @@ public class CodeTester extends SimpleStringProperty {
     public void setGetestetUndFehlerfrei(boolean bool){
         this.getestetUndFehlerfrei = bool;
     }
-}
+	}

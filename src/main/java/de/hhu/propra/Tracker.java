@@ -3,10 +3,7 @@ package de.hhu.propra;
 import de.hhu.propra.model.Analyse;
 import de.hhu.propra.view.OberflaecheController;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,13 +49,19 @@ public class Tracker {
     public void logPhasenWechsel(String von){
         switch(von.toLowerCase()){
             case "green":
-                log("Phase gewechselt: " + millisInGreen/1000 + "s fuer diese Green-Phase benoetigt");
+                if (!log("Phase gewechselt: " + millisInGreen/1000 + "s fuer diese Green-Phase benoetigt")){
+                    System.err.println(getFehler());
+                }
                 break;
             case "red":
-                log("Phase gewechselt: " + millisInRed/1000 + "s fuer diese Red-Phase benoetigt");
+                if(!log("Phase gewechselt: " + millisInRed/1000 + "s fuer diese Red-Phase benoetigt")){
+                    System.err.println(getFehler());
+                }
                 break;
             case "refactor":
-                log("Phase gewechselt: " + millisInRefactor/1000 + "s fuer diese Refactor-Phase benoetigt");
+                if(!log("Phase gewechselt: " + millisInRefactor/1000 + "s fuer diese Refactor-Phase benoetigt")){
+                    System.err.println(getFehler());
+                }
                 break;
         }
     }
@@ -211,8 +214,12 @@ public class Tracker {
 
     public void aktuellerStandtoFile(){
         try{
-            FileWriter writer = new FileWriter(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/trackerstand.txt");
-            writer.write(millisInRed + "\n" + millisInGreen + "\n" + millisInRefactor);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/trackerstand.txt"));
+            writer.write(Long.toString(millisInRed));
+            writer.newLine();
+            writer.write(Long.toString(millisInGreen));
+            writer.newLine();
+            writer.write(Long.toString(millisInRefactor));
             writer.close();
         } catch (Exception e){
             System.err.println("Fehler beim Speichern des Trackerstandes: " +e);

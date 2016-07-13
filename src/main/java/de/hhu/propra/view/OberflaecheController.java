@@ -1,8 +1,6 @@
 package de.hhu.propra.view;
 
-import de.hhu.propra.CodeTester;
-import de.hhu.propra.Main;
-import de.hhu.propra.Tracker;
+import de.hhu.propra.*;
 import de.hhu.propra.model.Aufgabe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,8 +34,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	private boolean code = false;
     private String letzterStandCode="";
     private String letzterStandCodeBS ="";
+	private String letzterStandTestCode="";
     private boolean refactor = false;
 	private static CodeTester codeTester;
+	private static TestTester testTester;
     private static Tracker tracker;
 
 	private boolean babysteps = main.getAktAufgabe().getValueBabysteps();
@@ -66,9 +66,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	
 	@FXML
 	private TextArea konsoleTextArea;
-	
-	@FXML
-	private ListView<String> fehlgeschlageneTests;
 
 	@FXML
 	private Label timerLabel;
@@ -76,12 +73,15 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
 		this.codeTester = new CodeTester();
-		konsoleTextArea.textProperty().bind(codeTester);
+		this.testTester = new TestTester();
+		konsoleTextArea.textProperty().bind(testTester);
 		setButtonTextTest();
 		fuelleCodeTab();
 		Image image = new Image("test.png");
 		phasenIcon.setImage(image);
 		starteTimer();
+		enableCodeArea();
+		disableCodeArea();
 	}
 
 	public void starteTimer(){
@@ -116,12 +116,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		TextArea codeTextMainArea = new TextArea("code");
 		testMain.setContent(codeTextMainArea);
 
-		Tab testClass = new Tab("TestKlasse");
-		TextArea codeTextKlasseArea = new TextArea("code");
-		testClass.setContent(codeTextKlasseArea);
-
 		codeTab.getTabs().add(testMain);
-		codeTab.getTabs().add(testClass);
 	}
 
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
@@ -158,6 +153,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 				codeTab.getTabs().add(temp);
 			}
         }
+		disableCodeArea();
+        code = false;
+        refactor = false;
+        test = true;
 		codeTester.setLetzterStandCode(letzterStandCode);
 	}
 	public void aktualisieretestTextArea(Aufgabe aktaufgabe){
@@ -236,15 +235,17 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
     public void handlePruefen() {
         wechsel = false;
+		List<Tab> tabs  = codeTab.getTabs();
         if (test){
-            // TODO fehlgeschlagene Tests in die Liste einfügen
-			// leert die Liste damit neu befüllt werden kann
-			fehlgeschlageneTests.getItems().clear();
-            for (int i=0;i<5;i++) {
-                fehlgeschlageneTests.getItems().add(i+"");
-            }
+			try{testTester.testeTests(testTextArea.getText(),main.getNameAufgabe());
+
+			}
+			catch (Exception e){
+
+			}
+
         } else {
-            List<Tab> tabs  = codeTab.getTabs();
+
             String code = "";
             int i = 0;
             TextArea codeArea;
@@ -279,6 +280,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         // TODO wechsel nur dann true wenn es okay ist zu wechseln
         wechsel=true;
         if (test) {
+			if (TestTester.getAnzahlFehlerhaft()!=1)
 			babystepsFail = false;
 			Image image = new Image("code.png");
 			phasenIcon.setImage(image);
@@ -292,6 +294,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
             letzterStandCodeBS = "";
             letzterStandCodeBS = testTextArea.getText();
+			konsoleTextArea.textProperty().bind(codeTester);
         }
         else if (code) {
 			Image image = new Image("refactor.png");
@@ -312,8 +315,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 letzterStandCodeBS += inhalt.getText();
             }
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
-        }
-        else {
+        } else {
 			babystepsFail = false;
 			Image image = new Image("test.png");
 			phasenIcon.setImage(image);
@@ -325,6 +327,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             tracker.logPhasenWechsel("refactor");
 			starteTimer();
             letzterStandCodeBS = "";
+			konsoleTextArea.textProperty().bind(testTester);
             for (Tab tab : codeTab.getTabs()){
                 TextArea inhalt = (TextArea) tab.getContent();
                 letzterStandCodeBS += inhalt.getText();
@@ -347,6 +350,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     public void reicheTrackerWeiter (Tracker tracker){
         this.tracker = tracker;
         codeTester.setTracker(tracker);
+		testTester.setTracker(tracker);
     }
 
     public String getAktuellePhase(){
