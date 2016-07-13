@@ -7,8 +7,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -136,13 +143,14 @@ public class HauptfensterController {
     }
 
     @FXML
-    public void handleMenueGebrauchsanweisung() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Gebrauchsanweisung");
-        alert.setHeaderText(null);
-        alert.setResizable(true);
-        alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
-        alert.showAndWait();
+    public void handleMenueGebrauchsanweisung() throws IOException{
+        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        //alert.setTitle("Gebrauchsanweisung");
+        //alert.setHeaderText(null);
+        //alert.setResizable(true);
+        //alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
+        //alert.showAndWait();
+        Desktop.getDesktop().open(new File("TDDT-Handbuch.pdf"));
     }
 
     public void setMain(Main main){

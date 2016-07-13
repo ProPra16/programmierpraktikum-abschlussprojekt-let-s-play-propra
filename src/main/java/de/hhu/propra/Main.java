@@ -157,13 +157,16 @@ public class Main extends Application {
 
         manual.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent AE) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Gebrauchsanweisung");
-                alert.setHeaderText(null);
-                alert.setResizable(true);
-                alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
-                alert.showAndWait();
+                //Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                //alert.setTitle("Gebrauchsanweisung");
+                //alert.setHeaderText(null);
+                //alert.setResizable(true);
+                //alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
+                //alert.showAndWait();
                 //Gebrauchsanweisung anzeigen
+                try {
+                    Desktop.getDesktop().open(new File("TDDT-Handbuch.pdf")); }
+                catch (IOException ioe) {}
         }
         });
 
