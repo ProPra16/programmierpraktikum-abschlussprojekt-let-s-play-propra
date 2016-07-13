@@ -125,9 +125,7 @@ public class HauptfensterController {
                 confirmation.setTitle("Achtung");
                 confirmation.setHeaderText("Ihre Eingabe wurde gespeichert.");
                 confirmation.showAndWait();
-                //System.out.println(dauer);
                 OberflaecheController.start = dauer;
-                //System.out.println(OberflaecheController.start); //Wie soll die Wertübergabe erfolgen?
             }
             catch (NumberFormatException dauer){
                 Alert warning = new Alert(Alert.AlertType.WARNING);
@@ -144,12 +142,6 @@ public class HauptfensterController {
 
     @FXML
     public void handleMenueGebrauchsanweisung() throws IOException{
-        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        //alert.setTitle("Gebrauchsanweisung");
-        //alert.setHeaderText(null);
-        //alert.setResizable(true);
-        //alert.getDialogPane().setContent(new TextArea("Hier wird später die Gebrauchsanweisung angezeigt."));
-        //alert.showAndWait();
         Desktop.getDesktop().open(new File("TDDT-Handbuch.pdf"));
     }
 
