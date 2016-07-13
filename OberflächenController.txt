@@ -1,5 +1,5 @@
 Inhalt:
-Der OberflaechenController enthält verschiedene Methoden, die zur Interaktion der anderen Klassen mit der Benutzeroberfläche nötig sind, unter anderem diejenigen, die durch die Oberflaeche.fxml festgelegt wurden.
+Der OberflaechenController ist die Controller-Klasse zu Oberflaeche.fxml und enthält deshalb verschiedene Methoden, die zur Interaktion der anderen Klassen mit der Benutzeroberfläche nötig sind.
  
 Aufgabe:
 Die Klasse OberflaechenController verwaltet die meisten der Oberflächeninhalte (außer Menü und Erster-Start-Fenster) und unter anderem die durch die zugehörige .fmxl festgelegten Methoden zur Interaktion mit den dort beschriebenen Teilen der Benutzeroberfläche. Sie stellt zusätzliche, nicht in der .fxml-Datei festgehaltene Funktionen, wie z.B. das An- und Ausschalten der Test- und Code-Sektion, zur Verfügung.
