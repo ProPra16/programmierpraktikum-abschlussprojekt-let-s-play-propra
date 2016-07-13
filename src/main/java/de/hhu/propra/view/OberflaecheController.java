@@ -2,6 +2,7 @@ package de.hhu.propra.view;
 
 import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
+import de.hhu.propra.TestTester;
 import de.hhu.propra.Tracker;
 import de.hhu.propra.model.Aufgabe;
 import javafx.fxml.FXML;
@@ -35,8 +36,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	private boolean code = false;
     private String letzterStandCode="";
     private String letzterStandCodeBS ="";
+	private String letzterStandTestCode="";
     private boolean refactor = false;
 	private static CodeTester codeTester;
+	private static TestTester testTester;
     private static Tracker tracker;
 
 	private boolean babysteps = true;
@@ -75,6 +78,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
 		this.codeTester = new CodeTester();
+		this.testTester = new TestTester();
 		konsoleTextArea.textProperty().bind(codeTester);
 		setButtonTextTest();
 		fuelleCodeTab();
@@ -224,15 +228,20 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
     public void handlePruefen() {
         wechsel = false;
+		List<Tab> tabs  = codeTab.getTabs();
         if (test){
             // TODO fehlgeschlagene Tests in die Liste einfügen
 			// leert die Liste damit neu befüllt werden kann
 			fehlgeschlageneTests.getItems().clear();
-            for (int i=0;i<5;i++) {
-                fehlgeschlageneTests.getItems().add(i+"");
-            }
+			try{testTester.testeTests(testTextArea.getText(),tabs.get(0).getText());
+
+			}
+			catch (Exception e){
+
+			}
+
         } else {
-            List<Tab> tabs  = codeTab.getTabs();
+
             String code = "";
             int i = 0;
             TextArea codeArea;
@@ -337,6 +346,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     public void reicheTrackerWeiter (Tracker tracker){
         this.tracker = tracker;
         codeTester.setTracker(tracker);
+		testTester.setTracker(tracker);
     }
 
     public String getAktuellePhase(){
