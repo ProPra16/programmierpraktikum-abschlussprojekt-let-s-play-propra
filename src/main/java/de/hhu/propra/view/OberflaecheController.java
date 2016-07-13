@@ -82,6 +82,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		Image image = new Image("test.png");
 		phasenIcon.setImage(image);
 		starteTimer();
+		enableCodeArea();
+		disableCodeArea();
 	}
 
 	public void starteTimer(){
@@ -105,12 +107,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		TextArea codeTextMainArea = new TextArea("code");
 		testMain.setContent(codeTextMainArea);
 
-		Tab testClass = new Tab("TestKlasse");
-		TextArea codeTextKlasseArea = new TextArea("code");
-		testClass.setContent(codeTextKlasseArea);
-
 		codeTab.getTabs().add(testMain);
-		codeTab.getTabs().add(testClass);
 	}
 
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
@@ -147,6 +144,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 				codeTab.getTabs().add(temp);
 			}
         }
+		disableCodeArea();
+        code = false;
+        refactor = false;
+        test = true;
 		codeTester.setLetzterStandCode(letzterStandCode);
 	}
 	public void aktualisieretestTextArea(Aufgabe aktaufgabe){
@@ -303,8 +304,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 letzterStandCodeBS += inhalt.getText();
             }
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
-        }
-        else {
+        } else {
 			babystepsFail = false;
 			Image image = new Image("test.png");
 			phasenIcon.setImage(image);

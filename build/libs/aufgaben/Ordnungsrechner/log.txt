@@ -1,0 +1,15 @@
+13.07.2016 21:09:06: Phase gewechselt: 12s fuer diese Refactor-Phase benoetigt
+13.07.2016 21:15:18: Phase gewechselt: 7s fuer diese Red-Phase benoetigt
+13.07.2016 21:15:20: Phase gewechselt: 10s fuer diese Green-Phase benoetigt
+13.07.2016 21:15:22: Phase gewechselt: 7s fuer diese Refactor-Phase benoetigt
+13.07.2016 21:28:04: Phase gewechselt: 9s fuer diese Green-Phase benoetigt
+13.07.2016 21:28:10: Phase gewechselt: 10s fuer diese Refactor-Phase benoetigt
+13.07.2016 21:28:12: Phase gewechselt: 6s fuer diese Red-Phase benoetigt
+13.07.2016 21:29:37: Phase gewechselt: 4s fuer diese Red-Phase benoetigt
+13.07.2016 21:29:38: Phase gewechselt: 9s fuer diese Green-Phase benoetigt
+13.07.2016 21:29:38: Phase gewechselt: 6s fuer diese Refactor-Phase benoetigt
+13.07.2016 21:29:39: Phase gewechselt: 5s fuer diese Red-Phase benoetigt
+13.07.2016 21:29:39: Phase gewechselt: 9s fuer diese Green-Phase benoetigt
+13.07.2016 21:29:40: Phase gewechselt: 6s fuer diese Refactor-Phase benoetigt
+13.07.2016 21:29:40: Phase gewechselt: 6s fuer diese Red-Phase benoetigt
+13.07.2016 21:35:36: Phase gewechselt: 7s fuer diese Red-Phase benoetigt

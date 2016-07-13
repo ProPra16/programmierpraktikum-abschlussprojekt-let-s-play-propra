@@ -42,7 +42,6 @@ public class TestTester extends SimpleStringProperty {
     //notWorking.addAll(Testcompiler.getTestResult().getTestFailures());
     //Object[] meinArray = notWorking.toArray();
 
-
     try {
       Testcompiler.compileAndRunTests();
     } catch (Exception e) {
@@ -55,8 +54,6 @@ public class TestTester extends SimpleStringProperty {
       set(Rueckgabe(testUnit));
     }
     writeTest();
-
-
   }
 
   private void writeTest() {
