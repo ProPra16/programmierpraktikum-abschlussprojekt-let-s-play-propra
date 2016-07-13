@@ -28,14 +28,16 @@ public class TestTester extends SimpleStringProperty {
   private static Main main;
   private String letzterStandTestCode = "";
   private Collection<TestFailure> notWorking;
+  private static int fehlerhafteTests;
 
   public void testeTests(String derCode, String testName) {
     this.code = derCode;
     nameTest = testName;
     String ergebnis = "";
     //Tests.add(TestNr, new Test(DateiScanner));
-    dateiname=testName+"Test";
-    CompilationUnit testUnit = new CompilationUnit("Test", code, true);
+    dateiname=testName+"_Test";
+    System.out.println("Ich bin eine wichtige Aussage");
+    CompilationUnit testUnit = new CompilationUnit(dateiname, code, true);
 
     Testcompiler = CompilerFactory.getCompiler(testUnit);
     //Testcompiler.compileAndRunTests();
@@ -91,6 +93,7 @@ public class TestTester extends SimpleStringProperty {
     rueckgabeString += "Fehlgeschlagene Tests: " + Testcompiler.getTestResult().getNumberOfFailedTests();
     rueckgabeString += "\n";
     rueckgabeString += "Erfolgreiche Tests: " + Testcompiler.getTestResult().getNumberOfSuccessfulTests();
+    fehlerhafteTests=Testcompiler.getTestResult().getNumberOfFailedTests();
     rueckgabeString += "\n";
     rueckgabeString += "Ignorierte Tests: " + Testcompiler.getTestResult().getNumberOfIgnoredTests();
     return rueckgabeString;
@@ -104,6 +107,10 @@ public class TestTester extends SimpleStringProperty {
       fehler += error.getMessage() + "\n";
     }
     return fehler;
+  }
+  
+  public static int getAnzahlFehlerhaft(){
+    return fehlerhafteTests;
   }
 
   public void setKonsolenText(String text) {
