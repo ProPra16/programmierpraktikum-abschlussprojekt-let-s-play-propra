@@ -41,7 +41,7 @@ public class CodeTester extends SimpleStringProperty {
 		}
 
 		logging(code, letzterStandCode, fehler, fehlerString(unit));
-        set(externCompile());
+        set(externCompile() + "\nBuild succesfull: " + compiler.getCompilerResult().getCompileDuration().toMillis());
         getestetUndFehlerfrei = true;
         letzterStandCode = code;
 	}

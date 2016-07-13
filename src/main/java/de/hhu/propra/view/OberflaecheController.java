@@ -31,6 +31,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	private boolean test = true;
 	private boolean code = false;
     private String letzterStandCode="";
+    private String letzterStandCodeBS ="";
     private boolean refactor = false;
 	private static CodeTester codeTester;
     private static Tracker tracker;
@@ -110,7 +111,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
 		codeTab.getTabs().clear();
-		String letzterStandCode = "";
+		letzterStandCode = "";
         if (main.schonBearbeitet(aktaufgabe.getName())){
             HashMap<String, String> klassen = main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
             for (String key : klassen.keySet()){
@@ -119,7 +120,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 				letzterStandCode += "//Neue Klasse " + key + "\n" + klassen.get(key);
                 codeTab.getTabs().add(temp);
             }
-
         } else {
             for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
                 Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
@@ -233,6 +233,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                         codeArea.setText(codeOhnePublicSubklassen);
                     } else if(codeArea.getText().contains("public abstract class")) {
                         codeOhnePublicSubklassen = codeArea.getText().replace("public abstract class", "abstract class");
+                        codeArea.setText(codeOhnePublicSubklassen);
+                    } else if(codeArea.getText().contains("public interface")){
+                        codeOhnePublicSubklassen = codeArea.getText().replace("public interface", "interface");
+                        codeArea.setText(codeOhnePublicSubklassen);
                     }
                 }
                 if (i < tabs.size()){
@@ -261,6 +265,9 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             tracker.phasenWechselMerken("red");
             tracker.logPhasenWechsel("red");
 			starteTimer();
+
+            letzterStandCodeBS = "";
+            letzterStandCodeBS = testTextArea.getText();
         }
         else if (code) {
 			Image image = new Image("refactor.png");
@@ -275,6 +282,11 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             tracker.phasenWechselMerken("green");
             tracker.logPhasenWechsel("green");
             codeTester.setGetestetUndFehlerfrei(false);
+            letzterStandCodeBS = "";
+            for (Tab tab : codeTab.getTabs()){
+                TextArea inhalt = (TextArea) tab.getContent();
+                letzterStandCodeBS += inhalt.getText();
+            }
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         }
         else {
@@ -288,6 +300,11 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
             tracker.phasenWechselMerken("refactor");
             tracker.logPhasenWechsel("refactor");
 			starteTimer();
+            letzterStandCodeBS = "";
+            for (Tab tab : codeTab.getTabs()){
+                TextArea inhalt = (TextArea) tab.getContent();
+                letzterStandCodeBS += inhalt.getText();
+            }
         }
     }
 

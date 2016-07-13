@@ -37,6 +37,7 @@ public class Main extends Application {
     private HauptfensterController hfController;
     private File aktuellerKatalog;
     private String nameAufgabe = " ";
+    private Aufgabe aktAufgabe;
     private static Tracker tracker;
     private static String[] startconfig;
     private String katalog;
@@ -132,7 +133,7 @@ public class Main extends Application {
             popupStage.setScene(scene);
             popupStage.show();
         } catch (Exception e){
-            e.printStackTrace();
+            System.err.println("Unable to load resources: " + e);
         }
     }
 
@@ -247,6 +248,7 @@ public class Main extends Application {
 
     public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
         setNameAufgabe(aufgaben[k].getName());
+        aktAufgabe = aufgaben[k];
         ofController.aktualisiereCodeTab(aufgaben[k]);
         ofController.aktualisieretestTextArea(aufgaben[k]);
         tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
@@ -321,6 +323,8 @@ public class Main extends Application {
                 if (line.startsWith("//Neue Klasse")){
                     if(anzahlKlassen > 0){
                         klassen.put(name, code);
+                        name = "";
+                        code = "";
                     }
                     name = line.substring(14);
                     anzahlKlassen++;
@@ -335,5 +339,9 @@ public class Main extends Application {
             System.err.println("Fehler beim Quellcodeladen: " + e);
         }
         return klassen;
+    }
+
+    public Aufgabe getAktAufgabe(){
+        return this.aktAufgabe;
     }
 }

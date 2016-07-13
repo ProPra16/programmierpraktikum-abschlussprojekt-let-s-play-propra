@@ -83,7 +83,7 @@ public class Tracker {
             }
             writer.close();
         } catch (Exception e){
-            fehler = "Fehler beim loggen: " + e;
+            fehler = "Fehler beim Loggen: " + e;
             return false;
         }
         return true;
