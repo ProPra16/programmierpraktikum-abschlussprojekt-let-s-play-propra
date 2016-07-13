@@ -120,6 +120,10 @@ public class CodeTester extends SimpleStringProperty {
 		}
 	}
 
+	public void setKonsolenText(String text){
+		set(text);
+	}
+
     public void setTracker(Tracker tracker){
         this.tracker = tracker;
     }

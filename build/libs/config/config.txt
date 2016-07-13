@@ -1,1 +1,1 @@
-gewaehlterKatalog##letzteAufgabe# #
+gewaehlterKatalog#D:\WorkspaceIntellij\programmierpraktikum-abschlussprojekt-let-s-play-propra\build\libs\aufgaben\aufgaben.xml#letzteAufgabe#Ordnungsrechner#

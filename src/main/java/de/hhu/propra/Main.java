@@ -169,8 +169,7 @@ public class Main extends Application {
         exit.setOnAction(new EventHandler<ActionEvent>(){
 
         public void handle(ActionEvent AE) {
-            aktuellerKatalog = new File("");
-            beenden();
+            System.exit(20);
         }
         });
 
@@ -196,8 +195,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setAlwaysOnTop(false);
         stage.setOnCloseRequest(close ->{
-            aktuellerKatalog = new File("");
-            beenden();
+            System.exit(20);
         });
         stage.showAndWait();
 
@@ -251,7 +249,6 @@ public class Main extends Application {
         aktAufgabe = aufgaben[k];
         ofController.aktualisiereCodeTab(aufgaben[k]);
         ofController.aktualisieretestTextArea(aufgaben[k]);
-        tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
         return aufgaben[k];
     }
 
@@ -278,6 +275,7 @@ public class Main extends Application {
         if (result.get() == bTJa){
             ofController.getCodeTester().writeExternalFile();
             tracker.phasenWechselMerken(ofController.getAktuellePhase());
+            tracker.aktuellerStandtoFile();
             // TODO: Viktor, hier müssten dann noch alle Tests geschrieben werden!
         }
     }

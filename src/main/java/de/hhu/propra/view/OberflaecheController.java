@@ -17,7 +17,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -119,6 +122,15 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 temp.setContent(new TextArea(klassen.get(key)));
 				letzterStandCode += "//Neue Klasse " + key + "\n" + klassen.get(key);
                 codeTab.getTabs().add(temp);
+            }
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(main.getCorrectPath() + "/aufgaben/" + aktaufgabe.getName() + "/trackerstand.txt"));
+                tracker.setMillisInRed(Long.valueOf(reader.readLine()));
+                tracker.setMillisInGreen(Long.valueOf(reader.readLine()));
+                tracker.setMillisInRefactor(Long.valueOf(reader.readLine()));
+                tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
+            } catch (Exception e){
+                codeTester.setKonsolenText("Trackerstand konnte nicht geladen werden: " + e);
             }
         } else {
             for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {

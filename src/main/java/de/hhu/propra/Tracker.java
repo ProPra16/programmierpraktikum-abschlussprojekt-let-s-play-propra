@@ -196,4 +196,26 @@ public class Tracker {
     public void setMillisBeiLetztemWechsel(long millisBeiLetztemWechsel){
         this.millisBeiLetztemWechsel = millisBeiLetztemWechsel;
     }
+
+    public void setMillisInGreen(long millisInGreen){
+        this.millisInGreen = millisInGreen;
+    }
+
+    public void setMillisInRed(long millisInRed){
+        this.millisInRed = millisInRed;
+    }
+
+    public void setMillisInRefactor(long millisInRefactor){
+        this.millisInRefactor = millisInRefactor;
+    }
+
+    public void aktuellerStandtoFile(){
+        try{
+            FileWriter writer = new FileWriter(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/trackerstand.txt");
+            writer.write(millisInRed + "\n" + millisInGreen + "\n" + millisInRefactor);
+            writer.close();
+        } catch (Exception e){
+            System.err.println("Fehler beim Speichern des Trackerstandes: " +e);
+        }
+    }
 }
