@@ -96,6 +96,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         katalog = getCorrectPath() + "/aufgaben/aufgaben.xml";
         ladeAufgaben(aktuellerKatalog);
+
         for (int k=0; k < aufgaben.length;k++) {
             hfController.addAufgabe(k,aufgaben[k].getName(),aufgaben[k].getValueBabysteps());
         }
@@ -249,6 +250,7 @@ public class Main extends Application {
         aktAufgabe = aufgaben[k];
         ofController.aktualisiereCodeTab(aufgaben[k]);
         ofController.aktualisieretestTextArea(aufgaben[k]);
+        tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
         return aufgaben[k];
     }
 
@@ -291,7 +293,7 @@ public class Main extends Application {
             }
             writer.close();
         } catch (Exception e) {
-            System.err.println("Unable to save.");
+            System.err.println("Unable to save: " + e);
         }
         System.exit(20);
     }
