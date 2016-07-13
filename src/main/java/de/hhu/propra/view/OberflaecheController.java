@@ -4,6 +4,7 @@ import de.hhu.propra.CodeTester;
 import de.hhu.propra.Main;
 import de.hhu.propra.Tracker;
 import de.hhu.propra.model.Aufgabe;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -39,7 +40,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	private static CodeTester codeTester;
     private static Tracker tracker;
 
-	private boolean babysteps = true;
+	private boolean babysteps = main.getAktAufgabe().getValueBabysteps();
 	private boolean babystepsFail = false;
 	public static int start = 10;
 	private IntegerProperty babytime = new SimpleIntegerProperty(start);
@@ -85,6 +86,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	public void starteTimer(){
 		if (babysteps) {
+			timerLabel.setVisible(true);
 			if (babystepsAnimation != null) {
 				babystepsAnimation.stop();
 			}
@@ -93,9 +95,19 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			babystepsAnimation = new Timeline();
 			babystepsAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(start+1), new KeyValue(babytime, 0)));
 			babystepsAnimation.playFromStart();
-			if (babytime.getValue()==0){
-				babystepsFail = true;
-			}
+			babystepsAnimation.setOnFinished((ActionEvent e)->{
+				if(test){
+					test = false;
+					refactor = true;
+					handleWechseln();
+				} else { // kann nur code sein
+					code = false;
+					test = true;
+					handleWechseln();
+				}
+			});
+		} else {
+			timerLabel.setVisible(false);
 		}
 	}
 
@@ -323,10 +335,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	public void handleLeeren() {
 		wechsel = false;
 		if (test) {
-			// TODO auf Anfang zurücksetzen, e.g. testTextArea.setText(test)
 			testTextArea.setText("");
 		} else {
-			// TODO auf Anfang zurücksetzen, e.g. codeTextArea.setText(code)
 			for (Tab tab : codeTab.getTabs()) {
 				TextArea codeArea = (TextArea) tab.getContent();
 				codeArea.setText("");
