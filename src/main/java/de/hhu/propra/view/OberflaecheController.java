@@ -68,9 +68,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	
 	@FXML
 	private TextArea konsoleTextArea;
-	
-	@FXML
-	private ListView<String> fehlgeschlageneTests;
 
 	@FXML
 	private Label timerLabel;
@@ -230,9 +227,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel = false;
 		List<Tab> tabs  = codeTab.getTabs();
         if (test){
-            // TODO fehlgeschlagene Tests in die Liste einfügen
-			// leert die Liste damit neu befüllt werden kann
-			fehlgeschlageneTests.getItems().clear();
 			try{testTester.testeTests(testTextArea.getText(),tabs.get(0).getText());
 
 			}
