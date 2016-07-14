@@ -35,14 +35,10 @@ public class TestTester extends SimpleStringProperty {
     this.code = derCode;
     nameTest=testName;
     String ergebnis = "";
-    //Tests.add(TestNr, new Test(DateiScanner));
     dateiname=testName+"_Test";
     CompilationUnit testUnit = new CompilationUnit(dateiname, code, true);
 
     Testcompiler = CompilerFactory.getCompiler(testUnit);
-    //Testcompiler.compileAndRunTests();
-    //notWorking.addAll(Testcompiler.getTestResult().getTestFailures());
-    //Object[] meinArray = notWorking.toArray();
 
     try {
       Testcompiler.compileAndRunTests();
@@ -54,7 +50,6 @@ public class TestTester extends SimpleStringProperty {
     if (Testcompiler.getCompilerResult().hasCompileErrors()) {
       hatFehler=true;
       set(fehlerString(testUnit));
-      //logging(code,letzterStandTestCode,hatFehler,fehlerString(testUnit));
     } else {
       hatFehler=false;
       set(Rueckgabe(testUnit));

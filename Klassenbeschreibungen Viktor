@@ -1,0 +1,29 @@
+TestTester
+
+Wie der Name schon sagt, testet diese Klasse die Tests des Nutzers auf Bestehen und Programmierfehler.
+Zudem speichert Sie die Tests ab, damit man später weiterarbeiten kann.
+
+Einzelne Methoden:
+
+testeTests: testet die Tests
+
+writeTest: erzeugt die Datei und speichert den Test
+
+logging: gibt Informationen an den Tracker weiter
+
+fehlerString: Funktion zum ausgeben der Programmierfehler
+
+Rueckgabe: Funktion zum ausgeben wie viele Tests durchlaufen und wie viele "falsch" sind
+
+setKonsolenTest: gibt Text in die Konsole aus
+
+setTracjer: setzt den Tracker
+
+setLetzterStandCode: wird fürs logging benötigt
+
+getCorrectPath: setzt den Dateipfad
+
+setNameAufgabe: setzt den Namen des Tests anhand des Aufgabenamens
+
+
+
