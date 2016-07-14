@@ -4,6 +4,7 @@ import de.hhu.propra.model.Aufgabe;
 import de.hhu.propra.view.AnalysePopupController;
 import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
+import de.hhu.propra.view.StartbildschirmController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -141,63 +142,28 @@ public class Main extends Application {
         }
     }
 
-    private void initialStart() {
+    private void initialStart() throws Exception {
+        FXMLLoader SL = new FXMLLoader(getClass().getResource("/fxml/Startbildschirm.fxml"));
+        BorderPane startbildschirm = SL.load();
+        StartbildschirmController Controller = SL.getController();
+        Controller.setMain(this);
+
         Stage stage = new Stage();
 
-        Label label = new Label("Willkommen!");
-        label.setFont(Font.font("Verdana", 50));
-        Button select = new Button("Katalog auswählen");
-        Button manual = new Button("Gebrauchsanweisung");
-        Button exit = new Button("Programm beenden");
-
-        select.setOnAction(new EventHandler<ActionEvent>(){
-
-        public void handle(ActionEvent AE) {
-            if (katalogLaden())
-                stage.close();
-        }
-        });
-
-        manual.setOnAction(new EventHandler<ActionEvent>(){
-            public void handle(ActionEvent AE) {
-                try {
-                    Desktop.getDesktop().open(new File("TDDT-Handbuch.pdf")); }
-                catch (IOException ioe) {}
-        }
-        });
-
-        exit.setOnAction(new EventHandler<ActionEvent>(){
-
-        public void handle(ActionEvent AE) {
-            System.exit(20);
-        }
-        });
-
-        HBox hbox = new HBox();
-        VBox vbox = new VBox();
-        hbox.getChildren().addAll(select, manual, exit);
-        hbox.setSpacing(10);
-        hbox.setPadding(new Insets(0, 0, 0, 50));
-        vbox.getChildren().add(label);
-        vbox.setPadding(new Insets(30, 0, 30, 75));
-
-        BorderPane pane = new BorderPane();
-        pane.setCenter(hbox);
-        // pane.setLeft(button);
-        pane.setTop(vbox);
-
-        Scene scene = new Scene(pane);
+        Scene scene = new Scene(startbildschirm);
 
         stage.setTitle("Startbildschirm");
         stage.centerOnScreen();
         stage.setHeight(250.0);
         stage.setWidth(500.0);
         stage.setScene(scene);
+        Controller.setStage(stage);
         stage.setAlwaysOnTop(false);
         stage.setOnCloseRequest(close ->{
             System.exit(20);
         });
         stage.showAndWait();
+        if (Controller.isKatalogausgewaehlt()) return;
 
         /* TODO: David
             1) Gebrauchsanweisung anzeigen
