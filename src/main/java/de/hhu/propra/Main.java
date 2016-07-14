@@ -245,7 +245,7 @@ public class Main extends Application {
         setNameAufgabe(aufgaben[k].getName());
         aktAufgabe = aufgaben[k];
         ofController.aktualisiereCodeTab(aufgaben[k]);
-        ofController.aktualisieretestTextArea(aufgaben[k]);
+        ofController.aktualisiereTestTextArea(aufgaben[k]);
         tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
         return aufgaben[k];
     }

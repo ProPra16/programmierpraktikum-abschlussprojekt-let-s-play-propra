@@ -147,9 +147,26 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         test = true;
 		codeTester.setLetzterStandCode(letzterStandCode);
 	}
-	public void aktualisieretestTextArea(Aufgabe aktaufgabe){
+	public void aktualisiereTestTextArea(Aufgabe aktaufgabe){
+
+		testTextArea.clear();
+		letzterStandTestCode = "";
+		if (main.schonBearbeitet(aktaufgabe.getName())) {
+			System.out.println("AUFGABENTEXT"+aktaufgabe.getTest().getText());
+			letzterStandCode += aktaufgabe.getTest().getText();
+
+		}
+		else{
+			testTextArea.setText(aktaufgabe.getTest().getText());
+
+		}
+		disableCodeArea();
+		code = false;
+		refactor = false;
+		test = true;
+		testTester.setLetzterStandTestCode(letzterStandTestCode);
 		testTextArea.setText(aktaufgabe.getTest().getText());
-    }
+	}
 
 	public void setButtonTextTest(){
 		Label phaseLabel = new Label("Phase wechseln");
@@ -225,10 +242,12 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         wechsel = false;
 		List<Tab> tabs  = codeTab.getTabs();
         if (test){
-			try{testTester.testeTests(testTextArea.getText(),main.getNameAufgabe());
+			try{
+				testTester.testeTests(testTextArea.getText(),main.getNameAufgabe());
 
 			}
 			catch (Exception e){
+				System.out.println(e.toString());
 
 			}
 
@@ -268,40 +287,51 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         // TODO wechsel nur dann true wenn es okay ist zu wechseln
         wechsel=true;
         if (test) {
-			if (TestTester.getAnzahlFehlerhaft()!=1)
-			babystepsFail = false;
-			Image image = new Image("code.png");
-			phasenIcon.setImage(image);
-            setButtonTextCode();
-            disableTestArea();
-            test = false;
-            code = true;
-            tracker.phasenWechselMerken("red");
-            tracker.logPhasenWechsel("red");
-			starteTimer();
+			if (TestTester.getAnzahlFehlerhaft()==1) {
 
-            letzterStandCodeBS = "";
-            letzterStandCodeBS = testTextArea.getText();
-			konsoleTextArea.textProperty().bind(codeTester);
+
+				babystepsFail = false;
+				Image image = new Image("code.png");
+				phasenIcon.setImage(image);
+				setButtonTextCode();
+				disableTestArea();
+				test = false;
+				code = true;
+				tracker.phasenWechselMerken("red");
+				tracker.logPhasenWechsel("red");
+				starteTimer();
+
+				letzterStandCodeBS = "";
+				letzterStandCodeBS = testTextArea.getText();
+				konsoleTextArea.textProperty().bind(codeTester);
+			}
+			else {
+				konsoleTextArea.appendText("\n Es darf nur genau ein Test fehlschlagen!");
+			}
         }
         else if (code) {
-			Image image = new Image("refactor.png");
-			phasenIcon.setImage(image);
-            code = false;
-            refactor = true;
-			if (babystepsAnimation != null) {
-				babystepsAnimation.stop();
+			if (codeTester.isGetestetUndFehlerfrei()) {
+				Image image = new Image("refactor.png");
+				phasenIcon.setImage(image);
+				code = false;
+				refactor = true;
+				if (babystepsAnimation != null) {
+					babystepsAnimation.stop();
+				}
+				babystepsAnimation = null;
+				babytime.set(0);
+				tracker.phasenWechselMerken("green");
+				tracker.logPhasenWechsel("green");
+				codeTester.setGetestetUndFehlerfrei(false);
+				letzterStandCodeBS = "";
+				for (Tab tab : codeTab.getTabs()) {
+					TextArea inhalt = (TextArea) tab.getContent();
+					letzterStandCodeBS += inhalt.getText();
+				}
 			}
-			babystepsAnimation = null;
-			babytime.set(0);
-            tracker.phasenWechselMerken("green");
-            tracker.logPhasenWechsel("green");
-            codeTester.setGetestetUndFehlerfrei(false);
-            letzterStandCodeBS = "";
-            for (Tab tab : codeTab.getTabs()){
-                TextArea inhalt = (TextArea) tab.getContent();
-                letzterStandCodeBS += inhalt.getText();
-            }
+			else if (testTester.getAnzahlFehlerhaft()==0){
+				konsoleTextArea.appendText("Der Code muss funktionieren");
+			}
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         } else {
 			babystepsFail = false;
