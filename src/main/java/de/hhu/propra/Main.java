@@ -41,6 +41,7 @@ public class Main extends Application {
     private Aufgabe aktAufgabe;
     private static Tracker tracker;
     private static CodeTester codeTester;
+    private static TestTester testTester;
     private static String[] startconfig;
     private String katalog;
 	private static int KATALOG = 1;
@@ -107,6 +108,7 @@ public class Main extends Application {
         BorderPane oberflaeche = obL.load();
         ofController = obL.getController();
         this.codeTester = ofController.getCodeTester();
+        this.testTester = ofController.getTestTester();
         ofController.setMain(this);
         hauptfenster.setCenter(oberflaeche);
 
@@ -222,6 +224,7 @@ public class Main extends Application {
     }
 
     public void setNameAufgabe(String nameAufgabe){
+        testTester.setNameAufgabe(nameAufgabe);
         tracker.setNameAufgabe(nameAufgabe);
         codeTester.setNameAufgabe(nameAufgabe);
         this.nameAufgabe = nameAufgabe;
@@ -244,9 +247,10 @@ public class Main extends Application {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == bTJa){
             codeTester.writeExternalFile(ofController.getCode());
+            testTester.writeTest(ofController.getTestCode());
             tracker.phasenWechselMerken(ofController.getAktuellePhase());
             tracker.aktuellerStandtoFile();
-            // TODO: Viktor, hier müssten dann noch alle Tests geschrieben werden!
+
         }
     }
 

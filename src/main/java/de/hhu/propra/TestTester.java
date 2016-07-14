@@ -49,12 +49,12 @@ public class TestTester extends SimpleStringProperty {
     } catch (Exception e) {
       set("Fehler beim Testausfuehren!" + e.toString());
     }
-    writeTest();
+    writeTest(code);
     tracker.aktuellerStandtoFile();
     if (Testcompiler.getCompilerResult().hasCompileErrors()) {
       hatFehler=true;
       set(fehlerString(testUnit));
-      logging(code,letzterStandTestCode,hatFehler,fehlerString(testUnit));
+      //logging(code,letzterStandTestCode,hatFehler,fehlerString(testUnit));
     } else {
       hatFehler=false;
       set(Rueckgabe(testUnit));
@@ -64,8 +64,9 @@ public class TestTester extends SimpleStringProperty {
     letzterStandTestCode=code;
   }
 
-  private void writeTest() {
+  public void writeTest(String testCode) {
     try {
+      dateiname=nameTest+"_Test";
       String path = getCorrectPath() + "/aufgaben/" + nameTest + "/";
       File subdir = new File(path);
       if (!subdir.exists()) {
@@ -76,7 +77,7 @@ public class TestTester extends SimpleStringProperty {
       }
 
       FileWriter writer = new FileWriter(path + dateiname + ".java");
-      writer.write(code);
+      writer.write(testCode);
       writer.close();
     } catch (Exception e) {
       set("Konnte keine externen Dateien erstellen: " + e);
@@ -124,9 +125,6 @@ public class TestTester extends SimpleStringProperty {
     this.tracker = tracker;
   }
 
-  public void setMain(Main main) {
-    this.main = main;
-  }
 
   public void setLetzterStandTestCode(String code) {
     this.letzterStandTestCode = code;
@@ -144,5 +142,9 @@ public class TestTester extends SimpleStringProperty {
     }
 
     return path;
+  }
+
+  public void setNameAufgabe(String nameAufgabe) {
+    this.nameTest = nameAufgabe;
   }
 }
