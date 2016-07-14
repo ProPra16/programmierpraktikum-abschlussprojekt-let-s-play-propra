@@ -6,26 +6,13 @@ import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
 import de.hhu.propra.view.StartbildschirmController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-
-import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -166,11 +153,6 @@ public class Main extends Application {
         });
         stage.showAndWait();
         if (Controller.isKatalogausgewaehlt()) return;
-
-        /* TODO: David
-            1) Gebrauchsanweisung anzeigen
-            2) FXML Datei hierraus erstellen? Wäre die schönere Variante
-        */
     }
 
 
