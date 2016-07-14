@@ -10,7 +10,6 @@ public class CodeTester extends SimpleStringProperty {
     private String letzterStandCode = "";
 	private String nameAufgabe;
 	private JavaStringCompiler compiler;
-    private static Main main;
     private boolean getestetUndFehlerfrei;
 	private String code;
     private static Tracker tracker;
@@ -22,7 +21,6 @@ public class CodeTester extends SimpleStringProperty {
 		this.code = code;
 		dateiname = tabname;
 		boolean fehler = false;
-        nameAufgabe = main.getNameAufgabe();
 		CompilationUnit unit = new CompilationUnit(dateiname, code, false);
 		compiler = CompilerFactory.getCompiler(unit);
 
@@ -32,7 +30,7 @@ public class CodeTester extends SimpleStringProperty {
             set("Fehler beim Codeausfuehren: " + e);
 			return;
 		}
-        writeExternalFile();
+        writeExternalFile(code);
 		tracker.aktuellerStandtoFile();
 		if (compiler.getCompilerResult().hasCompileErrors()){
 			set(fehlerString(unit));
@@ -79,7 +77,7 @@ public class CodeTester extends SimpleStringProperty {
 		return fehler;
 	}
 
-    public void writeExternalFile() {
+    public void writeExternalFile(String code) {
 		try {
 			String path = getCorrectPath() + "/aufgaben/" + nameAufgabe + "/";
 			File subdir = new File(path);
@@ -129,9 +127,6 @@ public class CodeTester extends SimpleStringProperty {
         this.tracker = tracker;
     }
 
-    public void setMain(Main main){
-        this.main = main;
-    }
 
     public void setLetzterStandCode(String code){
         this.letzterStandCode = code;
@@ -143,5 +138,13 @@ public class CodeTester extends SimpleStringProperty {
 
     public void setGetestetUndFehlerfrei(boolean bool){
         this.getestetUndFehlerfrei = bool;
+    }
+
+	public void setNameAufgabe(String nameAufgabe){
+		this.nameAufgabe = nameAufgabe;
+	}
+
+    public void setDateiname(String dateiname){
+        this.dateiname = dateiname;
     }
 	}

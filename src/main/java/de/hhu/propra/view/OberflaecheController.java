@@ -110,13 +110,18 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	public void aktualisiereCodeTab(Aufgabe aktaufgabe){
 		codeTab.getTabs().clear();
 		letzterStandCode = "";
-        if (main.schonBearbeitet(aktaufgabe.getName())){
-            HashMap<String, String> klassen = main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
-            for (String key : klassen.keySet()){
-                Tab temp = new Tab(key);
-                temp.setContent(new TextArea(klassen.get(key)));
-				letzterStandCode += "//Neue Klasse " + key + "\n" + klassen.get(key);
-                codeTab.getTabs().add(temp);
+        if (main.schonBearbeitet(aktaufgabe.getName())) {
+            File hauptklasse = new File(main.getCorrectPath() + "/aufgaben/" + aktaufgabe.getName() + "/" + aktaufgabe.getKlassen()[0].getName() + ".java");
+            if (hauptklasse.exists()) {
+                HashMap<String, String> klassen = main.getCode(aktaufgabe.getName(), aktaufgabe.getKlassen()[0].getName());
+                for (String key : klassen.keySet()) {
+                    Tab temp = new Tab(key);
+                    temp.setContent(new TextArea(klassen.get(key)));
+                    letzterStandCode += "//Neue Klasse " + key + "\n" + klassen.get(key);
+                    codeTab.getTabs().add(temp);
+                }
+            } else {
+                ladeAufgabeGrundzustand(aktaufgabe);
             }
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(main.getCorrectPath() + "/aufgaben/" + aktaufgabe.getName() + "/trackerstand.txt"));
@@ -124,41 +129,45 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
                 tracker.setMillisInGreen(Long.valueOf(reader.readLine()));
                 tracker.setMillisInRefactor(Long.valueOf(reader.readLine()));
                 tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
-            } catch (Exception e){
+            } catch (Exception e) {
                 codeTester.setKonsolenText("Trackerstand konnte nicht geladen werden: " + e);
             }
+            return;
         } else {
-            for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
-                Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
-                temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
-				letzterStandCode += "//Neue Klasse " + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText();
-                codeTab.getTabs().add(temp);
-            }
-			for (int i = 0; i < aktaufgabe.getInterfaace().length; i++) {
-				Tab temp = new Tab(aktaufgabe.getInterfaace()[i].getName());
-				temp.setContent(new TextArea(aktaufgabe.getInterfaace()[i].getText()));
-				letzterStandCode += "//Neues Interface " + aktaufgabe.getInterfaace()[i].getName() + "\n" + aktaufgabe.getInterfaace()[i].getText();
-				codeTab.getTabs().add(temp);
-			}
+            ladeAufgabeGrundzustand(aktaufgabe);
         }
+
 		disableCodeArea();
         code = false;
         refactor = false;
         test = true;
 		codeTester.setLetzterStandCode(letzterStandCode);
 	}
+
+    private void ladeAufgabeGrundzustand(Aufgabe aktaufgabe){
+        for (int i = 0; i < aktaufgabe.getKlassen().length; i++) {
+            Tab temp = new Tab(aktaufgabe.getKlassen()[i].getName());
+            temp.setContent(new TextArea(aktaufgabe.getKlassen()[i].getText()));
+            letzterStandCode += "//Neue Klasse " + aktaufgabe.getKlassen()[i].getName() + "\n" + aktaufgabe.getKlassen()[i].getText();
+            codeTab.getTabs().add(temp);
+        }
+
+        for (int i = 0; i < aktaufgabe.getInterfaace().length; i++) {
+            Tab temp = new Tab(aktaufgabe.getInterfaace()[i].getName());
+            temp.setContent(new TextArea(aktaufgabe.getInterfaace()[i].getText()));
+            letzterStandCode += "//Neues Interface " + aktaufgabe.getInterfaace()[i].getName() + "\n" + aktaufgabe.getInterfaace()[i].getText();
+            codeTab.getTabs().add(temp);
+        }
+    }
+
 	public void aktualisiereTestTextArea(Aufgabe aktaufgabe){
 
 		testTextArea.clear();
 		letzterStandTestCode = "";
 		if (main.schonBearbeitet(aktaufgabe.getName())) {
-			System.out.println("AUFGABENTEXT"+aktaufgabe.getTest().getText());
 			letzterStandCode += aktaufgabe.getTest().getText();
-
-		}
-		else{
+		} else{
 			testTextArea.setText(aktaufgabe.getTest().getText());
-
 		}
 		disableCodeArea();
 		code = false;
@@ -240,47 +249,49 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
     public void handlePruefen() {
         wechsel = false;
-		List<Tab> tabs  = codeTab.getTabs();
+
         if (test){
 			try{
 				testTester.testeTests(testTextArea.getText(),main.getNameAufgabe());
-
 			}
 			catch (Exception e){
 				System.out.println(e.toString());
-
 			}
-
         } else {
-
-            String code = "";
-            int i = 0;
-            TextArea codeArea;
-            for(Tab tab : tabs){
-                codeArea = (TextArea) tab.getContent();
-                if (i > 0){
-                    String codeOhnePublicSubklassen = "";
-                    if(codeArea.getText().contains("public class")) {
-                        codeOhnePublicSubklassen = codeArea.getText().replace("public class", "class");
-                        codeArea.setText(codeOhnePublicSubklassen);
-                    } else if(codeArea.getText().contains("public abstract class")) {
-                        codeOhnePublicSubklassen = codeArea.getText().replace("public abstract class", "abstract class");
-                        codeArea.setText(codeOhnePublicSubklassen);
-                    } else if(codeArea.getText().contains("public interface")){
-                        codeOhnePublicSubklassen = codeArea.getText().replace("public interface", "interface");
-                        codeArea.setText(codeOhnePublicSubklassen);
-                    }
-                }
-                if (i < tabs.size()){
-                    code += "//Neue Klasse " + tab.getText();
-                }
-                if (codeArea.getText().trim().length() > 0){
-                    code += "\n" + codeArea.getText() + "\n";
-                }
-                i++;
-            }
-            codeTester.testCode(code, tabs.get(0).getText());
+            String code = getCode();
+            codeTester.testCode(code, codeTab.getTabs().get(0).getText());
         }
+    }
+
+    public String getCode(){
+        List<Tab> tabs  = codeTab.getTabs();
+        String code = "";
+        int i = 0;
+        TextArea codeArea;
+        for(Tab tab : tabs) {
+            codeArea = (TextArea) tab.getContent();
+            if (i > 0) {
+                String codeOhnePublicSubklassen = "";
+                if (codeArea.getText().contains("public class")) {
+                    codeOhnePublicSubklassen = codeArea.getText().replace("public class", "class");
+                    codeArea.setText(codeOhnePublicSubklassen);
+                } else if (codeArea.getText().contains("public abstract class")) {
+                    codeOhnePublicSubklassen = codeArea.getText().replace("public abstract class", "abstract class");
+                    codeArea.setText(codeOhnePublicSubklassen);
+                } else if (codeArea.getText().contains("public interface")) {
+                    codeOhnePublicSubklassen = codeArea.getText().replace("public interface", "interface");
+                    codeArea.setText(codeOhnePublicSubklassen);
+                }
+            }
+            if (i < tabs.size()) {
+                code += "//Neue Klasse " + tab.getText();
+            }
+            if (codeArea.getText().trim().length() > 0) {
+                code += "\n" + codeArea.getText() + "\n";
+            }
+            i++;
+        }
+        return code;
     }
 
     public void handleWechseln() {
@@ -306,7 +317,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 				konsoleTextArea.textProperty().bind(codeTester);
 			}
 			else {
-				konsoleTextArea.appendText("\n Es darf nur genau ein Test fehlschlagen!");
+				testTester.setKonsolenText("Es darf nur genau ein Test fehlschlagen!");
 			}
         }
         else if (code) {
@@ -330,7 +341,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 				}
 			}
 			else if (testTester.getAnzahlFehlerhaft()==0){
-				konsoleTextArea.appendText("Der Code muss funktionieren");
+				codeTester.setKonsolenText("Der Code muss compiliert und fehlerfrei sein.");
 			}
             //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         } else {
@@ -384,12 +395,24 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         return "";
     }
 
-    public void reicheMainWeiter(Main main){
-        this.main = main;
-		codeTester.setMain(main);
-    }
-
 	public CodeTester getCodeTester(){
 		return codeTester;
 	}
+
+	public void disableAll(){
+		codeTab.setDisable(true);
+		testTextArea.setDisable(true);
+		pruefen.setDisable(true);
+		phaseWechseln.setDisable(true);
+		leeren.setDisable(true);
+	}
+
+    public void enableNecessary(){
+        pruefen.setDisable(false);
+        phaseWechseln.setDisable(false);
+        leeren.setDisable(false);
+        testTextArea.setDisable(false);
+        codeTab.setDisable(false);
+        disableCodeArea();
+    }
 }

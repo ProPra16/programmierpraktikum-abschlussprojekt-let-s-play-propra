@@ -37,7 +37,6 @@ public class TestTester extends SimpleStringProperty {
     String ergebnis = "";
     //Tests.add(TestNr, new Test(DateiScanner));
     dateiname=testName+"_Test";
-    System.out.println("Ich bin eine wichtige Aussage");
     CompilationUnit testUnit = new CompilationUnit(dateiname, code, true);
 
     Testcompiler = CompilerFactory.getCompiler(testUnit);
@@ -60,7 +59,7 @@ public class TestTester extends SimpleStringProperty {
       hatFehler=false;
       set(Rueckgabe(testUnit));
     }
-    System.out.println("ich lande da wo ich soll");
+
     logging(code,letzterStandTestCode, hatFehler, fehlerString(testUnit));
     letzterStandTestCode=code;
   }

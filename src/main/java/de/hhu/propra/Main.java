@@ -39,6 +39,7 @@ public class Main extends Application {
     private String nameAufgabe = " ";
     private Aufgabe aktAufgabe;
     private static Tracker tracker;
+    private static CodeTester codeTester;
     private static String[] startconfig;
     private String katalog;
 	private static int KATALOG = 1;
@@ -104,13 +105,15 @@ public class Main extends Application {
         FXMLLoader obL = new FXMLLoader(getClass().getResource("/fxml/Oberflaeche.fxml"));
         BorderPane oberflaeche = obL.load();
         ofController = obL.getController();
-        ofController.reicheMainWeiter(this);
+        this.codeTester = ofController.getCodeTester();
+        ofController.setMain(this);
         hauptfenster.setCenter(oberflaeche);
 
         tracker = new Tracker(ofController, nameAufgabe);
         hfController.setMain(this);
         ofController.reicheTrackerWeiter(tracker);
 
+        ofController.disableAll();
         primaryStage.show();
 
     }
@@ -246,12 +249,15 @@ public class Main extends Application {
         aktAufgabe = aufgaben[k];
         ofController.aktualisiereCodeTab(aufgaben[k]);
         ofController.aktualisiereTestTextArea(aufgaben[k]);
+        codeTester.setDateiname(aufgaben[k].getKlassen()[0].getName());
+        ofController.enableNecessary();
         tracker.setMillisBeiLetztemWechsel(System.currentTimeMillis());
         return aufgaben[k];
     }
 
     public void setNameAufgabe(String nameAufgabe){
         tracker.setNameAufgabe(nameAufgabe);
+        codeTester.setNameAufgabe(nameAufgabe);
         this.nameAufgabe = nameAufgabe;
     }
 
@@ -271,7 +277,7 @@ public class Main extends Application {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == bTJa){
-            ofController.getCodeTester().writeExternalFile();
+            codeTester.writeExternalFile(ofController.getCode());
             tracker.phasenWechselMerken(ofController.getAktuellePhase());
             tracker.aktuellerStandtoFile();
             // TODO: Viktor, hier müssten dann noch alle Tests geschrieben werden!
@@ -314,7 +320,6 @@ public class Main extends Application {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(getCorrectPath() + "/aufgaben/" + nameAufgabe + "/" + nameHauptklasse + ".java"));
             String line = reader.readLine();
-
             while (line != null){
                 if (line.startsWith("//Neue Klasse")){
                     if(anzahlKlassen > 0){
