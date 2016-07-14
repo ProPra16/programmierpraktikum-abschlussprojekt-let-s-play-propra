@@ -1,1 +1,1 @@
-gewaehlterKatalog##letzteAufgabe# #
+gewaehlterKatalog#C:\Users\User\Desktop\propragit\build\libs\aufgaben\aufgaben.xml#letzteAufgabe# #

@@ -51,6 +51,8 @@ public class HauptfensterController {
 
     @FXML
     private void handleMenueKatalogAendern(){
+        aufgabenmenu.getItems().clear();
+        babymenu.getItems().clear();
         main.aenderungenSpeichern();
         main.katalogLaden();
         Aufgabe[] aufgaben = main.getAufgaben();
@@ -87,8 +89,10 @@ public class HauptfensterController {
         alert.showAndWait();
     }
 
+
     public void addAufgabe(int id, String nameAufgabe, boolean babystep) {
         Menu tempmenu;
+
         if (babystep==false) {
             tempmenu=aufgabenmenu;
 
