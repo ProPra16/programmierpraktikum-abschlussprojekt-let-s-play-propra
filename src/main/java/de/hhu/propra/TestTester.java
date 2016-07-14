@@ -29,14 +29,14 @@ public class TestTester extends SimpleStringProperty {
   private String letzterStandTestCode = "";
   private Collection<TestFailure> notWorking;
   private static int fehlerhafteTests;
+  private static boolean hatFehler;
 
   public void testeTests(String derCode, String testName) {
     this.code = derCode;
-    nameTest = testName;
+    nameTest=testName;
     String ergebnis = "";
     //Tests.add(TestNr, new Test(DateiScanner));
     dateiname=testName+"_Test";
-    System.out.println("Ich bin eine wichtige Aussage");
     CompilationUnit testUnit = new CompilationUnit(dateiname, code, true);
 
     Testcompiler = CompilerFactory.getCompiler(testUnit);
@@ -49,13 +49,19 @@ public class TestTester extends SimpleStringProperty {
     } catch (Exception e) {
       set("Fehler beim Testausfuehren!" + e.toString());
     }
-
+    writeTest();
+    tracker.aktuellerStandtoFile();
     if (Testcompiler.getCompilerResult().hasCompileErrors()) {
+      hatFehler=true;
       set(fehlerString(testUnit));
+      logging(code,letzterStandTestCode,hatFehler,fehlerString(testUnit));
     } else {
+      hatFehler=false;
       set(Rueckgabe(testUnit));
     }
-    writeTest();
+
+    logging(code,letzterStandTestCode, hatFehler, fehlerString(testUnit));
+    letzterStandTestCode=code;
   }
 
   private void writeTest() {
@@ -77,8 +83,8 @@ public class TestTester extends SimpleStringProperty {
     }
   }
 
-  private void logging(String code, String letzterStandTestCode, boolean fehler, String fehlerString) {
-    boolean trackFehler = tracker.ermittleNeuerung(code, letzterStandTestCode, fehler, fehlerString);
+  private void logging(String code, String letzterStandTestCode, boolean hatFehler, String fehlerString) {
+    boolean trackFehler = tracker.ermittleNeuerung(code, letzterStandTestCode, hatFehler, fehlerString);
 
     if (trackFehler) {
       set(tracker.getFehler());
@@ -97,13 +103,13 @@ public class TestTester extends SimpleStringProperty {
   }
 
   private static String fehlerString(CompilationUnit dieserTest) {
-    String fehler = "Codefehler im Test in Zeile";
+    String fehlerString = "Codefehler im Test in Zeile";
     for (CompileError error : Testcompiler.getCompilerResult().getCompilerErrorsForCompilationUnit(dieserTest)) {
-      fehler += "\n" + error.getLineNumber() + ": " + error.getMessage() + ": \n";
-      fehler += error.getCodeLineContainingTheError() + "\n";
-      fehler += error.getMessage() + "\n";
+      fehlerString += "\n" + error.getLineNumber() + ": " + error.getMessage() + ": \n";
+      fehlerString += error.getCodeLineContainingTheError() + "\n";
+      fehlerString += error.getMessage() + "\n";
     }
-    return fehler;
+    return fehlerString;
   }
   
   public static int getAnzahlFehlerhaft(){
@@ -122,7 +128,7 @@ public class TestTester extends SimpleStringProperty {
     this.main = main;
   }
 
-  public void setLetzterStandTestCodeCode(String code) {
+  public void setLetzterStandTestCode(String code) {
     this.letzterStandTestCode = code;
   }
 
