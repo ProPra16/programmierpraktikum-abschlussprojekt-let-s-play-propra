@@ -14,7 +14,6 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
-
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;

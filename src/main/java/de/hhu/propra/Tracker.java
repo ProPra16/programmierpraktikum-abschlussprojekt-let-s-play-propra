@@ -2,7 +2,6 @@ package de.hhu.propra;
 
 import de.hhu.propra.model.Analyse;
 import de.hhu.propra.view.OberflaecheController;
-
 import java.io.*;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;

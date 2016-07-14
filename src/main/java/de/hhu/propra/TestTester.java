@@ -5,15 +5,10 @@ import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
 import vk.core.api.CompilerFactory;
 import vk.core.api.JavaStringCompiler;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Viktor on 06.07.2016.
