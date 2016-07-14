@@ -165,7 +165,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 		testTextArea.clear();
 		letzterStandTestCode = "";
 		if (main.schonBearbeitet(aktaufgabe.getName())) {
-			letzterStandCode += aktaufgabe.getTest().getText();
+			letzterStandTestCode += aktaufgabe.getTest().getText();
 		} else{
 			testTextArea.setText(aktaufgabe.getTest().getText());
 		}
