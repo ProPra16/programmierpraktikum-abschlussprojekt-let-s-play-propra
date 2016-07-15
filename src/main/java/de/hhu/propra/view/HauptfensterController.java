@@ -13,7 +13,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +50,8 @@ public class HauptfensterController {
 
     @FXML
     private void handleMenueKatalogAendern(){
+        aufgabenmenu.getItems().clear();
+        babymenu.getItems().clear();
         main.aenderungenSpeichern();
         main.katalogLaden();
         Aufgabe[] aufgaben = main.getAufgaben();
@@ -87,8 +88,10 @@ public class HauptfensterController {
         alert.showAndWait();
     }
 
+
     public void addAufgabe(int id, String nameAufgabe, boolean babystep) {
         Menu tempmenu;
+
         if (babystep==false) {
             tempmenu=aufgabenmenu;
 

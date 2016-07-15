@@ -2,7 +2,6 @@ package de.hhu.propra.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

@@ -6,26 +6,13 @@ import de.hhu.propra.view.HauptfensterController;
 import de.hhu.propra.view.OberflaecheController;
 import de.hhu.propra.view.StartbildschirmController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-
-import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -41,6 +28,7 @@ public class Main extends Application {
     private Aufgabe aktAufgabe;
     private static Tracker tracker;
     private static CodeTester codeTester;
+    private static TestTester testTester;
     private static String[] startconfig;
     private String katalog;
 	private static int KATALOG = 1;
@@ -107,6 +95,7 @@ public class Main extends Application {
         BorderPane oberflaeche = obL.load();
         ofController = obL.getController();
         this.codeTester = ofController.getCodeTester();
+        this.testTester = ofController.getTestTester();
         ofController.setMain(this);
         hauptfenster.setCenter(oberflaeche);
 
@@ -164,11 +153,6 @@ public class Main extends Application {
         });
         stage.showAndWait();
         if (Controller.isKatalogausgewaehlt()) return;
-
-        /* TODO: David
-            1) Gebrauchsanweisung anzeigen
-            2) FXML Datei hierraus erstellen? Wäre die schönere Variante
-        */
     }
 
 
@@ -211,6 +195,7 @@ public class Main extends Application {
     }
 
     public Aufgabe aktualisiereAufgabe(int k){//Wenn eine Aufgabe ausgewählt wird, wird das hier alles aktualisert
+
         setNameAufgabe(aufgaben[k].getName());
         aktAufgabe = aufgaben[k];
         ofController.aktualisiereCodeTab(aufgaben[k]);
@@ -222,6 +207,7 @@ public class Main extends Application {
     }
 
     public void setNameAufgabe(String nameAufgabe){
+        testTester.setNameAufgabe(nameAufgabe);
         tracker.setNameAufgabe(nameAufgabe);
         codeTester.setNameAufgabe(nameAufgabe);
         this.nameAufgabe = nameAufgabe;
@@ -244,9 +230,10 @@ public class Main extends Application {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == bTJa){
             codeTester.writeExternalFile(ofController.getCode());
+            testTester.writeTest(ofController.getTestCode());
             tracker.phasenWechselMerken(ofController.getAktuellePhase());
             tracker.aktuellerStandtoFile();
-            // TODO: Viktor, hier müssten dann noch alle Tests geschrieben werden!
+
         }
     }
 

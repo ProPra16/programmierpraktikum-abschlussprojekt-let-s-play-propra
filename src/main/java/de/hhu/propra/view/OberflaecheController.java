@@ -15,11 +15,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +65,10 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 	@FXML
 	private Label timerLabel;
+
+	public TestTester getTestTester() {
+		return this.testTester;
+	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
@@ -176,9 +176,26 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 
 		testTextArea.clear();
 		letzterStandTestCode = "";
+		BufferedReader reader=null;
+		String line;
 		if (main.schonBearbeitet(aktaufgabe.getName())) {
-			letzterStandTestCode += aktaufgabe.getTest().getText();
+			try {
+				reader = new BufferedReader(new FileReader(main.getCorrectPath() + "/aufgaben/" + aktaufgabe.getName() + "/"+aktaufgabe.getName()+"_test.java"));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			try {
+				line = reader.readLine();
+				while (line != null){
+					letzterStandTestCode+= line;
+					line= reader.readLine();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		} else{
+			letzterStandTestCode += aktaufgabe.getTest().getText();
 			testTextArea.setText(aktaufgabe.getTest().getText());
 		}
 		disableCodeArea();
@@ -425,4 +442,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
         codeTab.setDisable(false);
         disableCodeArea();
     }
+
+	public String getTestCode(){
+		return this.testTextArea.getText();
+	}
 }
