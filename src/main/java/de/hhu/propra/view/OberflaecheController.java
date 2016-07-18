@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class OberflaecheController implements OberflaecheControllerInterface, Initializable {
 
 	private Main main;
-	public static boolean wechsel = false;
+
 
 	private boolean test = true;
 	private boolean code = false;
@@ -251,10 +251,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			codeArea.setStyle("");
 		}
 	}
-	
-	public void logKonsole (String message){
-		konsoleTextArea.setText(message);
-	}
 
 	public void appendKonsoleText(String message) {
 		konsoleTextArea.setText(konsoleTextArea.getText() + "\n" + message);
@@ -265,8 +261,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 	}
 
     public void handlePruefen() {
-        wechsel = false;
-
         if (test){
 			try{
 				testTester.testeTests(testTextArea.getText(),main.getNameAufgabe());
@@ -312,12 +306,8 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     }
 
     public void handleWechseln() {
-        // TODO wechsel nur dann true wenn es okay ist zu wechseln
-        wechsel=true;
         if (test) {
-			if (TestTester.getAnzahlFehlerhaft()==1) {
-
-
+			if (testTester.getWechselerlaubnis()) {
 				babystepsFail = false;
 				Image image = new Image("code.png");
 				phasenIcon.setImage(image);
@@ -336,8 +326,7 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 			else {
 				testTester.setKonsolenText("Es darf nur genau ein Test fehlschlagen!");
 			}
-        }
-        else if (code) {
+        } else if (code) {
 			if (codeTester.isGetestetUndFehlerfrei()) {
 				Image image = new Image("refactor.png");
 				phasenIcon.setImage(image);
@@ -356,11 +345,9 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
 					TextArea inhalt = (TextArea) tab.getContent();
 					letzterStandCodeBS += inhalt.getText();
 				}
-			}
-			else if (testTester.getAnzahlFehlerhaft()==0){
+			} else {
 				codeTester.setKonsolenText("Der Code muss compiliert und fehlerfrei sein.");
 			}
-            //TODO: wechseln zu refactor wenn code okay (Bem von Freddy: Wechseln, wenn code okay, oder wenn Test nicht mehr fehlschlagen?!)
         } else {
 			babystepsFail = false;
 			Image image = new Image("test.png");
@@ -382,7 +369,6 @@ public class OberflaecheController implements OberflaecheControllerInterface, In
     }
 
 	public void handleLeeren() {
-		wechsel = false;
 		if (test) {
 			// TODO auf Anfang zurücksetzen, e.g. testTextArea.setText(test)
 			testTextArea.setText("");

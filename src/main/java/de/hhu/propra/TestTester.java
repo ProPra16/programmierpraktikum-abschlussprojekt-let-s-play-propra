@@ -30,7 +30,7 @@ public class TestTester extends SimpleStringProperty {
     this.code = derCode;
     nameTest=testName;
     String ergebnis = "";
-    dateiname=testName+"_Test";
+    dateiname= testName+"_Test";
     CompilationUnit testUnit = new CompilationUnit(dateiname, code, true);
 
     Testcompiler = CompilerFactory.getCompiler(testUnit);
@@ -43,11 +43,11 @@ public class TestTester extends SimpleStringProperty {
     writeTest(code);
     tracker.aktuellerStandtoFile();
     if (Testcompiler.getCompilerResult().hasCompileErrors()) {
-      hatFehler=true;
-      set(fehlerString(testUnit));
+        hatFehler=true;
+        set(fehlerString(testUnit));
     } else {
-      hatFehler=false;
-      set(Rueckgabe(testUnit));
+        hatFehler=false;
+        set(Rueckgabe(testUnit));
     }
 
     logging(code,letzterStandTestCode, hatFehler, fehlerString(testUnit));
@@ -56,7 +56,7 @@ public class TestTester extends SimpleStringProperty {
 
   public void writeTest(String testCode) {
     try {
-      dateiname=nameTest+"_Test";
+      dateiname = nameTest + "_Test";
       String path = getCorrectPath() + "/aufgaben/" + nameTest + "/";
       File subdir = new File(path);
       if (!subdir.exists()) {
@@ -87,7 +87,7 @@ public class TestTester extends SimpleStringProperty {
     rueckgabeString += "Fehlgeschlagene Tests: " + Testcompiler.getTestResult().getNumberOfFailedTests();
     rueckgabeString += "\n";
     rueckgabeString += "Erfolgreiche Tests: " + Testcompiler.getTestResult().getNumberOfSuccessfulTests();
-    fehlerhafteTests=Testcompiler.getTestResult().getNumberOfFailedTests();
+    fehlerhafteTests = Testcompiler.getTestResult().getNumberOfFailedTests();
     rueckgabeString += "\n";
     rueckgabeString += "Ignorierte Tests: " + Testcompiler.getTestResult().getNumberOfIgnoredTests();
     return rueckgabeString;
@@ -98,13 +98,19 @@ public class TestTester extends SimpleStringProperty {
     for (CompileError error : Testcompiler.getCompilerResult().getCompilerErrorsForCompilationUnit(dieserTest)) {
       fehlerString += "\n" + error.getLineNumber() + ": " + error.getMessage() + ": \n";
       fehlerString += error.getCodeLineContainingTheError() + "\n";
-      fehlerString += error.getMessage() + "\n";
     }
     return fehlerString;
   }
   
-  public static int getAnzahlFehlerhaft(){
-    return fehlerhafteTests;
+  public static boolean getWechselerlaubnis(){
+    if (hatFehler == true) {
+        if (fehlerhafteTests == 1)
+            return true;
+        return true;
+    } else if (fehlerhafteTests == 1)
+        return true;
+    else
+      return false;
   }
 
   public void setKonsolenText(String text) {
